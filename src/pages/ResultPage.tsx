@@ -52,10 +52,10 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                     flexDirection: 'column',
                     alignItems: 'center',
                     textAlign: 'center',
-                    gap: { xs: 0.5, sm: 3 },
+                    gap: { xs: 0.7, sm: 3 },
                     px: { xs: 2, sm: 3 },
-                    pt: { xs: 1, sm: 3 },
-                    pb: { xs: 7, sm: 3 }, // Extra padding for fixed button on mobile
+                    pt: { xs: 1.2, sm: 3 },
+                    pb: { xs: 7.5, sm: 3 }, // Extra padding for fixed button on mobile
                 }}
             >
                 {/* Animated confetti */}
@@ -104,8 +104,8 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                     <Paper
                         elevation={2}
                         sx={{
-                            px: { xs: 1.8, sm: 4 },
-                            py: { xs: 0.5, sm: 1.5 },
+                            px: { xs: 2, sm: 4 },
+                            py: { xs: 0.6, sm: 1.5 },
                             borderRadius: '50px',
                             background: 'linear-gradient(135deg, rgba(126, 200, 80, 0.15) 0%, rgba(184, 233, 134, 0.15) 100%)',
                             backdropFilter: 'blur(10px)',
@@ -117,7 +117,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                             sx={{
                                 fontWeight: 700,
                                 color: '#5CA632',
-                                fontSize: { xs: '0.7rem', sm: '1.1rem' },
+                                fontSize: { xs: '0.8rem', sm: '1.1rem' },
                                 letterSpacing: '0.05em',
                             }}
                         >
@@ -139,8 +139,8 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                         variant="body2"
                         sx={{
                             color: '#888',
-                            fontSize: { xs: '0.6rem', sm: '1rem' },
-                            mb: { xs: 0.1, sm: 1 },
+                            fontSize: { xs: '0.7rem', sm: '1rem' },
+                            mb: { xs: 0.15, sm: 1 },
                         }}
                     >
                         당신의 성격 유형은...
@@ -150,7 +150,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                         sx={{
                             fontWeight: 900,
                             fontSize: {
-                                xs: '1.1rem',    // 320px - ultra compact
+                                xs: '1.25rem',    // 320px - bigger
                                 sm: '2.5rem',    // 600px+
                                 md: '3.2rem',    // 900px+
                             },
@@ -158,15 +158,15 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                             backgroundClip: 'text',
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
-                            mb: { xs: 0.2, sm: 2 },
-                            lineHeight: 1.1,
+                            mb: { xs: 0.25, sm: 2 },
+                            lineHeight: 1.15,
                         }}
                     >
                         {node.title}
                     </Typography>
                 </Box>
 
-                {/* Lovebird celebration illustration - 2/3 size on mobile */}
+                {/* Lovebird celebration illustration - bigger on mobile */}
                 <Box
                     className={showContent ? 'fade-in' : ''}
                     sx={{
@@ -178,12 +178,12 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                 >
                     <LovebirdIllustration
                         variant="couple"
-                        size={{ xs: 33, sm: 120, md: 140 }}
+                        size={{ xs: 40, sm: 120, md: 140 }}
                         animated
                     />
                 </Box>
 
-                {/* Result image - 2/3 size on mobile */}
+                {/* Result image - bigger on mobile */}
                 {node.imageUrl && (
                     <Box
                         className={showContent ? 'fade-in' : ''}
@@ -191,8 +191,8 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                             opacity: showContent ? 1 : 0,
                             animationDelay: '0.4s',
                             width: '100%',
-                            maxWidth: { xs: '133px', sm: '100%' }, // 2/3 of 200px
-                            borderRadius: { xs: '8px', sm: '32px' },
+                            maxWidth: { xs: '160px', sm: '100%' }, // Bigger
+                            borderRadius: { xs: '10px', sm: '32px' },
                             overflow: 'hidden',
                             boxShadow: '0 6px 20px rgba(126, 200, 80, 0.25)',
                             border: {
@@ -200,7 +200,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                                 sm: '4px solid rgba(255, 255, 255, 0.9)',
                             },
                             position: 'relative',
-                            mb: { xs: 0.3, sm: 2 },
+                            mb: { xs: 0.4, sm: 2 },
                             zIndex: 1,
                             '&::after': {
                                 content: '""',
@@ -220,7 +220,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                             style={{
                                 width: '100%',
                                 height: 'auto',
-                                maxHeight: window.innerWidth < 600 ? '67px' : '360px', // 2/3 of 100px
+                                maxHeight: window.innerWidth < 600 ? '80px' : '360px', // Bigger
                                 objectFit: 'contain',
                                 display: 'block',
                             }}
@@ -228,22 +228,22 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                     </Box>
                 )}
 
-                {/* Description card - Ultra compact on mobile */}
+                {/* Description card - bigger on mobile */}
                 <Paper
                     className={showContent ? 'fade-in' : ''}
                     elevation={3}
                     sx={{
                         opacity: showContent ? 1 : 0,
                         animationDelay: '0.5s',
-                        p: { xs: 1.2, sm: 4 },
+                        p: { xs: 1.4, sm: 4 },
                         background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 249, 250, 0.95) 100%)',
                         backdropFilter: 'blur(12px)',
-                        borderRadius: { xs: '10px', sm: '32px' },
+                        borderRadius: { xs: '12px', sm: '32px' },
                         border: {
                             xs: '2px solid rgba(126, 200, 80, 0.3)',
                             sm: '3px solid rgba(126, 200, 80, 0.3)',
                         },
-                        mb: { xs: 0.3, sm: 2 },
+                        mb: { xs: 0.4, sm: 2 },
                         width: '100%',
                         position: 'relative',
                         zIndex: 1,
@@ -266,9 +266,9 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                         sx={{
                             wordBreak: 'keep-all',
                             color: '#3A3A3A',
-                            lineHeight: 1.5,
+                            lineHeight: 1.55,
                             fontSize: {
-                                xs: '0.7rem',   // 320px - ultra compact
+                                xs: '0.8rem',   // 320px - bigger
                                 sm: '1.1rem',    // 600px+
                             },
                             whiteSpace: 'pre-line',
@@ -316,9 +316,9 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                         opacity: showContent ? 0.7 : 0,
                         animationDelay: '1s',
                         color: '#999',
-                        fontSize: { xs: '0.65rem', sm: '0.9rem' },
-                        mt: { xs: 0.2, sm: 1 },
-                        mb: { xs: 0.3, sm: 0 },
+                        fontSize: { xs: '0.75rem', sm: '0.9rem' },
+                        mt: { xs: 0.3, sm: 1 },
+                        mb: { xs: 0.4, sm: 0 },
                         zIndex: 1,
                     }}
                 >
@@ -338,7 +338,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                     backdropFilter: { xs: 'blur(10px)', sm: 'none' },
                     borderTop: { xs: '1px solid rgba(126, 200, 80, 0.2)', sm: 'none' },
                     boxShadow: { xs: '0 -4px 12px rgba(0, 0, 0, 0.08)', sm: 'none' },
-                    py: { xs: 1.2, sm: 0 },
+                    py: { xs: 1.4, sm: 0 },
                     px: { xs: 2, sm: 0 },
                     display: 'flex',
                     flexDirection: 'column',
@@ -365,16 +365,16 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                         startIcon={<ReplayIcon />}
                         onClick={onRestart}
                         sx={{
-                            minWidth: { xs: '180px', sm: '240px' },
+                            minWidth: { xs: '200px', sm: '240px' },
                             width: { xs: '100%', sm: 'auto' },
                             maxWidth: '300px',
                             fontSize: {
-                                xs: '0.85rem',      // 320px - more compact
+                                xs: '0.95rem',      // 320px - bigger
                                 sm: '1.25rem',   // 600px+
                             },
                             fontWeight: 700,
                             padding: {
-                                xs: '10px 20px',   // 320px - smaller but still touch-friendly
+                                xs: '11px 24px',   // 320px - bigger
                                 sm: '16px 40px',   // 600px+
                             },
                             background: 'linear-gradient(135deg, #FFE84D 0%, #FFD700 100%)',
