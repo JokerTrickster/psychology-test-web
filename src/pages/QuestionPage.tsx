@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Box, Typography, Button, Paper } from '@mui/material';
 import type { Node } from '../types';
 import LovebirdIllustration from '../components/LovebirdIllustration';
@@ -10,14 +10,9 @@ interface QuestionPageProps {
 }
 
 const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => {
-    const [showContent, setShowContent] = useState(false);
+    // Animation handled by App.tsx AnimatePresence
+    const showContent = true;
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
-    useEffect(() => {
-        setShowContent(false);
-        const timer = setTimeout(() => setShowContent(true), 100);
-        return () => clearTimeout(timer);
-    }, [node]);
 
     const birdColors: Array<'pepe-green' | 'violet-butter' | 'pepe-yellow' | 'yellowface-green' | 'pepe-lime'> = [
         'pepe-green',

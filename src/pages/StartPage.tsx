@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import LovebirdIllustration from '../components/LovebirdIllustration';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -8,13 +8,8 @@ interface StartPageProps {
 }
 
 const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
-    const [showContent, setShowContent] = useState(false);
-
-    useEffect(() => {
-        // Smooth entrance animation
-        const timer = setTimeout(() => setShowContent(true), 100);
-        return () => clearTimeout(timer);
-    }, []);
+    // Animation handled by App.tsx AnimatePresence
+    const showContent = true;
 
     return (
         <Box

@@ -12,14 +12,14 @@ interface ResultPageProps {
 }
 
 const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
-    const [showContent, setShowContent] = useState(false);
+    // Remove local animation state - handled by App.tsx AnimatePresence
+    const showContent = true;
     const [showConfetti, setShowConfetti] = useState(false);
 
     useEffect(() => {
-        const contentTimer = setTimeout(() => setShowContent(true), 100);
-        const confettiTimer = setTimeout(() => setShowConfetti(true), 600);
+        // Keep confetti animation with slight delay
+        const confettiTimer = setTimeout(() => setShowConfetti(true), 400);
         return () => {
-            clearTimeout(contentTimer);
             clearTimeout(confettiTimer);
         };
     }, []);

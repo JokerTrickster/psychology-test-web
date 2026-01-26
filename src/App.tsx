@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ThemeProvider, CssBaseline } from '@mui/material';
+import { AnimatePresence, motion } from 'framer-motion';
 import theme from './theme';
 import Layout from './components/Layout';
 import StartPage from './pages/StartPage';
@@ -10,6 +11,30 @@ import type { Scenario, Node } from './types';
 
 // Cast the JSON data to specific type
 const scenario = scenarioData as Scenario;
+
+// Page transition variants
+const pageVariants = {
+  initial: {
+    opacity: 0,
+    y: 20,
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.4,
+      ease: [0.4, 0, 0.2, 1],
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -20,
+    transition: {
+      duration: 0.3,
+      ease: [0.4, 0, 0.2, 1],
+    },
+  },
+};
 
 function App() {
   const [currentNodeId, setCurrentNodeId] = useState<string | null>(null);
@@ -27,6 +52,15 @@ function App() {
   // Handle restart
   const handleRestart = () => {
     setCurrentNodeId(null);
+  };
+
+  // Get current page type for key
+  const getPageKey = () => {
+    if (!currentNodeId) return 'start';
+    const currentNode = scenario.nodes[currentNodeId];
+    if (currentNode?.type === 'question') return `question-${currentNodeId}`;
+    if (currentNode?.type === 'result') return `result-${currentNodeId}`;
+    return 'unknown';
   };
 
   // Determine which page to show
@@ -65,7 +99,21 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Layout>
-        {renderContent()}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={getPageKey()}
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            style={{
+              width: '100%',
+              height: '100%',
+            }}
+          >
+            {renderContent()}
+          </motion.div>
+        </AnimatePresence>
       </Layout>
     </ThemeProvider>
   );
