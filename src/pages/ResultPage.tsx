@@ -9,9 +9,11 @@ import StarIcon from '@mui/icons-material/Star';
 interface ResultPageProps {
     node: Node;
     onRestart: () => void;
+    score?: number; // Optional score for score-based system
+    summary?: string; // Optional summary for score-based system
 }
 
-const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
+const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart, score, summary }) => {
     // Remove local animation state - handled by App.tsx AnimatePresence
     const showContent = true;
     const [showConfetti, setShowConfetti] = useState(false);
@@ -164,6 +166,35 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                     >
                         {node.title}
                     </Typography>
+                    {/* Score display (only for score-based system) */}
+                    {score !== undefined && (
+                        <Typography
+                            variant="body2"
+                            sx={{
+                                color: '#7EC850',
+                                fontSize: { xs: '0.75rem', sm: '1rem' },
+                                fontWeight: 600,
+                                mb: { xs: 0.3, sm: 1 },
+                            }}
+                        >
+                            점수: {score > 0 ? `+${score}` : score}
+                        </Typography>
+                    )}
+                    {/* Summary (only for score-based system) */}
+                    {summary && (
+                        <Typography
+                            variant="body1"
+                            sx={{
+                                color: '#5CA632',
+                                fontSize: { xs: '0.8rem', sm: '1.1rem' },
+                                fontWeight: 600,
+                                mb: { xs: 0.3, sm: 1 },
+                                fontStyle: 'italic',
+                            }}
+                        >
+                            {summary}
+                        </Typography>
+                    )}
                 </Box>
 
                 {/* Lovebird celebration illustration - bigger on mobile */}
