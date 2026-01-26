@@ -14,16 +14,6 @@ const LovebirdIllustration: React.FC<LovebirdProps> = ({
   animated = true,
   variant = 'sitting'
 }) => {
-  // Handle responsive sizes
-  const getResponsiveSize = () => {
-    if (typeof size === 'number') {
-      return size;
-    }
-    // For object sizes, use the values directly in sx prop
-    return size.md || size.sm || size.xs || 100;
-  };
-
-  const displaySize = typeof size === 'number' ? size : getResponsiveSize();
   const colorMap = {
     'pepe-green': {
       main: '#7EC850',
