@@ -26,42 +26,43 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                 py: { xs: 2, sm: 0 },
             }}
         >
-            {/* Decorative floating hearts */}
+            {/* Decorative floating hearts - Green and White theme */}
             <Box
                 sx={{
                     position: 'absolute',
                     top: '5%',
                     left: '10%',
-                    opacity: 0.3,
+                    opacity: 0.4,
                     animation: 'float 4s ease-in-out infinite',
                     animationDelay: '0s',
                 }}
             >
-                <FavoriteIcon sx={{ fontSize: 40, color: '#B8E986' }} />
+                <FavoriteIcon sx={{ fontSize: 40, color: '#7EC850' }} />
             </Box>
             <Box
                 sx={{
                     position: 'absolute',
                     top: '15%',
                     right: '15%',
-                    opacity: 0.25,
+                    opacity: 0.5,
                     animation: 'float 5s ease-in-out infinite',
                     animationDelay: '1s',
+                    filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
                 }}
             >
-                <FavoriteIcon sx={{ fontSize: 30, color: '#D4B5E8' }} />
+                <FavoriteIcon sx={{ fontSize: 30, color: '#FFFFFF' }} />
             </Box>
             <Box
                 sx={{
                     position: 'absolute',
                     bottom: '20%',
                     left: '5%',
-                    opacity: 0.2,
+                    opacity: 0.35,
                     animation: 'float 4.5s ease-in-out infinite',
                     animationDelay: '2s',
                 }}
             >
-                <FavoriteIcon sx={{ fontSize: 35, color: '#FFE84D' }} />
+                <FavoriteIcon sx={{ fontSize: 35, color: '#5CA632' }} />
             </Box>
 
             {/* Main lovebird couple illustration */}
@@ -97,10 +98,11 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                             sm: '2.8rem',    // 600px+
                             md: '3.5rem'     // 900px+
                         },
-                        background: 'linear-gradient(135deg, #7EC850 0%, #C4E86B 50%, #FFE84D 100%)',
+                        background: 'linear-gradient(135deg, #7EC850 0%, #FFFFFF 50%, #7EC850 100%)',
                         backgroundClip: 'text',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
+                        textShadow: '0 2px 10px rgba(126, 200, 80, 0.2)',
                         mb: { xs: 0.5, sm: 1 },
                         lineHeight: 1.2,
                     }}
@@ -125,13 +127,13 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                 </Typography>
             </Box>
 
-            {/* Decorative subtitle box */}
+            {/* Decorative subtitle box - Green and White theme */}
             <Box
                 className={showContent ? 'fade-in' : ''}
                 sx={{
                     opacity: showContent ? 1 : 0,
                     animationDelay: '0.3s',
-                    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 255, 240, 0.95) 100%)',
+                    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.95) 100%)',
                     backdropFilter: 'blur(10px)',
                     borderRadius: { xs: '20px', sm: '30px' },
                     padding: {
@@ -139,10 +141,10 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                         sm: '24px 36px'    // 600px+ - spacious
                     },
                     border: {
-                        xs: '2px solid rgba(126, 200, 80, 0.3)',
-                        sm: '3px solid rgba(126, 200, 80, 0.3)'
+                        xs: '2px solid rgba(126, 200, 80, 0.4)',
+                        sm: '3px solid rgba(126, 200, 80, 0.5)'
                     },
-                    boxShadow: '0 8px 32px rgba(126, 200, 80, 0.25)',
+                    boxShadow: '0 8px 32px rgba(126, 200, 80, 0.3)',
                     maxWidth: '90%',
                 }}
             >
@@ -150,7 +152,7 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     variant="h5"
                     sx={{
                         mb: { xs: 1, sm: 1.5 },
-                        color: '#5C5C5C',
+                        color: '#5CA632',
                         fontWeight: 600,
                         fontSize: {
                             xs: '1.1rem',    // 320px
@@ -163,7 +165,7 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                 <Typography
                     variant="body1"
                     sx={{
-                        color: '#6B6B6B',
+                        color: '#4A4A4A',
                         lineHeight: 1.8,
                         fontSize: {
                             xs: '0.95rem',   // 320px
@@ -176,7 +178,7 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                 </Typography>
             </Box>
 
-            {/* Five flying birds - All 5 color variants */}
+            {/* Five flying birds - Green, Lime, Green, White, Yellow */}
             <Box
                 sx={{
                     display: 'flex',
@@ -188,7 +190,7 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     maxWidth: '100%',
                 }}
             >
-                {/* Pepe Green */}
+                {/* 1. Green */}
                 <Box
                     className={showContent ? 'fade-in' : ''}
                     sx={{
@@ -204,7 +206,7 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     />
                 </Box>
 
-                {/* Violet Butter */}
+                {/* 2. Lime */}
                 <Box
                     className={showContent ? 'fade-in' : ''}
                     sx={{
@@ -214,13 +216,13 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                 >
                     <LovebirdIllustration
                         variant="flying"
-                        color="violet-butter"
+                        color="pepe-lime"
                         size={{ xs: 42, sm: 55 }}
                         animated
                     />
                 </Box>
 
-                {/* Pepe Yellow */}
+                {/* 3. Green */}
                 <Box
                     className={showContent ? 'fade-in' : ''}
                     sx={{
@@ -230,29 +232,30 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                 >
                     <LovebirdIllustration
                         variant="flying"
-                        color="pepe-yellow"
+                        color="pepe-green"
                         size={{ xs: 42, sm: 55 }}
                         animated
                     />
                 </Box>
 
-                {/* Yellow Face Green */}
+                {/* 4. White */}
                 <Box
                     className={showContent ? 'fade-in' : ''}
                     sx={{
                         opacity: showContent ? 1 : 0,
                         animationDelay: '0.7s',
+                        filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.15))',
                     }}
                 >
                     <LovebirdIllustration
                         variant="flying"
-                        color="yellowface-green"
+                        color="white"
                         size={{ xs: 42, sm: 55 }}
                         animated
                     />
                 </Box>
 
-                {/* Pepe Lime */}
+                {/* 5. Yellow */}
                 <Box
                     className={showContent ? 'fade-in' : ''}
                     sx={{
@@ -262,7 +265,7 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                 >
                     <LovebirdIllustration
                         variant="flying"
-                        color="pepe-lime"
+                        color="pepe-yellow"
                         size={{ xs: 42, sm: 55 }}
                         animated
                     />
@@ -321,13 +324,13 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                 sx={{
                     opacity: showContent ? 0.7 : 0,
                     animationDelay: '1s',
-                    color: '#7C7C7C',
+                    color: '#5CA632',
                     fontSize: { xs: '0.85rem', sm: '0.95rem' },
                     mt: { xs: 0.5, sm: 1 },
                     px: 2,
                 }}
             >
-                🌈 5가지 컬러의 모란앵무가 기다리고 있어요!
+                🌿 다양한 컬러의 모란앵무가 기다리고 있어요!
             </Typography>
         </Box>
     );

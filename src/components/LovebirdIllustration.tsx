@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 
 interface LovebirdProps {
-  color?: 'pepe-green' | 'violet-butter' | 'pepe-yellow' | 'yellowface-green' | 'pepe-lime';
+  color?: 'pepe-green' | 'violet-butter' | 'pepe-yellow' | 'yellowface-green' | 'pepe-lime' | 'white';
   size?: number | { xs?: number; sm?: number; md?: number };
   animated?: boolean;
   variant?: 'sitting' | 'flying' | 'couple';
@@ -55,6 +55,12 @@ const LovebirdIllustration: React.FC<LovebirdProps> = ({
       accent: '#E0F5A8',
       beak: '#FFB347',
       description: 'Pepe Lime'
+    },
+    'white': {
+      main: '#FFFFFF',
+      accent: '#F5F5F5',
+      beak: '#FFB347',
+      description: 'White'
     }
   };
 
