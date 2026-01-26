@@ -20,10 +20,11 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                 justifyContent: 'center',
                 height: '100%',
                 textAlign: 'center',
-                gap: { xs: 2, sm: 3 },
+                gap: { xs: 0.8, sm: 3 },
                 position: 'relative',
                 overflow: 'hidden',
-                py: { xs: 2, sm: 0 },
+                py: { xs: 1, sm: 0 },
+                px: { xs: 2, sm: 0 },
             }}
         >
             {/* Decorative floating hearts - Green and White theme */}
@@ -70,12 +71,12 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                 className={showContent ? 'fade-in' : ''}
                 sx={{
                     opacity: showContent ? 1 : 0,
-                    mb: { xs: 1, sm: 2 },
+                    mb: { xs: 0, sm: 2 },
                 }}
             >
                 <LovebirdIllustration
                     variant="couple"
-                    size={{ xs: 90, sm: 110, md: 120 }}
+                    size={{ xs: 65, sm: 110, md: 120 }}
                     animated
                 />
             </Box>
@@ -94,14 +95,14 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     sx={{
                         fontWeight: 800,
                         fontSize: {
-                            xs: '2rem',      // 320px - very small phones
+                            xs: '1.6rem',    // 320px - compact
                             sm: '2.8rem',    // 600px+
                             md: '3.5rem'     // 900px+
                         },
                         color: '#5CA632',
                         textShadow: '0 2px 8px rgba(92, 166, 50, 0.3), 0 0 40px rgba(255, 255, 255, 0.8)',
-                        mb: { xs: 0.5, sm: 1 },
-                        lineHeight: 1.2,
+                        mb: { xs: 0.3, sm: 1 },
+                        lineHeight: 1.1,
                         WebkitTextStroke: '0.5px rgba(92, 166, 50, 0.3)',
                     }}
                 >
@@ -112,13 +113,13 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     sx={{
                         fontWeight: 800,
                         fontSize: {
-                            xs: '1.6rem',    // 320px
+                            xs: '1.3rem',    // 320px - compact
                             sm: '2.2rem',    // 600px+
                             md: '2.8rem'     // 900px+
                         },
                         color: '#5CA632',
-                        mb: { xs: 2, sm: 3 },
-                        lineHeight: 1.2,
+                        mb: { xs: 0.5, sm: 3 },
+                        lineHeight: 1.1,
                     }}
                 >
                     심리 테스트 🦜
@@ -133,9 +134,9 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     animationDelay: '0.3s',
                     background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.95) 100%)',
                     backdropFilter: 'blur(10px)',
-                    borderRadius: { xs: '20px', sm: '30px' },
+                    borderRadius: { xs: '16px', sm: '30px' },
                     padding: {
-                        xs: '16px 20px',   // 320px - compact
+                        xs: '10px 16px',   // 320px - very compact
                         sm: '24px 36px'    // 600px+ - spacious
                     },
                     border: {
@@ -149,11 +150,11 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                 <Typography
                     variant="h5"
                     sx={{
-                        mb: { xs: 1, sm: 1.5 },
+                        mb: { xs: 0.3, sm: 1.5 },
                         color: '#5CA632',
                         fontWeight: 600,
                         fontSize: {
-                            xs: '1.1rem',    // 320px
+                            xs: '0.95rem',   // 320px - compact
                             sm: '1.4rem'     // 600px+
                         },
                     }}
@@ -164,9 +165,9 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     variant="body1"
                     sx={{
                         color: '#4A4A4A',
-                        lineHeight: 1.8,
+                        lineHeight: 1.5,
                         fontSize: {
-                            xs: '0.95rem',   // 320px
+                            xs: '0.85rem',   // 320px - compact
                             sm: '1.1rem'     // 600px+
                         },
                     }}
@@ -180,9 +181,9 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
             <Box
                 sx={{
                     display: 'flex',
-                    gap: { xs: 1.5, sm: 3 },
-                    mt: { xs: 1, sm: 2 },
-                    mb: { xs: 0.5, sm: 1 },
+                    gap: { xs: 0.8, sm: 3 },
+                    mt: { xs: 0, sm: 2 },
+                    mb: { xs: 0, sm: 1 },
                     flexWrap: 'wrap',
                     justifyContent: 'center',
                     maxWidth: '100%',
@@ -199,7 +200,7 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     <LovebirdIllustration
                         variant="flying"
                         color="pepe-green"
-                        size={{ xs: 42, sm: 55 }}
+                        size={{ xs: 32, sm: 55 }}
                         animated
                     />
                 </Box>
@@ -215,7 +216,7 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     <LovebirdIllustration
                         variant="flying"
                         color="pepe-lime"
-                        size={{ xs: 42, sm: 55 }}
+                        size={{ xs: 32, sm: 55 }}
                         animated
                     />
                 </Box>
@@ -231,7 +232,7 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     <LovebirdIllustration
                         variant="flying"
                         color="pepe-green"
-                        size={{ xs: 42, sm: 55 }}
+                        size={{ xs: 32, sm: 55 }}
                         animated
                     />
                 </Box>
@@ -248,7 +249,7 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     <LovebirdIllustration
                         variant="flying"
                         color="white"
-                        size={{ xs: 42, sm: 55 }}
+                        size={{ xs: 32, sm: 55 }}
                         animated
                     />
                 </Box>
@@ -264,7 +265,7 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     <LovebirdIllustration
                         variant="flying"
                         color="pepe-yellow"
-                        size={{ xs: 42, sm: 55 }}
+                        size={{ xs: 32, sm: 55 }}
                         animated
                     />
                 </Box>
@@ -276,7 +277,7 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                 sx={{
                     opacity: showContent ? 1 : 0,
                     animationDelay: '0.9s',
-                    mt: { xs: 1.5, sm: 2 },
+                    mt: { xs: 0.5, sm: 2 },
                     width: '100%',
                     display: 'flex',
                     justifyContent: 'center',
@@ -292,12 +293,12 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                         width: { xs: '90%', sm: 'auto' },
                         maxWidth: '300px',
                         fontSize: {
-                            xs: '1.1rem',    // 320px
+                            xs: '1rem',      // 320px - compact
                             sm: '1.35rem'    // 600px+
                         },
                         fontWeight: 700,
                         padding: {
-                            xs: '14px 28px',   // 320px - min 44px touch target
+                            xs: '12px 24px',   // 320px - min 44px touch target
                             sm: '16px 40px'    // 600px+
                         },
                         background: 'linear-gradient(135deg, #7EC850 0%, #5CA632 100%)',
@@ -323,8 +324,8 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     opacity: showContent ? 0.7 : 0,
                     animationDelay: '1s',
                     color: '#5CA632',
-                    fontSize: { xs: '0.85rem', sm: '0.95rem' },
-                    mt: { xs: 0.5, sm: 1 },
+                    fontSize: { xs: '0.75rem', sm: '0.95rem' },
+                    mt: { xs: 0.3, sm: 1 },
                     px: 2,
                 }}
             >
