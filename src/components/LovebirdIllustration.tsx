@@ -119,7 +119,7 @@ const LovebirdIllustration: React.FC<LovebirdProps> = ({
           </svg>
         </Box>
 
-        {/* Heart between birds */}
+        {/* Heart between birds - Pink */}
         <Box
           className={animated ? 'pulse-glow' : ''}
           sx={{
@@ -143,13 +143,13 @@ const LovebirdIllustration: React.FC<LovebirdProps> = ({
           <svg width="100%" height="100%" viewBox="0 0 100 100">
             <path
               d="M 50 85 C 30 70, 10 55, 10 35 C 10 20, 20 10, 30 10 C 40 10, 45 15, 50 25 C 55 15, 60 10, 70 10 C 80 10, 90 20, 90 35 C 90 55, 70 70, 50 85 Z"
-              fill="#FFE84D"
-              opacity="0.9"
+              fill="#FFB7C5"
+              opacity="0.95"
             />
           </svg>
         </Box>
 
-        {/* Right bird - Pepe Yellow */}
+        {/* Right bird - White */}
         <Box
           className={animated ? 'wiggle' : ''}
           sx={{
@@ -167,13 +167,14 @@ const LovebirdIllustration: React.FC<LovebirdProps> = ({
             },
             transform: 'scaleX(-1)',
             animationDelay: '0.4s',
+            filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.12))',
           }}
         >
           <svg width="100%" height="100%" viewBox="0 0 100 100">
-            <ellipse cx="50" cy="55" rx="28" ry="35" fill="#FFE84D" />
-            <circle cx="50" cy="30" r="22" fill="#FFE84D" />
-            <ellipse cx="45" cy="60" rx="15" ry="25" fill="#FFF9B0" transform="rotate(-20 45 60)" />
-            <ellipse cx="58" cy="82" rx="10" ry="15" fill="#FFF9B0" transform="rotate(30 58 82)" />
+            <ellipse cx="50" cy="55" rx="28" ry="35" fill="#FFFFFF" />
+            <circle cx="50" cy="30" r="22" fill="#FFFFFF" />
+            <ellipse cx="45" cy="60" rx="15" ry="25" fill="#F5F5F5" transform="rotate(-20 45 60)" />
+            <ellipse cx="58" cy="82" rx="10" ry="15" fill="#F5F5F5" transform="rotate(30 58 82)" />
             <path d="M 62 28 L 72 30 L 62 32 Z" fill="#FFB347" />
             <circle cx="58" cy="26" r="4" fill="#2C2C2C" />
             <circle cx="59" cy="25" r="1.5" fill="white" />

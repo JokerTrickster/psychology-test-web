@@ -98,13 +98,11 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                             sm: '2.8rem',    // 600px+
                             md: '3.5rem'     // 900px+
                         },
-                        background: 'linear-gradient(135deg, #7EC850 0%, #FFFFFF 50%, #7EC850 100%)',
-                        backgroundClip: 'text',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
-                        textShadow: '0 2px 10px rgba(126, 200, 80, 0.2)',
+                        color: '#5CA632',
+                        textShadow: '0 2px 8px rgba(92, 166, 50, 0.3), 0 0 40px rgba(255, 255, 255, 0.8)',
                         mb: { xs: 0.5, sm: 1 },
                         lineHeight: 1.2,
+                        WebkitTextStroke: '0.5px rgba(92, 166, 50, 0.3)',
                     }}
                 >
                     모란앵무
