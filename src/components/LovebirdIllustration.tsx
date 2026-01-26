@@ -121,7 +121,6 @@ const LovebirdIllustration: React.FC<LovebirdProps> = ({
 
         {/* Heart between birds - Pink */}
         <Box
-          className={animated ? 'pulse-glow' : ''}
           sx={{
             position: 'absolute',
             top: '10%',
@@ -138,6 +137,7 @@ const LovebirdIllustration: React.FC<LovebirdProps> = ({
               sm: (size.sm || 110) * 0.35,
               md: (size.md || 120) * 0.35,
             },
+            backgroundColor: 'transparent',
           }}
         >
           <svg width="100%" height="100%" viewBox="0 0 100 100">
