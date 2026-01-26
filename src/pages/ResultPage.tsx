@@ -166,20 +166,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart, score, summary
                     >
                         {node.title}
                     </Typography>
-                    {/* Score display (only for score-based system) */}
-                    {score !== undefined && (
-                        <Typography
-                            variant="body2"
-                            sx={{
-                                color: '#7EC850',
-                                fontSize: { xs: '0.75rem', sm: '1rem' },
-                                fontWeight: 600,
-                                mb: { xs: 0.3, sm: 1 },
-                            }}
-                        >
-                            점수: {score > 0 ? `+${score}` : score}
-                        </Typography>
-                    )}
+                    {/* Score section removed as per request */}
                     {/* Summary (only for score-based system) */}
                     {summary && (
                         <Typography
@@ -214,7 +201,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart, score, summary
                     />
                 </Box>
 
-                {/* Result image - bigger on mobile */}
+                {/* Result image - significantly bigger on mobile */}
                 {node.imageUrl && (
                     <Box
                         className={showContent ? 'fade-in' : ''}
@@ -222,16 +209,16 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart, score, summary
                             opacity: showContent ? 1 : 0,
                             animationDelay: '0.4s',
                             width: '100%',
-                            maxWidth: { xs: '160px', sm: '100%' }, // Bigger
-                            borderRadius: { xs: '10px', sm: '32px' },
+                            maxWidth: { xs: '190px', sm: '270px', md: '340px' }, // Reduced size (approx 2/3)
+                            borderRadius: { xs: '20px', sm: '32px' },
                             overflow: 'hidden',
                             boxShadow: '0 6px 20px rgba(126, 200, 80, 0.25)',
                             border: {
-                                xs: '2px solid rgba(255, 255, 255, 0.9)',
+                                xs: '3px solid rgba(255, 255, 255, 0.9)',
                                 sm: '4px solid rgba(255, 255, 255, 0.9)',
                             },
                             position: 'relative',
-                            mb: { xs: 0.4, sm: 2 },
+                            mb: { xs: 1.5, sm: 2 },
                             zIndex: 1,
                             '&::after': {
                                 content: '""',
@@ -251,7 +238,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart, score, summary
                             style={{
                                 width: '100%',
                                 height: 'auto',
-                                maxHeight: window.innerWidth < 600 ? '80px' : '360px', // Bigger
+                                maxHeight: 'none', // Remove height restriction to let it fill based on width
                                 objectFit: 'contain',
                                 display: 'block',
                             }}

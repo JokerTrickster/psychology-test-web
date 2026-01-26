@@ -32,7 +32,7 @@ const QuestionPageScore: React.FC<QuestionPageScoreProps> = ({
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'center',
+                justifyContent: 'flex-start', // Changed from center to allow using spacer
                 height: '100%',
                 gap: { xs: 0.9, sm: 3 },
                 pb: { xs: 1.2, sm: 4 },
@@ -115,6 +115,9 @@ const QuestionPageScore: React.FC<QuestionPageScoreProps> = ({
                     textAlign: 'center',
                     borderRadius: { xs: '16px', sm: '32px' },
                     position: 'relative',
+                    mt: 'auto', // Push to center/bottom vertically alongside options? No, let's keep it top-ish or center.
+                    // Actually, if I use mt: auto on BOTH Question and Options, they might split the space?
+                    // Let's first try just pushing Options down.
                     boxShadow: '0 10px 32px rgba(255, 183, 213, 0.35)',
                     '&::before': {
                         content: '""',
@@ -159,7 +162,7 @@ const QuestionPageScore: React.FC<QuestionPageScoreProps> = ({
             </Paper>
 
             {/* Options (A and B) */}
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 0.9, sm: 2.5 }, mt: { xs: 0, sm: 1 } }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 0.9, sm: 2.5 }, mt: 'auto', mb: { xs: 3, sm: 0 } }}>
                 {question.options.map((option, index) => {
                     const isHovered = hoveredIndex === index;
                     const birdColor = birdColors[index % birdColors.length];

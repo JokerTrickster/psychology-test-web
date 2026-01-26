@@ -277,7 +277,8 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                 sx={{
                     opacity: showContent ? 1 : 0,
                     animationDelay: '0.9s',
-                    mt: { xs: 0.5, sm: 2 },
+                    mt: 'auto', // Push to bottom
+                    mb: { xs: 5, sm: 2 }, // Add margin bottom for safety from edge
                     width: '100%',
                     display: 'flex',
                     justifyContent: 'center',
