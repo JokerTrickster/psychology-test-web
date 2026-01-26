@@ -1,10 +1,173 @@
-/* Global resets if needed, mostly handled by CssBaseline */
+/* Import playful Korean fonts */
+@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Jua&family=Gaegu:wght@400;700&display=swap');
+
+/* Global CSS Variables for Lovebird Theme - 5 Lovebird Color Variants */
+:root {
+  /* Pepe Green - 가장 일반적인 모란앵무 색 */
+  --pepe-green: #7EC850;
+  --pepe-green-light: #B8E986;
+
+  /* Violet Butter - 보라빛이 도는 버터색 */
+  --violet-butter: #D4B5E8;
+  --violet-butter-light: #E8D4F5;
+
+  /* Pepe Yellow - 노란색 모란앵무 */
+  --pepe-yellow: #FFE84D;
+  --pepe-yellow-light: #FFF9B0;
+
+  /* Yellow Face Green - 얼굴이 노란 초록 모란앵무 */
+  --yellowface-green: #8FD6A8;
+  --yellowface-yellow: #FFE84D;
+
+  /* Pepe Lime - 라임색 모란앵무 */
+  --pepe-lime: #C4E86B;
+  --pepe-lime-light: #E0F5A8;
+
+  /* Common colors */
+  --bird-beak: #FFB347;
+  --bird-white: #F5F5F5;
+  --shadow-soft: 0 8px 24px rgba(126, 200, 80, 0.25);
+  --shadow-hover: 0 12px 32px rgba(126, 200, 80, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Jua', 'Gamja Flower', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Animated gradient background - Soft pastel themed */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg,
+    #F0FFF0 0%,
+    #FFF9F0 25%,
+    #F5F0FF 50%,
+    #F0FFF5 75%,
+    #FFF8F0 100%
+  );
+  background-size: 400% 400%;
+  animation: gradientShift 25s ease infinite;
+  z-index: -2;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Floating cloud decorations */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(ellipse 120px 60px at 20% 10%, rgba(255, 255, 255, 0.6) 0%, transparent 70%),
+    radial-gradient(ellipse 180px 80px at 80% 20%, rgba(255, 255, 255, 0.5) 0%, transparent 70%),
+    radial-gradient(ellipse 140px 70px at 40% 80%, rgba(255, 255, 255, 0.55) 0%, transparent 70%),
+    radial-gradient(ellipse 100px 50px at 90% 70%, rgba(255, 255, 255, 0.5) 0%, transparent 70%);
+  animation: cloudFloat 40s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes cloudFloat {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-20px, -10px); }
+  50% { transform: translate(15px, 5px); }
+  75% { transform: translate(-10px, 10px); }
+}
+
+/* Custom scrollbar - Green themed */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--pepe-green), var(--pepe-lime));
+  border-radius: 10px;
+  transition: background 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--pepe-lime), var(--pepe-green));
+}
+
+/* Selection color */
+::selection {
+  background: var(--pepe-lime-light);
+  color: #2C2C2C;
+}
+
+/* Smooth fade-in animation - NO SCALE */
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Gentle float animation */
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+/* Gentle wiggle animation */
+.wiggle {
+  animation: wiggle 3s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+
+/* Pulse glow animation */
+.pulse-glow {
+  animation: pulseGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(126, 200, 80, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(126, 200, 80, 0.6);
+  }
 }

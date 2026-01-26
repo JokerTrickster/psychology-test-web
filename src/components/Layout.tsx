@@ -9,26 +9,34 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     return (
         <Box
             sx={{
-                backgroundColor: '#f0f2f5',
                 minHeight: '100vh',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
                 padding: 0,
+                position: 'relative',
             }}
         >
             <Container
                 maxWidth="sm"
                 sx={{
-                    backgroundColor: 'background.default',
+                    backgroundColor: 'transparent',
                     minHeight: '100vh',
                     height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
-                    boxShadow: { sm: '0 0 20px rgba(0,0,0,0.1)' },
-                    padding: '24px !important',
-                    // On mobile (default and up to sm), full width/height.
-                    // On desktop, it looks like a mobile screen.
+                    padding: '32px 24px !important',
+                    position: 'relative',
+                    // On desktop, add a subtle card effect
+                    '@media (min-width: 600px)': {
+                        backgroundColor: 'rgba(255, 255, 255, 0.6)',
+                        backdropFilter: 'blur(20px)',
+                        borderRadius: '40px',
+                        border: '3px solid rgba(255, 255, 255, 0.8)',
+                        boxShadow: '0 20px 60px rgba(255, 183, 213, 0.25)',
+                        minHeight: '95vh',
+                        my: '2.5vh',
+                    },
                 }}
             >
                 {children}

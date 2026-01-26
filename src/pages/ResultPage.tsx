@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Typography, Button, Paper } from '@mui/material';
 import type { Node } from '../types';
+import LovebirdIllustration from '../components/LovebirdIllustration';
 import ReplayIcon from '@mui/icons-material/Replay';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import StarIcon from '@mui/icons-material/Star';
 
 interface ResultPageProps {
     node: Node;
@@ -9,6 +12,27 @@ interface ResultPageProps {
 }
 
 const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
+    const [showContent, setShowContent] = useState(false);
+    const [showConfetti, setShowConfetti] = useState(false);
+
+    useEffect(() => {
+        const contentTimer = setTimeout(() => setShowContent(true), 100);
+        const confettiTimer = setTimeout(() => setShowConfetti(true), 600);
+        return () => {
+            clearTimeout(contentTimer);
+            clearTimeout(confettiTimer);
+        };
+    }, []);
+
+    // Generate random confetti items
+    const confettiItems = Array.from({ length: 20 }, (_, i) => ({
+        id: i,
+        left: Math.random() * 100,
+        delay: Math.random() * 2,
+        duration: 3 + Math.random() * 2,
+        rotation: Math.random() * 360,
+    }));
+
     return (
         <Box
             sx={{
@@ -19,24 +43,153 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                 height: '100%',
                 gap: 3,
                 textAlign: 'center',
+                position: 'relative',
+                overflow: 'hidden',
+                pb: 3,
             }}
         >
-            <Typography variant="subtitle1" color="primary" sx={{ fontWeight: 'bold' }}>
-                나의 성격 유형은?
-            </Typography>
+            {/* Animated confetti */}
+            {showConfetti && confettiItems.map((item) => (
+                <Box
+                    key={item.id}
+                    sx={{
+                        position: 'absolute',
+                        top: '-50px',
+                        left: `${item.left}%`,
+                        animation: `confettiFall ${item.duration}s ease-in-out ${item.delay}s infinite`,
+                        zIndex: 0,
+                    }}
+                >
+                    {item.id % 3 === 0 ? (
+                        <FavoriteIcon
+                            sx={{
+                                fontSize: 20,
+                                color: item.id % 2 === 0 ? '#7EC850' : '#B8E986',
+                                opacity: 0.7,
+                                transform: `rotate(${item.rotation}deg)`,
+                            }}
+                        />
+                    ) : (
+                        <StarIcon
+                            sx={{
+                                fontSize: 18,
+                                color: item.id % 2 === 0 ? '#FFE84D' : '#FFF9B0',
+                                opacity: 0.6,
+                                transform: `rotate(${item.rotation}deg)`,
+                            }}
+                        />
+                    )}
+                </Box>
+            ))}
 
-            <Typography variant="h3" sx={{ fontWeight: 800, color: 'text.primary', mb: 1 }}>
-                {node.title}
-            </Typography>
+            {/* Title badge */}
+            <Box
+                className={showContent ? 'fade-in' : ''}
+                sx={{
+                    opacity: showContent ? 1 : 0,
+                    animationDelay: '0.1s',
+                    zIndex: 1,
+                }}
+            >
+                <Paper
+                    elevation={2}
+                    sx={{
+                        px: 4,
+                        py: 1.5,
+                        borderRadius: '50px',
+                        background: 'linear-gradient(135deg, rgba(126, 200, 80, 0.15) 0%, rgba(184, 233, 134, 0.15) 100%)',
+                        backdropFilter: 'blur(10px)',
+                        border: '2px solid rgba(126, 200, 80, 0.3)',
+                    }}
+                >
+                    <Typography
+                        variant="subtitle1"
+                        sx={{
+                            fontWeight: 700,
+                            color: '#5CA632',
+                            fontSize: '1.1rem',
+                            letterSpacing: '0.05em',
+                        }}
+                    >
+                        🎉 테스트 완료! 🎉
+                    </Typography>
+                </Paper>
+            </Box>
 
+            {/* Result title */}
+            <Box
+                className={showContent ? 'fade-in' : ''}
+                sx={{
+                    opacity: showContent ? 1 : 0,
+                    animationDelay: '0.2s',
+                    zIndex: 1,
+                }}
+            >
+                <Typography
+                    variant="body2"
+                    sx={{
+                        color: '#888',
+                        fontSize: '1rem',
+                        mb: 1,
+                    }}
+                >
+                    당신의 성격 유형은...
+                </Typography>
+                <Typography
+                    variant="h2"
+                    sx={{
+                        fontWeight: 900,
+                        fontSize: { xs: '2.5rem', sm: '3.2rem' },
+                        background: 'linear-gradient(135deg, #7EC850 0%, #5CA632 50%, #B8E986 100%)',
+                        backgroundClip: 'text',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        mb: 2,
+                        lineHeight: 1.3,
+                    }}
+                >
+                    {node.title}
+                </Typography>
+            </Box>
+
+            {/* Lovebird celebration illustration */}
+            <Box
+                className={showContent ? 'fade-in' : ''}
+                sx={{
+                    opacity: showContent ? 1 : 0,
+                    animationDelay: '0.3s',
+                    zIndex: 1,
+                    mb: 1,
+                }}
+            >
+                <LovebirdIllustration variant="couple" size={140} animated />
+            </Box>
+
+            {/* Result image */}
             {node.imageUrl && (
                 <Box
+                    className={showContent ? 'fade-in' : ''}
                     sx={{
+                        opacity: showContent ? 1 : 0,
+                        animationDelay: '0.4s',
                         width: '100%',
-                        borderRadius: '20px',
+                        borderRadius: '32px',
                         overflow: 'hidden',
-                        boxShadow: '0 8px 20px rgba(0,0,0,0.1)',
-                        mb: 2
+                        boxShadow: '0 12px 48px rgba(126, 200, 80, 0.35)',
+                        border: '4px solid rgba(255, 255, 255, 0.9)',
+                        position: 'relative',
+                        mb: 2,
+                        zIndex: 1,
+                        '&::after': {
+                            content: '""',
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            background: 'linear-gradient(135deg, rgba(126, 200, 80, 0.1) 0%, rgba(255, 232, 77, 0.1) 100%)',
+                            pointerEvents: 'none',
+                        },
                     }}
                 >
                     <img
@@ -45,36 +198,150 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                         style={{
                             width: '100%',
                             height: 'auto',
-                            maxHeight: '350px',
-                            objectFit: 'cover'
+                            maxHeight: '360px',
+                            objectFit: 'cover',
+                            display: 'block',
                         }}
                     />
                 </Box>
             )}
 
+            {/* Description card */}
             <Paper
-                elevation={0}
+                className={showContent ? 'fade-in' : ''}
+                elevation={3}
                 sx={{
+                    opacity: showContent ? 1 : 0,
+                    animationDelay: '0.5s',
                     p: 4,
-                    backgroundColor: 'secondary.light',
-                    borderRadius: '30px',
-                    mb: 4,
+                    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 249, 250, 0.95) 100%)',
+                    backdropFilter: 'blur(12px)',
+                    borderRadius: '32px',
+                    border: '3px solid rgba(126, 200, 80, 0.3)',
+                    mb: 2,
+                    width: '100%',
+                    position: 'relative',
+                    zIndex: 1,
+                    boxShadow: '0 10px 32px rgba(126, 200, 80, 0.25)',
+                    '&::before': {
+                        content: '""',
+                        position: 'absolute',
+                        top: -10,
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        width: '60px',
+                        height: '6px',
+                        borderRadius: '3px',
+                        background: 'linear-gradient(90deg, #7EC850, #FFE84D)',
+                    },
                 }}
             >
-                <Typography variant="body1" sx={{ wordBreak: 'keep-all', color: '#444', lineHeight: 1.6 }}>
+                <Typography
+                    variant="body1"
+                    sx={{
+                        wordBreak: 'keep-all',
+                        color: '#3A3A3A',
+                        lineHeight: 1.9,
+                        fontSize: '1.1rem',
+                        whiteSpace: 'pre-line',
+                    }}
+                >
                     {node.description}
                 </Typography>
             </Paper>
 
-            <Button
-                variant="contained"
-                color="secondary"
-                startIcon={<ReplayIcon />}
-                onClick={onRestart}
-                sx={{ color: '#444', fontWeight: 'bold' }}
+            {/* Decorative flying birds */}
+            <Box
+                sx={{
+                    display: 'flex',
+                    gap: 3,
+                    justifyContent: 'center',
+                    mb: 2,
+                    zIndex: 1,
+                }}
             >
-                다시 테스트하기
-            </Button>
+                {['pepe-green', 'violet-butter', 'pepe-yellow', 'yellowface-green', 'pepe-lime'].map((color, idx) => (
+                    <Box
+                        key={color}
+                        className={showContent ? 'fade-in' : ''}
+                        sx={{
+                            opacity: showContent ? 1 : 0,
+                            animationDelay: `${0.6 + idx * 0.08}s`,
+                        }}
+                    >
+                        <LovebirdIllustration
+                            variant="flying"
+                            color={color as 'pepe-green' | 'violet-butter' | 'pepe-yellow' | 'yellowface-green' | 'pepe-lime'}
+                            size={45}
+                            animated
+                        />
+                    </Box>
+                ))}
+            </Box>
+
+            {/* Restart button */}
+            <Box
+                className={showContent ? 'fade-in' : ''}
+                sx={{
+                    opacity: showContent ? 1 : 0,
+                    animationDelay: '0.9s',
+                    zIndex: 1,
+                }}
+            >
+                <Button
+                    variant="contained"
+                    size="large"
+                    startIcon={<ReplayIcon />}
+                    onClick={onRestart}
+                    sx={{
+                        minWidth: '240px',
+                        fontSize: '1.25rem',
+                        fontWeight: 700,
+                        padding: '16px 40px',
+                        background: 'linear-gradient(135deg, #FFE84D 0%, #FFD700 100%)',
+                        color: '#2C2C2C',
+                        boxShadow: '0 8px 24px rgba(255, 232, 77, 0.4)',
+                        '&:hover': {
+                            background: 'linear-gradient(135deg, #FFD700 0%, #FFE84D 100%)',
+                            boxShadow: '0 12px 36px rgba(255, 232, 77, 0.6)',
+                        },
+                    }}
+                >
+                    다시 테스트하기
+                </Button>
+            </Box>
+
+            {/* Fun message */}
+            <Typography
+                className={showContent ? 'fade-in' : ''}
+                variant="body2"
+                sx={{
+                    opacity: showContent ? 0.7 : 0,
+                    animationDelay: '1s',
+                    color: '#999',
+                    fontSize: '0.9rem',
+                    mt: 1,
+                    zIndex: 1,
+                }}
+            >
+                💕 친구들과도 함께 해보세요!
+            </Typography>
+
+            {/* Confetti animation */}
+            <style>
+                {`
+                    @keyframes confettiFall {
+                        0% {
+                            transform: translateY(-50px) rotate(0deg);
+                            opacity: 1;
+                        }
+                        100% {
+                            transform: translateY(110vh) rotate(720deg);
+                            opacity: 0;
+                        }
+                    }
+                `}
+            </style>
         </Box>
     );
 };
