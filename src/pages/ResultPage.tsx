@@ -52,9 +52,9 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                     flexDirection: 'column',
                     alignItems: 'center',
                     textAlign: 'center',
-                    gap: { xs: 1.2, sm: 3 },
+                    gap: { xs: 0.8, sm: 3 },
                     px: { xs: 2, sm: 3 },
-                    pt: { xs: 2, sm: 3 },
+                    pt: { xs: 1.5, sm: 3 },
                     pb: { xs: 8, sm: 3 }, // Extra padding for fixed button on mobile
                 }}
             >
@@ -126,7 +126,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                     </Paper>
                 </Box>
 
-                {/* Result title */}
+                {/* Result title - Smaller on mobile */}
                 <Box
                     className={showContent ? 'fade-in' : ''}
                     sx={{
@@ -139,8 +139,8 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                         variant="body2"
                         sx={{
                             color: '#888',
-                            fontSize: { xs: '0.8rem', sm: '1rem' },
-                            mb: { xs: 0.3, sm: 1 },
+                            fontSize: { xs: '0.7rem', sm: '1rem' },
+                            mb: { xs: 0.2, sm: 1 },
                         }}
                     >
                         당신의 성격 유형은...
@@ -150,7 +150,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                         sx={{
                             fontWeight: 900,
                             fontSize: {
-                                xs: '1.5rem',    // 320px - compact
+                                xs: '1.3rem',    // 320px - very compact
                                 sm: '2.5rem',    // 600px+
                                 md: '3.2rem',    // 900px+
                             },
@@ -158,15 +158,15 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                             backgroundClip: 'text',
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
-                            mb: { xs: 0.5, sm: 2 },
-                            lineHeight: 1.2,
+                            mb: { xs: 0.3, sm: 2 },
+                            lineHeight: 1.15,
                         }}
                     >
                         {node.title}
                     </Typography>
                 </Box>
 
-                {/* Lovebird celebration illustration - Smaller on mobile */}
+                {/* Lovebird celebration illustration - Much smaller on mobile */}
                 <Box
                     className={showContent ? 'fade-in' : ''}
                     sx={{
@@ -178,12 +178,12 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                 >
                     <LovebirdIllustration
                         variant="couple"
-                        size={{ xs: 70, sm: 120, md: 140 }}
+                        size={{ xs: 50, sm: 120, md: 140 }}
                         animated
                     />
                 </Box>
 
-                {/* Result image - Smaller on mobile */}
+                {/* Result image - Much smaller on mobile, better quality */}
                 {node.imageUrl && (
                     <Box
                         className={showContent ? 'fade-in' : ''}
@@ -191,15 +191,16 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                             opacity: showContent ? 1 : 0,
                             animationDelay: '0.4s',
                             width: '100%',
-                            borderRadius: { xs: '16px', sm: '32px' },
+                            maxWidth: { xs: '280px', sm: '100%' }, // Limit width on mobile
+                            borderRadius: { xs: '12px', sm: '32px' },
                             overflow: 'hidden',
-                            boxShadow: '0 12px 48px rgba(126, 200, 80, 0.35)',
+                            boxShadow: '0 8px 24px rgba(126, 200, 80, 0.3)',
                             border: {
                                 xs: '2px solid rgba(255, 255, 255, 0.9)',
                                 sm: '4px solid rgba(255, 255, 255, 0.9)',
                             },
                             position: 'relative',
-                            mb: { xs: 0.8, sm: 2 },
+                            mb: { xs: 0.5, sm: 2 },
                             zIndex: 1,
                             '&::after': {
                                 content: '""',
@@ -219,42 +220,42 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                             style={{
                                 width: '100%',
                                 height: 'auto',
-                                maxHeight: window.innerWidth < 600 ? '180px' : '360px',
-                                objectFit: 'cover',
+                                maxHeight: window.innerWidth < 600 ? '140px' : '360px',
+                                objectFit: 'contain', // Changed from cover to contain for better quality
                                 display: 'block',
                             }}
                         />
                     </Box>
                 )}
 
-                {/* Description card - More compact on mobile */}
+                {/* Description card - Very compact on mobile */}
                 <Paper
                     className={showContent ? 'fade-in' : ''}
                     elevation={3}
                     sx={{
                         opacity: showContent ? 1 : 0,
                         animationDelay: '0.5s',
-                        p: { xs: 1.8, sm: 4 },
+                        p: { xs: 1.5, sm: 4 },
                         background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 249, 250, 0.95) 100%)',
                         backdropFilter: 'blur(12px)',
-                        borderRadius: { xs: '16px', sm: '32px' },
+                        borderRadius: { xs: '12px', sm: '32px' },
                         border: {
                             xs: '2px solid rgba(126, 200, 80, 0.3)',
                             sm: '3px solid rgba(126, 200, 80, 0.3)',
                         },
-                        mb: { xs: 0.8, sm: 2 },
+                        mb: { xs: 0.5, sm: 2 },
                         width: '100%',
                         position: 'relative',
                         zIndex: 1,
-                        boxShadow: '0 10px 32px rgba(126, 200, 80, 0.25)',
+                        boxShadow: '0 8px 24px rgba(126, 200, 80, 0.2)',
                         '&::before': {
                             content: '""',
                             position: 'absolute',
-                            top: { xs: -8, sm: -10 },
+                            top: { xs: -6, sm: -10 },
                             left: '50%',
                             transform: 'translateX(-50%)',
-                            width: { xs: '50px', sm: '60px' },
-                            height: { xs: '5px', sm: '6px' },
+                            width: { xs: '40px', sm: '60px' },
+                            height: { xs: '4px', sm: '6px' },
                             borderRadius: '3px',
                             background: 'linear-gradient(90deg, #7EC850, #FFE84D)',
                         },
@@ -265,9 +266,9 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                         sx={{
                             wordBreak: 'keep-all',
                             color: '#3A3A3A',
-                            lineHeight: 1.7,
+                            lineHeight: 1.6,
                             fontSize: {
-                                xs: '0.85rem',   // 320px - compact
+                                xs: '0.78rem',   // 320px - very compact
                                 sm: '1.1rem',    // 600px+
                             },
                             whiteSpace: 'pre-line',
