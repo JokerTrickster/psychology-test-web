@@ -183,7 +183,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                     />
                 </Box>
 
-                {/* Result image - Much smaller on mobile, better quality */}
+                {/* Result image - Even smaller on mobile for better fit */}
                 {node.imageUrl && (
                     <Box
                         className={showContent ? 'fade-in' : ''}
@@ -191,10 +191,10 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                             opacity: showContent ? 1 : 0,
                             animationDelay: '0.4s',
                             width: '100%',
-                            maxWidth: { xs: '280px', sm: '100%' }, // Limit width on mobile
-                            borderRadius: { xs: '12px', sm: '32px' },
+                            maxWidth: { xs: '200px', sm: '100%' }, // Much smaller on mobile
+                            borderRadius: { xs: '10px', sm: '32px' },
                             overflow: 'hidden',
-                            boxShadow: '0 8px 24px rgba(126, 200, 80, 0.3)',
+                            boxShadow: '0 6px 20px rgba(126, 200, 80, 0.25)',
                             border: {
                                 xs: '2px solid rgba(255, 255, 255, 0.9)',
                                 sm: '4px solid rgba(255, 255, 255, 0.9)',
@@ -220,8 +220,8 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                             style={{
                                 width: '100%',
                                 height: 'auto',
-                                maxHeight: window.innerWidth < 600 ? '140px' : '360px',
-                                objectFit: 'contain', // Changed from cover to contain for better quality
+                                maxHeight: window.innerWidth < 600 ? '100px' : '360px', // Smaller height
+                                objectFit: 'contain',
                                 display: 'block',
                             }}
                         />
