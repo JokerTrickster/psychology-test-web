@@ -17,13 +17,13 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent: 'center',
+                justifyContent: 'flex-start',
                 height: '100%',
                 textAlign: 'center',
                 gap: { xs: 0.8, sm: 3 },
                 position: 'relative',
                 overflow: 'hidden',
-                py: { xs: 1, sm: 0 },
+                py: { xs: 2, sm: 3 },
                 px: { xs: 2, sm: 0 },
             }}
         >
@@ -271,14 +271,16 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                 </Box>
             </Box>
 
+            {/* Spacer to push button to bottom */}
+            <Box sx={{ flex: 1 }} />
+
             {/* Start button */}
             <Box
                 className={showContent ? 'fade-in' : ''}
                 sx={{
                     opacity: showContent ? 1 : 0,
                     animationDelay: '0.9s',
-                    mt: 'auto', // Push to bottom
-                    mb: { xs: 5, sm: 2 }, // Add margin bottom for safety from edge
+                    mb: { xs: 3, sm: 4 },
                     width: '100%',
                     display: 'flex',
                     justifyContent: 'center',

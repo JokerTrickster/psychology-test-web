@@ -27,11 +27,11 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'center',
+                justifyContent: 'flex-start',
                 height: '100%',
                 gap: { xs: 0.9, sm: 3 },
-                pb: { xs: 1.2, sm: 4 },
-                py: { xs: 1.2, sm: 0 },
+                pb: { xs: 3, sm: 4 },
+                pt: { xs: 2, sm: 3 },
                 px: { xs: 2, sm: 0 },
                 position: 'relative',
             }}
@@ -156,8 +156,11 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
                 </Typography>
             </Paper>
 
+            {/* Spacer to push options to bottom */}
+            <Box sx={{ flex: 1 }} />
+
             {/* Options with bird indicators */}
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 0.9, sm: 2.5 }, mt: { xs: 0, sm: 1 } }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 0.9, sm: 2.5 }, mt: { xs: 0, sm: 1 }, mb: { xs: 1, sm: 2 } }}>
                 {node.options?.map((option, index) => {
                     const isHovered = hoveredIndex === index;
                     const birdColor = birdColors[index % birdColors.length];

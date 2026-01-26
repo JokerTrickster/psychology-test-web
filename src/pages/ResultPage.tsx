@@ -184,7 +184,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart, score, summary
                     )}
                 </Box>
 
-                {/* Lovebird celebration illustration - bigger on mobile */}
+                {/* Lovebird celebration illustration - reduced to 2/3 size */}
                 <Box
                     className={showContent ? 'fade-in' : ''}
                     sx={{
@@ -196,7 +196,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart, score, summary
                 >
                     <LovebirdIllustration
                         variant="couple"
-                        size={{ xs: 40, sm: 120, md: 140 }}
+                        size={{ xs: 27, sm: 80, md: 93 }}
                         animated
                     />
                 </Box>
