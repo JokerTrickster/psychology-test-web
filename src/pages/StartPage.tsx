@@ -25,9 +25,10 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                 justifyContent: 'center',
                 height: '100%',
                 textAlign: 'center',
-                gap: 3,
+                gap: { xs: 2, sm: 3 },
                 position: 'relative',
                 overflow: 'hidden',
+                py: { xs: 2, sm: 0 },
             }}
         >
             {/* Decorative floating hearts */}
@@ -73,10 +74,14 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                 className={showContent ? 'fade-in' : ''}
                 sx={{
                     opacity: showContent ? 1 : 0,
-                    mb: 2,
+                    mb: { xs: 1, sm: 2 },
                 }}
             >
-                <LovebirdIllustration variant="couple" size={120} animated />
+                <LovebirdIllustration
+                    variant="couple"
+                    size={{ xs: 90, sm: 110, md: 120 }}
+                    animated
+                />
             </Box>
 
             {/* Title */}
@@ -92,12 +97,17 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     component="h1"
                     sx={{
                         fontWeight: 800,
-                        fontSize: { xs: '2.8rem', sm: '3.5rem' },
+                        fontSize: {
+                            xs: '2rem',      // 320px - very small phones
+                            sm: '2.8rem',    // 600px+
+                            md: '3.5rem'     // 900px+
+                        },
                         background: 'linear-gradient(135deg, #7EC850 0%, #C4E86B 50%, #FFE84D 100%)',
                         backgroundClip: 'text',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
-                        mb: 1,
+                        mb: { xs: 0.5, sm: 1 },
+                        lineHeight: 1.2,
                     }}
                 >
                     모란앵무
@@ -106,9 +116,14 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     variant="h2"
                     sx={{
                         fontWeight: 800,
-                        fontSize: { xs: '2.2rem', sm: '2.8rem' },
+                        fontSize: {
+                            xs: '1.6rem',    // 320px
+                            sm: '2.2rem',    // 600px+
+                            md: '2.8rem'     // 900px+
+                        },
                         color: '#5CA632',
-                        mb: 3,
+                        mb: { xs: 2, sm: 3 },
+                        lineHeight: 1.2,
                     }}
                 >
                     심리 테스트 🦜
@@ -123,9 +138,15 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     animationDelay: '0.3s',
                     background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 255, 240, 0.95) 100%)',
                     backdropFilter: 'blur(10px)',
-                    borderRadius: '30px',
-                    padding: '24px 36px',
-                    border: '3px solid rgba(126, 200, 80, 0.3)',
+                    borderRadius: { xs: '20px', sm: '30px' },
+                    padding: {
+                        xs: '16px 20px',   // 320px - compact
+                        sm: '24px 36px'    // 600px+ - spacious
+                    },
+                    border: {
+                        xs: '2px solid rgba(126, 200, 80, 0.3)',
+                        sm: '3px solid rgba(126, 200, 80, 0.3)'
+                    },
                     boxShadow: '0 8px 32px rgba(126, 200, 80, 0.25)',
                     maxWidth: '90%',
                 }}
@@ -133,9 +154,13 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                 <Typography
                     variant="h5"
                     sx={{
-                        mb: 1.5,
+                        mb: { xs: 1, sm: 1.5 },
                         color: '#5C5C5C',
                         fontWeight: 600,
+                        fontSize: {
+                            xs: '1.1rem',    // 320px
+                            sm: '1.4rem'     // 600px+
+                        },
                     }}
                 >
                     귀여운 모란앵무와 함께하는
@@ -145,6 +170,10 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     sx={{
                         color: '#6B6B6B',
                         lineHeight: 1.8,
+                        fontSize: {
+                            xs: '0.95rem',   // 320px
+                            sm: '1.1rem'     // 600px+
+                        },
                     }}
                 >
                     간단한 선택으로 알아보는<br />
@@ -156,11 +185,12 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
             <Box
                 sx={{
                     display: 'flex',
-                    gap: 3,
-                    mt: 2,
-                    mb: 1,
+                    gap: { xs: 1.5, sm: 3 },
+                    mt: { xs: 1, sm: 2 },
+                    mb: { xs: 0.5, sm: 1 },
                     flexWrap: 'wrap',
                     justifyContent: 'center',
+                    maxWidth: '100%',
                 }}
             >
                 {/* Pepe Green */}
@@ -171,7 +201,12 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                         animationDelay: '0.4s',
                     }}
                 >
-                    <LovebirdIllustration variant="flying" color="pepe-green" size={55} animated />
+                    <LovebirdIllustration
+                        variant="flying"
+                        color="pepe-green"
+                        size={{ xs: 42, sm: 55 }}
+                        animated
+                    />
                 </Box>
 
                 {/* Violet Butter */}
@@ -182,7 +217,12 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                         animationDelay: '0.5s',
                     }}
                 >
-                    <LovebirdIllustration variant="flying" color="violet-butter" size={55} animated />
+                    <LovebirdIllustration
+                        variant="flying"
+                        color="violet-butter"
+                        size={{ xs: 42, sm: 55 }}
+                        animated
+                    />
                 </Box>
 
                 {/* Pepe Yellow */}
@@ -193,7 +233,12 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                         animationDelay: '0.6s',
                     }}
                 >
-                    <LovebirdIllustration variant="flying" color="pepe-yellow" size={55} animated />
+                    <LovebirdIllustration
+                        variant="flying"
+                        color="pepe-yellow"
+                        size={{ xs: 42, sm: 55 }}
+                        animated
+                    />
                 </Box>
 
                 {/* Yellow Face Green */}
@@ -204,7 +249,12 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                         animationDelay: '0.7s',
                     }}
                 >
-                    <LovebirdIllustration variant="flying" color="yellowface-green" size={55} animated />
+                    <LovebirdIllustration
+                        variant="flying"
+                        color="yellowface-green"
+                        size={{ xs: 42, sm: 55 }}
+                        animated
+                    />
                 </Box>
 
                 {/* Pepe Lime */}
@@ -215,7 +265,12 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                         animationDelay: '0.8s',
                     }}
                 >
-                    <LovebirdIllustration variant="flying" color="pepe-lime" size={55} animated />
+                    <LovebirdIllustration
+                        variant="flying"
+                        color="pepe-lime"
+                        size={{ xs: 42, sm: 55 }}
+                        animated
+                    />
                 </Box>
             </Box>
 
@@ -225,7 +280,10 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                 sx={{
                     opacity: showContent ? 1 : 0,
                     animationDelay: '0.9s',
-                    mt: 2,
+                    mt: { xs: 1.5, sm: 2 },
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
                 }}
             >
                 <Button
@@ -234,15 +292,26 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     onClick={onStart}
                     endIcon={<FavoriteIcon />}
                     sx={{
-                        minWidth: '240px',
-                        fontSize: '1.35rem',
+                        minWidth: { xs: '200px', sm: '240px' },
+                        width: { xs: '90%', sm: 'auto' },
+                        maxWidth: '300px',
+                        fontSize: {
+                            xs: '1.1rem',    // 320px
+                            sm: '1.35rem'    // 600px+
+                        },
                         fontWeight: 700,
-                        padding: '16px 40px',
+                        padding: {
+                            xs: '14px 28px',   // 320px - min 44px touch target
+                            sm: '16px 40px'    // 600px+
+                        },
                         background: 'linear-gradient(135deg, #7EC850 0%, #5CA632 100%)',
                         boxShadow: '0 8px 24px rgba(126, 200, 80, 0.4)',
                         '&:hover': {
                             background: 'linear-gradient(135deg, #5CA632 0%, #7EC850 100%)',
                             boxShadow: '0 12px 36px rgba(126, 200, 80, 0.6)',
+                        },
+                        '&:active': {
+                            transform: 'scale(0.98)',
                         },
                     }}
                 >
@@ -258,8 +327,9 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     opacity: showContent ? 0.7 : 0,
                     animationDelay: '1s',
                     color: '#7C7C7C',
-                    fontSize: '0.95rem',
-                    mt: 1,
+                    fontSize: { xs: '0.85rem', sm: '0.95rem' },
+                    mt: { xs: 0.5, sm: 1 },
+                    px: 2,
                 }}
             >
                 🌈 5가지 컬러의 모란앵무가 기다리고 있어요!

@@ -25,7 +25,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
-                    padding: '32px 24px !important',
+                    padding: {
+                        xs: '20px 16px !important',  // 320px - compact
+                        sm: '32px 24px !important'   // 600px+ - spacious
+                    },
                     position: 'relative',
                     // On desktop, add a subtle card effect
                     '@media (min-width: 600px)': {

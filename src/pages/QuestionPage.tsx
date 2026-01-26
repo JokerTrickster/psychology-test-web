@@ -34,8 +34,9 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
                 flexDirection: 'column',
                 justifyContent: 'center',
                 height: '100%',
-                gap: 3,
-                pb: 4,
+                gap: { xs: 2, sm: 3 },
+                pb: { xs: 2, sm: 4 },
+                py: { xs: 2, sm: 0 },
                 position: 'relative',
             }}
         >
@@ -43,10 +44,11 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
             <Box
                 sx={{
                     position: 'absolute',
-                    top: -20,
-                    right: 10,
+                    top: { xs: -15, sm: -20 },
+                    right: { xs: 5, sm: 10 },
                     opacity: 0.6,
                     zIndex: 1,
+                    display: { xs: 'none', sm: 'block' }, // Hide on very small screens
                 }}
             >
                 <LovebirdIllustration variant="sitting" color="pepe-yellow" size={60} animated />
@@ -62,10 +64,13 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
                         animationDelay: '0.1s',
                         width: '100%',
                         overflow: 'hidden',
-                        borderRadius: '32px',
-                        mb: 1,
+                        borderRadius: { xs: '20px', sm: '32px' },
+                        mb: { xs: 0.5, sm: 1 },
                         lineHeight: 0,
-                        border: '4px solid rgba(255, 255, 255, 0.8)',
+                        border: {
+                            xs: '3px solid rgba(255, 255, 255, 0.8)',
+                            sm: '4px solid rgba(255, 255, 255, 0.8)',
+                        },
                         boxShadow: '0 12px 40px rgba(255, 183, 213, 0.4)',
                         position: 'relative',
                         '&::before': {
@@ -86,7 +91,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
                         style={{
                             width: '100%',
                             height: 'auto',
-                            maxHeight: '320px',
+                            maxHeight: window.innerWidth < 600 ? '220px' : '320px',
                             objectFit: 'cover',
                             display: 'block',
                         }}
@@ -101,21 +106,24 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
                 sx={{
                     opacity: showContent ? 1 : 0,
                     animationDelay: '0.2s',
-                    p: 4,
+                    p: { xs: 2.5, sm: 4 },
                     background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 249, 250, 0.95) 100%)',
                     backdropFilter: 'blur(12px)',
-                    border: '3px solid rgba(255, 183, 213, 0.4)',
+                    border: {
+                        xs: '2px solid rgba(255, 183, 213, 0.4)',
+                        sm: '3px solid rgba(255, 183, 213, 0.4)',
+                    },
                     textAlign: 'center',
-                    borderRadius: '32px',
+                    borderRadius: { xs: '20px', sm: '32px' },
                     position: 'relative',
                     boxShadow: '0 10px 32px rgba(255, 183, 213, 0.35)',
                     '&::before': {
                         content: '""',
                         position: 'absolute',
-                        top: -15,
-                        left: 20,
-                        width: '30px',
-                        height: '30px',
+                        top: { xs: -10, sm: -15 },
+                        left: { xs: 15, sm: 20 },
+                        width: { xs: '20px', sm: '30px' },
+                        height: { xs: '20px', sm: '30px' },
                         background: 'rgba(255, 183, 213, 0.6)',
                         borderRadius: '50%',
                         animation: 'pulse-glow 2s ease-in-out infinite',
@@ -123,10 +131,10 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
                     '&::after': {
                         content: '""',
                         position: 'absolute',
-                        bottom: -12,
-                        right: 30,
-                        width: '24px',
-                        height: '24px',
+                        bottom: { xs: -8, sm: -12 },
+                        right: { xs: 20, sm: 30 },
+                        width: { xs: '18px', sm: '24px' },
+                        height: { xs: '18px', sm: '24px' },
                         background: 'rgba(181, 234, 215, 0.6)',
                         borderRadius: '50%',
                         animation: 'pulse-glow 2s ease-in-out infinite',
@@ -140,7 +148,11 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
                         fontWeight: 700,
                         color: '#3A3A3A',
                         lineHeight: 1.6,
-                        fontSize: { xs: '1.5rem', sm: '1.8rem' },
+                        fontSize: {
+                            xs: '1.15rem',   // 320px - compact
+                            sm: '1.5rem',    // 600px+
+                            md: '1.8rem',    // 900px+
+                        },
                     }}
                 >
                     {node.text}
@@ -148,7 +160,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
             </Paper>
 
             {/* Options with bird indicators */}
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5, mt: 1 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 1.5, sm: 2.5 }, mt: { xs: 0.5, sm: 1 } }}>
                 {node.options?.map((option, index) => {
                     const isHovered = hoveredIndex === index;
                     const birdColor = birdColors[index % birdColors.length];
@@ -163,7 +175,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
                                 position: 'relative',
                             }}
                         >
-                            {/* Decorative bird appears on hover */}
+                            {/* Decorative bird appears on hover - Hidden on mobile */}
                             <Box
                                 sx={{
                                     position: 'absolute',
@@ -174,6 +186,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
                                     transition: 'opacity 0.3s ease-in-out, transform 0.3s ease-in-out',
                                     pointerEvents: 'none',
                                     zIndex: 10,
+                                    display: { xs: 'none', sm: 'block' }, // Hide on mobile
                                 }}
                             >
                                 <LovebirdIllustration
@@ -190,16 +203,28 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
                                 onClick={() => onSelectOption(option.nextId)}
                                 onMouseEnter={() => setHoveredIndex(index)}
                                 onMouseLeave={() => setHoveredIndex(null)}
+                                onTouchStart={() => setHoveredIndex(index)}
+                                onTouchEnd={() => setHoveredIndex(null)}
                                 sx={{
-                                    padding: '20px 24px',
-                                    borderWidth: '3px',
+                                    padding: {
+                                        xs: '14px 18px',   // 320px - min 44px touch target
+                                        sm: '20px 24px',   // 600px+
+                                    },
+                                    minHeight: '48px', // Ensure touch-friendly minimum
+                                    borderWidth: {
+                                        xs: '2px',
+                                        sm: '3px',
+                                    },
                                     borderColor: isHovered ? '#5CA632' : 'rgba(126, 200, 80, 0.5)',
                                     color: '#3A3A3A',
                                     backgroundColor: isHovered ? 'rgba(126, 200, 80, 0.15)' : 'rgba(255, 255, 255, 0.8)',
                                     backdropFilter: 'blur(10px)',
-                                    fontSize: '1.15rem',
+                                    fontSize: {
+                                        xs: '1rem',      // 320px
+                                        sm: '1.15rem',   // 600px+
+                                    },
                                     fontWeight: 600,
-                                    borderRadius: '28px',
+                                    borderRadius: { xs: '20px', sm: '28px' },
                                     textAlign: 'left',
                                     position: 'relative',
                                     overflow: 'visible',
@@ -208,31 +233,37 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
                                         : '0 4px 16px rgba(126, 200, 80, 0.2)',
                                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                                     '&:hover': {
-                                        borderWidth: '3px',
+                                        borderWidth: { xs: '2px', sm: '3px' },
                                         borderColor: '#5CA632',
                                         backgroundColor: 'rgba(126, 200, 80, 0.15)',
-                                        transform: 'translateX(8px) scale(1.02)',
+                                        transform: {
+                                            xs: 'scale(1.02)',           // Mobile - just scale
+                                            sm: 'translateX(8px) scale(1.02)', // Desktop - slide and scale
+                                        },
+                                    },
+                                    '&:active': {
+                                        transform: 'scale(0.98)',
                                     },
                                     '&::before': {
                                         content: '""',
                                         position: 'absolute',
-                                        left: 16,
+                                        left: { xs: 12, sm: 16 },
                                         top: '50%',
                                         transform: 'translateY(-50%)',
-                                        width: '12px',
-                                        height: '12px',
+                                        width: { xs: '10px', sm: '12px' },
+                                        height: { xs: '10px', sm: '12px' },
                                         borderRadius: '50%',
                                         backgroundColor: isHovered ? '#7EC850' : 'rgba(126, 200, 80, 0.5)',
                                         transition: 'all 0.3s ease',
                                     },
                                 }}
                             >
-                                <Box sx={{ pl: 2 }}>
+                                <Box sx={{ pl: { xs: 1.5, sm: 2 } }}>
                                     {option.text}
                                 </Box>
                             </Button>
 
-                            {/* Small heart icon on hover */}
+                            {/* Small heart icon on hover - Hidden on mobile */}
                             {isHovered && (
                                 <Box
                                     sx={{
@@ -241,6 +272,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
                                         top: '50%',
                                         transform: 'translateY(-50%)',
                                         animation: 'float 2s ease-in-out infinite',
+                                        display: { xs: 'none', sm: 'block' }, // Hide on mobile
                                     }}
                                 >
                                     <FavoriteIcon sx={{ fontSize: 24, color: '#7EC850', opacity: 0.7 }} />
@@ -255,10 +287,11 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
             <Box
                 sx={{
                     position: 'absolute',
-                    bottom: -30,
-                    left: 5,
+                    bottom: { xs: -20, sm: -30 },
+                    left: { xs: 0, sm: 5 },
                     opacity: 0.5,
                     zIndex: 1,
+                    display: { xs: 'none', sm: 'block' }, // Hide on very small screens
                 }}
             >
                 <LovebirdIllustration variant="sitting" color="violet-butter" size={55} animated />

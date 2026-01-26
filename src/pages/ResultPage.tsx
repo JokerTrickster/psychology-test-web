@@ -41,11 +41,12 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 height: '100%',
-                gap: 3,
+                gap: { xs: 2, sm: 3 },
                 textAlign: 'center',
                 position: 'relative',
                 overflow: 'hidden',
-                pb: 3,
+                pb: { xs: 2, sm: 3 },
+                py: { xs: 2, sm: 0 },
             }}
         >
             {/* Animated confetti */}
@@ -94,8 +95,8 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                 <Paper
                     elevation={2}
                     sx={{
-                        px: 4,
-                        py: 1.5,
+                        px: { xs: 3, sm: 4 },
+                        py: { xs: 1, sm: 1.5 },
                         borderRadius: '50px',
                         background: 'linear-gradient(135deg, rgba(126, 200, 80, 0.15) 0%, rgba(184, 233, 134, 0.15) 100%)',
                         backdropFilter: 'blur(10px)',
@@ -107,7 +108,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                         sx={{
                             fontWeight: 700,
                             color: '#5CA632',
-                            fontSize: '1.1rem',
+                            fontSize: { xs: '0.95rem', sm: '1.1rem' },
                             letterSpacing: '0.05em',
                         }}
                     >
@@ -129,8 +130,8 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                     variant="body2"
                     sx={{
                         color: '#888',
-                        fontSize: '1rem',
-                        mb: 1,
+                        fontSize: { xs: '0.9rem', sm: '1rem' },
+                        mb: { xs: 0.5, sm: 1 },
                     }}
                 >
                     당신의 성격 유형은...
@@ -139,12 +140,16 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                     variant="h2"
                     sx={{
                         fontWeight: 900,
-                        fontSize: { xs: '2.5rem', sm: '3.2rem' },
+                        fontSize: {
+                            xs: '1.8rem',    // 320px
+                            sm: '2.5rem',    // 600px+
+                            md: '3.2rem',    // 900px+
+                        },
                         background: 'linear-gradient(135deg, #7EC850 0%, #5CA632 50%, #B8E986 100%)',
                         backgroundClip: 'text',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
-                        mb: 2,
+                        mb: { xs: 1, sm: 2 },
                         lineHeight: 1.3,
                     }}
                 >
@@ -159,10 +164,14 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                     opacity: showContent ? 1 : 0,
                     animationDelay: '0.3s',
                     zIndex: 1,
-                    mb: 1,
+                    mb: { xs: 0.5, sm: 1 },
                 }}
             >
-                <LovebirdIllustration variant="couple" size={140} animated />
+                <LovebirdIllustration
+                    variant="couple"
+                    size={{ xs: 100, sm: 120, md: 140 }}
+                    animated
+                />
             </Box>
 
             {/* Result image */}
@@ -173,12 +182,15 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                         opacity: showContent ? 1 : 0,
                         animationDelay: '0.4s',
                         width: '100%',
-                        borderRadius: '32px',
+                        borderRadius: { xs: '20px', sm: '32px' },
                         overflow: 'hidden',
                         boxShadow: '0 12px 48px rgba(126, 200, 80, 0.35)',
-                        border: '4px solid rgba(255, 255, 255, 0.9)',
+                        border: {
+                            xs: '3px solid rgba(255, 255, 255, 0.9)',
+                            sm: '4px solid rgba(255, 255, 255, 0.9)',
+                        },
                         position: 'relative',
-                        mb: 2,
+                        mb: { xs: 1.5, sm: 2 },
                         zIndex: 1,
                         '&::after': {
                             content: '""',
@@ -198,7 +210,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                         style={{
                             width: '100%',
                             height: 'auto',
-                            maxHeight: '360px',
+                            maxHeight: window.innerWidth < 600 ? '240px' : '360px',
                             objectFit: 'cover',
                             display: 'block',
                         }}
@@ -213,12 +225,15 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                 sx={{
                     opacity: showContent ? 1 : 0,
                     animationDelay: '0.5s',
-                    p: 4,
+                    p: { xs: 2.5, sm: 4 },
                     background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 249, 250, 0.95) 100%)',
                     backdropFilter: 'blur(12px)',
-                    borderRadius: '32px',
-                    border: '3px solid rgba(126, 200, 80, 0.3)',
-                    mb: 2,
+                    borderRadius: { xs: '20px', sm: '32px' },
+                    border: {
+                        xs: '2px solid rgba(126, 200, 80, 0.3)',
+                        sm: '3px solid rgba(126, 200, 80, 0.3)',
+                    },
+                    mb: { xs: 1.5, sm: 2 },
                     width: '100%',
                     position: 'relative',
                     zIndex: 1,
@@ -226,11 +241,11 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                     '&::before': {
                         content: '""',
                         position: 'absolute',
-                        top: -10,
+                        top: { xs: -8, sm: -10 },
                         left: '50%',
                         transform: 'translateX(-50%)',
-                        width: '60px',
-                        height: '6px',
+                        width: { xs: '50px', sm: '60px' },
+                        height: { xs: '5px', sm: '6px' },
                         borderRadius: '3px',
                         background: 'linear-gradient(90deg, #7EC850, #FFE84D)',
                     },
@@ -242,7 +257,10 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                         wordBreak: 'keep-all',
                         color: '#3A3A3A',
                         lineHeight: 1.9,
-                        fontSize: '1.1rem',
+                        fontSize: {
+                            xs: '0.95rem',   // 320px
+                            sm: '1.1rem',    // 600px+
+                        },
                         whiteSpace: 'pre-line',
                     }}
                 >
@@ -254,10 +272,11 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
             <Box
                 sx={{
                     display: 'flex',
-                    gap: 3,
+                    gap: { xs: 1.5, sm: 3 },
                     justifyContent: 'center',
-                    mb: 2,
+                    mb: { xs: 1.5, sm: 2 },
                     zIndex: 1,
+                    flexWrap: 'wrap',
                 }}
             >
                 {['pepe-green', 'violet-butter', 'pepe-yellow', 'yellowface-green', 'pepe-lime'].map((color, idx) => (
@@ -272,7 +291,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                         <LovebirdIllustration
                             variant="flying"
                             color={color as 'pepe-green' | 'violet-butter' | 'pepe-yellow' | 'yellowface-green' | 'pepe-lime'}
-                            size={45}
+                            size={{ xs: 35, sm: 45 }}
                             animated
                         />
                     </Box>
@@ -286,6 +305,9 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                     opacity: showContent ? 1 : 0,
                     animationDelay: '0.9s',
                     zIndex: 1,
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
                 }}
             >
                 <Button
@@ -294,16 +316,27 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                     startIcon={<ReplayIcon />}
                     onClick={onRestart}
                     sx={{
-                        minWidth: '240px',
-                        fontSize: '1.25rem',
+                        minWidth: { xs: '200px', sm: '240px' },
+                        width: { xs: '90%', sm: 'auto' },
+                        maxWidth: '300px',
+                        fontSize: {
+                            xs: '1.1rem',    // 320px
+                            sm: '1.25rem',   // 600px+
+                        },
                         fontWeight: 700,
-                        padding: '16px 40px',
+                        padding: {
+                            xs: '14px 32px',   // 320px - min 44px touch target
+                            sm: '16px 40px',   // 600px+
+                        },
                         background: 'linear-gradient(135deg, #FFE84D 0%, #FFD700 100%)',
                         color: '#2C2C2C',
                         boxShadow: '0 8px 24px rgba(255, 232, 77, 0.4)',
                         '&:hover': {
                             background: 'linear-gradient(135deg, #FFD700 0%, #FFE84D 100%)',
                             boxShadow: '0 12px 36px rgba(255, 232, 77, 0.6)',
+                        },
+                        '&:active': {
+                            transform: 'scale(0.98)',
                         },
                     }}
                 >
@@ -319,8 +352,8 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                     opacity: showContent ? 0.7 : 0,
                     animationDelay: '1s',
                     color: '#999',
-                    fontSize: '0.9rem',
-                    mt: 1,
+                    fontSize: { xs: '0.85rem', sm: '0.9rem' },
+                    mt: { xs: 0.5, sm: 1 },
                     zIndex: 1,
                 }}
             >

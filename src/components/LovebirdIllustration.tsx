@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 
 interface LovebirdProps {
   color?: 'pepe-green' | 'violet-butter' | 'pepe-yellow' | 'yellowface-green' | 'pepe-lime';
-  size?: number;
+  size?: number | { xs?: number; sm?: number; md?: number };
   animated?: boolean;
   variant?: 'sitting' | 'flying' | 'couple';
 }
@@ -14,6 +14,16 @@ const LovebirdIllustration: React.FC<LovebirdProps> = ({
   animated = true,
   variant = 'sitting'
 }) => {
+  // Handle responsive sizes
+  const getResponsiveSize = () => {
+    if (typeof size === 'number') {
+      return size;
+    }
+    // For object sizes, use the values directly in sx prop
+    return size.md || size.sm || size.xs || 100;
+  };
+
+  const displaySize = typeof size === 'number' ? size : getResponsiveSize();
   const colorMap = {
     'pepe-green': {
       main: '#7EC850',
@@ -55,8 +65,16 @@ const LovebirdIllustration: React.FC<LovebirdProps> = ({
       <Box
         sx={{
           position: 'relative',
-          width: size * 2,
-          height: size * 1.2,
+          width: typeof size === 'number' ? size * 2 : {
+            xs: (size.xs || 90) * 2,
+            sm: (size.sm || 110) * 2,
+            md: (size.md || 120) * 2,
+          },
+          height: typeof size === 'number' ? size * 1.2 : {
+            xs: (size.xs || 90) * 1.2,
+            sm: (size.sm || 110) * 1.2,
+            md: (size.md || 120) * 1.2,
+          },
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -68,12 +86,20 @@ const LovebirdIllustration: React.FC<LovebirdProps> = ({
           sx={{
             position: 'absolute',
             left: 0,
-            width: size,
-            height: size,
+            width: typeof size === 'number' ? size : {
+              xs: size.xs || 90,
+              sm: size.sm || 110,
+              md: size.md || 120,
+            },
+            height: typeof size === 'number' ? size : {
+              xs: size.xs || 90,
+              sm: size.sm || 110,
+              md: size.md || 120,
+            },
             animationDelay: '0s',
           }}
         >
-          <svg width={size} height={size} viewBox="0 0 100 100">
+          <svg width="100%" height="100%" viewBox="0 0 100 100">
             <ellipse cx="50" cy="55" rx="28" ry="35" fill="#7EC850" />
             <circle cx="50" cy="30" r="22" fill="#7EC850" />
             <ellipse cx="45" cy="60" rx="15" ry="25" fill="#B8E986" transform="rotate(-20 45 60)" />
@@ -96,9 +122,19 @@ const LovebirdIllustration: React.FC<LovebirdProps> = ({
             left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 10,
+            width: typeof size === 'number' ? size * 0.35 : {
+              xs: (size.xs || 90) * 0.35,
+              sm: (size.sm || 110) * 0.35,
+              md: (size.md || 120) * 0.35,
+            },
+            height: typeof size === 'number' ? size * 0.35 : {
+              xs: (size.xs || 90) * 0.35,
+              sm: (size.sm || 110) * 0.35,
+              md: (size.md || 120) * 0.35,
+            },
           }}
         >
-          <svg width={size * 0.35} height={size * 0.35} viewBox="0 0 100 100">
+          <svg width="100%" height="100%" viewBox="0 0 100 100">
             <path
               d="M 50 85 C 30 70, 10 55, 10 35 C 10 20, 20 10, 30 10 C 40 10, 45 15, 50 25 C 55 15, 60 10, 70 10 C 80 10, 90 20, 90 35 C 90 55, 70 70, 50 85 Z"
               fill="#FFE84D"
@@ -113,13 +149,21 @@ const LovebirdIllustration: React.FC<LovebirdProps> = ({
           sx={{
             position: 'absolute',
             right: 0,
-            width: size,
-            height: size,
+            width: typeof size === 'number' ? size : {
+              xs: size.xs || 90,
+              sm: size.sm || 110,
+              md: size.md || 120,
+            },
+            height: typeof size === 'number' ? size : {
+              xs: size.xs || 90,
+              sm: size.sm || 110,
+              md: size.md || 120,
+            },
             transform: 'scaleX(-1)',
             animationDelay: '0.4s',
           }}
         >
-          <svg width={size} height={size} viewBox="0 0 100 100">
+          <svg width="100%" height="100%" viewBox="0 0 100 100">
             <ellipse cx="50" cy="55" rx="28" ry="35" fill="#FFE84D" />
             <circle cx="50" cy="30" r="22" fill="#FFE84D" />
             <ellipse cx="45" cy="60" rx="15" ry="25" fill="#FFF9B0" transform="rotate(-20 45 60)" />
@@ -144,9 +188,20 @@ const LovebirdIllustration: React.FC<LovebirdProps> = ({
     return (
       <Box
         className={animated ? 'float' : ''}
-        sx={{ width: size, height: size }}
+        sx={{
+          width: typeof size === 'number' ? size : {
+            xs: size.xs || 42,
+            sm: size.sm || 55,
+            md: size.md || 55,
+          },
+          height: typeof size === 'number' ? size : {
+            xs: size.xs || 42,
+            sm: size.sm || 55,
+            md: size.md || 55,
+          },
+        }}
       >
-        <svg width={size} height={size} viewBox="0 0 100 100">
+        <svg width="100%" height="100%" viewBox="0 0 100 100">
           {/* Body */}
           <ellipse cx="50" cy="50" rx="25" ry="30" fill={bodyColor} />
           {/* Head - Yellow for Yellow Face Green */}
@@ -176,9 +231,20 @@ const LovebirdIllustration: React.FC<LovebirdProps> = ({
   return (
     <Box
       className={animated ? 'wiggle' : ''}
-      sx={{ width: size, height: size }}
+      sx={{
+        width: typeof size === 'number' ? size : {
+          xs: size.xs || 100,
+          sm: size.sm || 100,
+          md: size.md || 100,
+        },
+        height: typeof size === 'number' ? size : {
+          xs: size.xs || 100,
+          sm: size.sm || 100,
+          md: size.md || 100,
+        },
+      }}
     >
-      <svg width={size} height={size} viewBox="0 0 100 100">
+      <svg width="100%" height="100%" viewBox="0 0 100 100">
         {/* Body */}
         <ellipse cx="50" cy="55" rx="28" ry="35" fill={bodyColor} />
         {/* Head - Yellow for Yellow Face Green */}
