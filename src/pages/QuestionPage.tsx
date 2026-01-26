@@ -29,9 +29,9 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
                 flexDirection: 'column',
                 justifyContent: 'center',
                 height: '100%',
-                gap: { xs: 1, sm: 3 },
-                pb: { xs: 1.5, sm: 4 },
-                py: { xs: 1.5, sm: 0 },
+                gap: { xs: 0.6, sm: 3 },
+                pb: { xs: 1, sm: 4 },
+                py: { xs: 1, sm: 0 },
                 px: { xs: 2, sm: 0 },
                 position: 'relative',
             }}
@@ -103,7 +103,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
                 sx={{
                     opacity: showContent ? 1 : 0,
                     animationDelay: '0.2s',
-                    p: { xs: 1.8, sm: 4 },
+                    p: { xs: 1.2, sm: 4 },
                     background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 249, 250, 0.95) 100%)',
                     backdropFilter: 'blur(12px)',
                     border: {
@@ -144,9 +144,9 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
                     sx={{
                         fontWeight: 700,
                         color: '#3A3A3A',
-                        lineHeight: 1.5,
+                        lineHeight: 1.4,
                         fontSize: {
-                            xs: '1rem',      // 320px - compact
+                            xs: '0.85rem',      // 320px - more compact
                             sm: '1.5rem',    // 600px+
                             md: '1.8rem',    // 900px+
                         },
@@ -157,7 +157,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
             </Paper>
 
             {/* Options with bird indicators */}
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 1, sm: 2.5 }, mt: { xs: 0, sm: 1 } }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 0.7, sm: 2.5 }, mt: { xs: 0, sm: 1 } }}>
                 {node.options?.map((option, index) => {
                     const isHovered = hoveredIndex === index;
                     const birdColor = birdColors[index % birdColors.length];
@@ -204,10 +204,10 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
                                 onTouchEnd={() => setHoveredIndex(null)}
                                 sx={{
                                     padding: {
-                                        xs: '12px 16px',   // 320px - min 44px touch target
+                                        xs: '9px 12px',   // 320px - smaller but still touch-friendly
                                         sm: '20px 24px',   // 600px+
                                     },
-                                    minHeight: '48px', // Ensure touch-friendly minimum
+                                    minHeight: '42px', // Smaller minimum while maintaining accessibility
                                     borderWidth: {
                                         xs: '2px',
                                         sm: '3px',
@@ -217,11 +217,11 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
                                     backgroundColor: isHovered ? 'rgba(126, 200, 80, 0.15)' : 'rgba(255, 255, 255, 0.8)',
                                     backdropFilter: 'blur(10px)',
                                     fontSize: {
-                                        xs: '0.9rem',    // 320px - compact
+                                        xs: '0.78rem',    // 320px - more compact
                                         sm: '1.15rem',   // 600px+
                                     },
                                     fontWeight: 600,
-                                    borderRadius: { xs: '16px', sm: '28px' },
+                                    borderRadius: { xs: '12px', sm: '28px' },
                                     textAlign: 'left',
                                     position: 'relative',
                                     overflow: 'visible',

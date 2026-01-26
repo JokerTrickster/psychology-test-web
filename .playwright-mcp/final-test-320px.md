@@ -1,0 +1,26 @@
+- generic [ref=e5]:
+  - img [ref=e7]
+  - img [ref=e10]
+  - img [ref=e13]
+  - generic [ref=e16]:
+    - img [ref=e18]
+    - img [ref=e30]
+    - img [ref=e33]
+  - generic [ref=e44]:
+    - heading "모란앵무" [level=1] [ref=e45]
+    - heading "심리 테스트 🦜" [level=2] [ref=e46]
+  - generic [ref=e47]:
+    - heading "귀여운 모란앵무와 함께하는" [level=5] [ref=e48]
+    - paragraph [ref=e49]:
+      - text: 간단한 선택으로 알아보는
+      - text: 나의 숨겨진 성격은? ✨
+  - generic [ref=e50]:
+    - img [ref=e53]
+    - img [ref=e65]
+    - img [ref=e77]
+    - img [ref=e89]
+    - img [ref=e101]
+  - button "테스트 시작하기" [ref=e112] [cursor=pointer]:
+    - text: 테스트 시작하기
+    - img [ref=e114]
+  - paragraph [ref=e116]: 🌈 5가지 컬러의 모란앵무가 기다리고 있어요!
