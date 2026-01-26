@@ -11,6 +11,7 @@ export interface Node {
     text?: string; // For questions
     title?: string; // For results
     description?: string; // For results
+    imageUrl?: string; // Optional image for both questions and results
     options?: Option[]; // For questions
 }
 

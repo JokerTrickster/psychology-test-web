@@ -15,9 +15,34 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
                 flexDirection: 'column',
                 justifyContent: 'center',
                 height: '100%',
-                gap: 4,
+                gap: 2,
+                pb: 4, // Add padding bottom for scrolling content
             }}
         >
+            {node.imageUrl && (
+                <Paper
+                    elevation={4}
+                    sx={{
+                        width: '100%',
+                        overflow: 'hidden',
+                        borderRadius: '20px',
+                        mb: 2,
+                        lineHeight: 0,
+                    }}
+                >
+                    <img
+                        src={node.imageUrl}
+                        alt="Question"
+                        style={{
+                            width: '100%',
+                            height: 'auto',
+                            maxHeight: '300px',
+                            objectFit: 'cover'
+                        }}
+                    />
+                </Paper>
+            )}
+
             <Paper
                 elevation={0}
                 sx={{
@@ -25,6 +50,7 @@ const QuestionPage: React.FC<QuestionPageProps> = ({ node, onSelectOption }) => 
                     backgroundColor: '#ffffff',
                     border: '2px solid #F0F0F0',
                     textAlign: 'center',
+                    borderRadius: '20px',
                 }}
             >
                 <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#444' }}>

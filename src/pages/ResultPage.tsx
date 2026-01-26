@@ -25,9 +25,32 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart }) => {
                 나의 성격 유형은?
             </Typography>
 
-            <Typography variant="h3" sx={{ fontWeight: 800, color: 'text.primary', mb: 2 }}>
+            <Typography variant="h3" sx={{ fontWeight: 800, color: 'text.primary', mb: 1 }}>
                 {node.title}
             </Typography>
+
+            {node.imageUrl && (
+                <Box
+                    sx={{
+                        width: '100%',
+                        borderRadius: '20px',
+                        overflow: 'hidden',
+                        boxShadow: '0 8px 20px rgba(0,0,0,0.1)',
+                        mb: 2
+                    }}
+                >
+                    <img
+                        src={node.imageUrl}
+                        alt="Result"
+                        style={{
+                            width: '100%',
+                            height: 'auto',
+                            maxHeight: '350px',
+                            objectFit: 'cover'
+                        }}
+                    />
+                </Box>
+            )}
 
             <Paper
                 elevation={0}
