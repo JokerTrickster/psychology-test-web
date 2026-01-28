@@ -25,6 +25,7 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                 overflow: 'hidden',
                 py: { xs: 2, sm: 3 },
                 px: { xs: 2, sm: 0 },
+                pb: { xs: 'calc(100px + env(safe-area-inset-bottom))', sm: 3 }, // Space for fixed button on mobile
             }}
         >
             {/* Decorative floating hearts - Green and White theme */}
@@ -95,34 +96,18 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     sx={{
                         fontWeight: 800,
                         fontSize: {
-                            xs: '1.5rem',    // 320px - bigger for modern phones
-                            sm: '2.8rem',    // 600px+
-                            md: '3.5rem'     // 900px+
+                            xs: '1.6rem',    // 320px - bigger for modern phones
+                            sm: '3rem',      // 600px+
+                            md: '3.8rem'     // 900px+
                         },
                         color: '#5CA632',
                         textShadow: '0 2px 8px rgba(92, 166, 50, 0.3), 0 0 40px rgba(255, 255, 255, 0.8)',
-                        mb: { xs: 0.3, sm: 1 },
-                        lineHeight: 1.1,
+                        mb: { xs: 0.5, sm: 1.5 },
+                        lineHeight: 1.2,
                         WebkitTextStroke: '0.5px rgba(92, 166, 50, 0.3)',
                     }}
                 >
-                    모란앵무
-                </Typography>
-                <Typography
-                    variant="h2"
-                    sx={{
-                        fontWeight: 800,
-                        fontSize: {
-                            xs: '1.25rem',    // 320px - bigger
-                            sm: '2.2rem',    // 600px+
-                            md: '2.8rem'     // 900px+
-                        },
-                        color: '#5CA632',
-                        mb: { xs: 0.4, sm: 3 },
-                        lineHeight: 1.1,
-                    }}
-                >
-                    심리 테스트 🦜
+                    나는 어떤 앵무새일까? 🦜
                 </Typography>
             </Box>
 
@@ -136,8 +121,8 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     backdropFilter: 'blur(10px)',
                     borderRadius: { xs: '14px', sm: '30px' },
                     padding: {
-                        xs: '10px 14px',   // 320px - bigger
-                        sm: '24px 36px'    // 600px+ - spacious
+                        xs: '14px 18px',   // 320px - bigger
+                        sm: '28px 40px'    // 600px+ - spacious
                     },
                     border: {
                         xs: '2px solid rgba(126, 200, 80, 0.4)',
@@ -148,32 +133,19 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                 }}
             >
                 <Typography
-                    variant="h5"
-                    sx={{
-                        mb: { xs: 0.3, sm: 1.5 },
-                        color: '#5CA632',
-                        fontWeight: 600,
-                        fontSize: {
-                            xs: '0.9rem',   // 320px - bigger
-                            sm: '1.4rem'     // 600px+
-                        },
-                    }}
-                >
-                    귀여운 모란앵무와 함께하는
-                </Typography>
-                <Typography
                     variant="body1"
                     sx={{
                         color: '#4A4A4A',
-                        lineHeight: 1.45,
+                        lineHeight: 1.6,
                         fontSize: {
-                            xs: '0.8rem',   // 320px - bigger
-                            sm: '1.1rem'     // 600px+
+                            xs: '0.9rem',   // 320px - bigger
+                            sm: '1.2rem'     // 600px+
                         },
+                        fontWeight: 500,
                     }}
                 >
-                    간단한 선택으로 알아보는<br />
-                    나의 숨겨진 성격은? ✨
+                    간단한 질문으로 알아보는<br />
+                    나에게 어울리는 앵무새는? ✨
                 </Typography>
             </Box>
 
@@ -274,16 +246,27 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
             {/* Spacer to push button to bottom */}
             <Box sx={{ flex: 1 }} />
 
-            {/* Start button */}
+            {/* Start button - Fixed at bottom on mobile */}
             <Box
                 className={showContent ? 'fade-in' : ''}
                 sx={{
                     opacity: showContent ? 1 : 0,
                     animationDelay: '0.9s',
-                    mb: { xs: 3, sm: 4 },
-                    width: '100%',
+                    position: { xs: 'fixed', sm: 'relative' },
+                    bottom: { xs: 0, sm: 'auto' },
+                    left: { xs: 0, sm: 'auto' },
+                    right: { xs: 0, sm: 'auto' },
+                    width: { xs: '100%', sm: 'auto' },
+                    p: { xs: '16px', sm: 0 },
+                    pb: { xs: 'max(16px, env(safe-area-inset-bottom))', sm: 0 },
+                    mb: { xs: 0, sm: 4 },
                     display: 'flex',
                     justifyContent: 'center',
+                    backgroundColor: { xs: 'rgba(255, 255, 255, 0.95)', sm: 'transparent' },
+                    backdropFilter: { xs: 'blur(10px)', sm: 'none' },
+                    borderTop: { xs: '1px solid rgba(126, 200, 80, 0.2)', sm: 'none' },
+                    boxShadow: { xs: '0 -4px 12px rgba(0, 0, 0, 0.08)', sm: 'none' },
+                    zIndex: 10,
                 }}
             >
                 <Button
@@ -292,20 +275,22 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     onClick={onStart}
                     endIcon={<FavoriteIcon />}
                     sx={{
-                        minWidth: { xs: '200px', sm: '240px' },
-                        width: { xs: '90%', sm: 'auto' },
-                        maxWidth: '300px',
+                        minWidth: { xs: 'calc(100% - 32px)', sm: '240px' },
+                        width: { xs: '100%', sm: 'auto' },
+                        maxWidth: { xs: 'none', sm: '300px' },
                         fontSize: {
-                            xs: '0.95rem',      // 320px - bigger
-                            sm: '1.35rem'    // 600px+
+                            xs: '1.1rem',
+                            sm: '1.35rem'
                         },
                         fontWeight: 700,
                         padding: {
-                            xs: '11px 24px',   // 320px - bigger
-                            sm: '16px 40px'    // 600px+
+                            xs: '16px 32px',
+                            sm: '18px 44px'
                         },
+                        minHeight: { xs: '56px', sm: 'auto' },
                         background: 'linear-gradient(135deg, #7EC850 0%, #5CA632 100%)',
                         boxShadow: '0 8px 24px rgba(126, 200, 80, 0.4)',
+                        borderRadius: { xs: '16px', sm: '50px' },
                         '&:hover': {
                             background: 'linear-gradient(135deg, #5CA632 0%, #7EC850 100%)',
                             boxShadow: '0 12px 36px rgba(126, 200, 80, 0.6)',
@@ -332,7 +317,7 @@ const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
                     px: 2,
                 }}
             >
-                🌿 다양한 컬러의 모란앵무가 기다리고 있어요!
+                🌿 31가지 다양한 앵무새가 기다리고 있어요!
             </Typography>
         </Box>
     );

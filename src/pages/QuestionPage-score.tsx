@@ -32,10 +32,10 @@ const QuestionPageScore: React.FC<QuestionPageScoreProps> = ({
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'flex-start', // Changed from center to allow using spacer
+                justifyContent: 'flex-start',
                 height: '100%',
                 gap: { xs: 0.9, sm: 3 },
-                pb: { xs: 1.2, sm: 4 },
+                pb: { xs: 'calc(200px + env(safe-area-inset-bottom))', sm: 4 }, // Space for fixed buttons on mobile
                 py: { xs: 1.2, sm: 0 },
                 px: { xs: 2, sm: 0 },
                 position: 'relative',
@@ -105,20 +105,19 @@ const QuestionPageScore: React.FC<QuestionPageScoreProps> = ({
                 sx={{
                     opacity: showContent ? 1 : 0,
                     animationDelay: '0.2s',
-                    p: { xs: 1.6, sm: 4 },
+                    p: { xs: 1.8, sm: 4 },
                     background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 249, 250, 0.95) 100%)',
                     backdropFilter: 'blur(12px)',
                     border: {
-                        xs: '2px solid rgba(255, 183, 213, 0.4)',
-                        sm: '3px solid rgba(255, 183, 213, 0.4)',
+                        xs: '2px solid rgba(126, 200, 80, 0.4)',
+                        sm: '3px solid rgba(126, 200, 80, 0.4)',
                     },
                     textAlign: 'center',
-                    borderRadius: { xs: '16px', sm: '32px' },
+                    borderRadius: { xs: '18px', sm: '32px' },
                     position: 'relative',
-                    mt: 'auto', // Push to center/bottom vertically alongside options? No, let's keep it top-ish or center.
-                    // Actually, if I use mt: auto on BOTH Question and Options, they might split the space?
-                    // Let's first try just pushing Options down.
-                    boxShadow: '0 10px 32px rgba(255, 183, 213, 0.35)',
+                    mt: { xs: 2, sm: 4 },
+                    mb: { xs: 3, sm: 4 },
+                    boxShadow: '0 10px 32px rgba(126, 200, 80, 0.25)',
                     '&::before': {
                         content: '""',
                         position: 'absolute',
@@ -161,8 +160,28 @@ const QuestionPageScore: React.FC<QuestionPageScoreProps> = ({
                 </Typography>
             </Paper>
 
-            {/* Options (A and B) */}
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 0.9, sm: 2.5 }, mt: 'auto', mb: { xs: 3, sm: 0 } }}>
+            {/* Options (A and B) - Fixed at bottom */}
+            <Box 
+                sx={{ 
+                    position: { xs: 'fixed', sm: 'relative' },
+                    bottom: { xs: 0, sm: 'auto' },
+                    left: { xs: 0, sm: 'auto' },
+                    right: { xs: 0, sm: 'auto' },
+                    width: { xs: '100%', sm: '100%' },
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    gap: { xs: 1.2, sm: 2.5 },
+                    p: { xs: '16px', sm: 0 },
+                    pb: { xs: 'max(16px, env(safe-area-inset-bottom))', sm: 0 },
+                    backgroundColor: { xs: 'rgba(255, 255, 255, 0.95)', sm: 'transparent' },
+                    backdropFilter: { xs: 'blur(10px)', sm: 'none' },
+                    borderTop: { xs: '1px solid rgba(126, 200, 80, 0.2)', sm: 'none' },
+                    boxShadow: { xs: '0 -4px 12px rgba(0, 0, 0, 0.08)', sm: 'none' },
+                    zIndex: 10,
+                    mt: { xs: 0, sm: 'auto' },
+                    mb: { xs: 0, sm: 0 },
+                }}
+            >
                 {question.options.map((option, index) => {
                     const isHovered = hoveredIndex === index;
                     const birdColor = birdColors[index % birdColors.length];
@@ -210,35 +229,35 @@ const QuestionPageScore: React.FC<QuestionPageScoreProps> = ({
                                 onTouchEnd={() => setHoveredIndex(null)}
                                 sx={{
                                     padding: {
-                                        xs: '11px 14px',
-                                        sm: '20px 24px',
+                                        xs: '16px 20px',
+                                        sm: '24px 32px',
                                     },
-                                    minHeight: '46px',
+                                    minHeight: { xs: '56px', sm: '64px' },
                                     borderWidth: {
-                                        xs: '2px',
+                                        xs: '2.5px',
                                         sm: '3px',
                                     },
                                     borderColor: isHovered ? '#5CA632' : 'rgba(126, 200, 80, 0.5)',
                                     color: '#3A3A3A',
-                                    backgroundColor: isHovered ? 'rgba(126, 200, 80, 0.15)' : 'rgba(255, 255, 255, 0.8)',
+                                    backgroundColor: isHovered ? 'rgba(126, 200, 80, 0.15)' : 'rgba(255, 255, 255, 0.9)',
                                     backdropFilter: 'blur(10px)',
                                     fontSize: {
-                                        xs: '0.88rem',
-                                        sm: '1.15rem',
+                                        xs: '1rem',
+                                        sm: '1.25rem',
                                     },
                                     fontWeight: 600,
-                                    borderRadius: { xs: '14px', sm: '28px' },
+                                    borderRadius: { xs: '16px', sm: '32px' },
                                     textAlign: 'left',
                                     position: 'relative',
                                     overflow: 'visible',
                                     boxShadow: isHovered
-                                        ? '0 10px 32px rgba(126, 200, 80, 0.4)'
-                                        : '0 4px 16px rgba(126, 200, 80, 0.2)',
+                                        ? '0 12px 40px rgba(126, 200, 80, 0.5)'
+                                        : '0 6px 20px rgba(126, 200, 80, 0.25)',
                                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                                     '&:hover': {
-                                        borderWidth: { xs: '2px', sm: '3px' },
+                                        borderWidth: { xs: '2.5px', sm: '3px' },
                                         borderColor: '#5CA632',
-                                        backgroundColor: 'rgba(126, 200, 80, 0.15)',
+                                        backgroundColor: 'rgba(126, 200, 80, 0.2)',
                                         transform: {
                                             xs: 'scale(1.02)',
                                             sm: 'translateX(8px) scale(1.02)',
@@ -250,11 +269,11 @@ const QuestionPageScore: React.FC<QuestionPageScoreProps> = ({
                                     '&::before': {
                                         content: `"${label}"`,
                                         position: 'absolute',
-                                        left: { xs: 12, sm: 16 },
+                                        left: { xs: 16, sm: 20 },
                                         top: '50%',
                                         transform: 'translateY(-50%)',
-                                        width: { xs: '24px', sm: '28px' },
-                                        height: { xs: '24px', sm: '28px' },
+                                        width: { xs: '32px', sm: '36px' },
+                                        height: { xs: '32px', sm: '36px' },
                                         borderRadius: '50%',
                                         backgroundColor: isHovered ? '#7EC850' : 'rgba(126, 200, 80, 0.5)',
                                         color: isHovered ? '#fff' : '#7EC850',
@@ -262,12 +281,12 @@ const QuestionPageScore: React.FC<QuestionPageScoreProps> = ({
                                         alignItems: 'center',
                                         justifyContent: 'center',
                                         fontWeight: 700,
-                                        fontSize: { xs: '0.75rem', sm: '0.85rem' },
+                                        fontSize: { xs: '0.9rem', sm: '1rem' },
                                         transition: 'all 0.3s ease',
                                     },
                                 }}
                             >
-                                <Box sx={{ pl: { xs: 3, sm: 3.5 } }}>
+                                <Box sx={{ pl: { xs: 4, sm: 4.5 } }}>
                                     {option.text}
                                 </Box>
                             </Button>

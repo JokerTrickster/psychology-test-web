@@ -13,10 +13,21 @@ interface ResultPageProps {
     summary?: string; // Optional summary for score-based system
 }
 
-const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart, score, summary }) => {
+const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart, summary }) => {
     // Remove local animation state - handled by App.tsx AnimatePresence
     const showContent = true;
     const [showConfetti, setShowConfetti] = useState(false);
+
+    // Generate random confetti items - use useState with lazy initializer to avoid calling Math.random during render
+    const [confettiItems] = useState(() => {
+        return Array.from({ length: 20 }, (_, i) => ({
+            id: i,
+            left: Math.random() * 100,
+            delay: Math.random() * 2,
+            duration: 3 + Math.random() * 2,
+            rotation: Math.random() * 360,
+        }));
+    });
 
     useEffect(() => {
         // Keep confetti animation with slight delay
@@ -25,15 +36,6 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart, score, summary
             clearTimeout(confettiTimer);
         };
     }, []);
-
-    // Generate random confetti items
-    const confettiItems = Array.from({ length: 20 }, (_, i) => ({
-        id: i,
-        left: Math.random() * 100,
-        delay: Math.random() * 2,
-        duration: 3 + Math.random() * 2,
-        rotation: Math.random() * 360,
-    }));
 
     return (
         <Box
@@ -201,7 +203,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart, score, summary
                     />
                 </Box>
 
-                {/* Result image - significantly bigger on mobile */}
+                {/* Result image - reduced to half size */}
                 {node.imageUrl && (
                     <Box
                         className={showContent ? 'fade-in' : ''}
@@ -209,17 +211,19 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart, score, summary
                             opacity: showContent ? 1 : 0,
                             animationDelay: '0.4s',
                             width: '100%',
-                            maxWidth: { xs: '190px', sm: '270px', md: '340px' }, // Reduced size (approx 2/3)
-                            borderRadius: { xs: '20px', sm: '32px' },
-                            overflow: 'hidden',
+                            maxWidth: { xs: '95px', sm: '135px', md: '170px' }, // Reduced to half size
+                            borderRadius: { xs: '16px', sm: '24px' },
+                            overflow: 'visible',
                             boxShadow: '0 6px 20px rgba(126, 200, 80, 0.25)',
                             border: {
-                                xs: '3px solid rgba(255, 255, 255, 0.9)',
-                                sm: '4px solid rgba(255, 255, 255, 0.9)',
+                                xs: '2px solid rgba(255, 255, 255, 0.9)',
+                                sm: '3px solid rgba(255, 255, 255, 0.9)',
                             },
                             position: 'relative',
                             mb: { xs: 1.5, sm: 2 },
                             zIndex: 1,
+                            backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                            padding: { xs: '8px', sm: '12px' },
                             '&::after': {
                                 content: '""',
                                 position: 'absolute',
@@ -229,20 +233,33 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart, score, summary
                                 bottom: 0,
                                 background: 'linear-gradient(135deg, rgba(126, 200, 80, 0.1) 0%, rgba(255, 232, 77, 0.1) 100%)',
                                 pointerEvents: 'none',
+                                borderRadius: { xs: '16px', sm: '24px' },
                             },
                         }}
                     >
-                        <img
-                            src={node.imageUrl}
-                            alt="Result"
-                            style={{
+                        <Box
+                            sx={{
                                 width: '100%',
-                                height: 'auto',
-                                maxHeight: 'none', // Remove height restriction to let it fill based on width
-                                objectFit: 'contain',
-                                display: 'block',
+                                height: '100%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                position: 'relative',
+                                zIndex: 1,
                             }}
-                        />
+                        >
+                            <img
+                                src={node.imageUrl}
+                                alt="Result"
+                                style={{
+                                    width: '100%',
+                                    height: 'auto',
+                                    maxHeight: 'none',
+                                    objectFit: 'contain',
+                                    display: 'block',
+                                }}
+                            />
+                        </Box>
                     </Box>
                 )}
 
