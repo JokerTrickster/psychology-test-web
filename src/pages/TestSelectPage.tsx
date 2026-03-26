@@ -7,6 +7,9 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import QuizIcon from '@mui/icons-material/Quiz';
 import PetsIcon from '@mui/icons-material/Pets';
+import WorkIcon from '@mui/icons-material/Work';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import PsychologyIcon from '@mui/icons-material/Psychology';
 
 const socialLinks = [
     { icon: <YouTubeIcon />, label: 'YouTube', url: 'https://www.youtube.com/@%EB%AA%A8%EB%9E%80%EB%8F%84%EB%9E%80%EC%95%B5%ED%8A%9C%EB%B8%8C', color: '#FF0000' },
@@ -53,10 +56,52 @@ const testCards = [
         accentColorBorder: 'rgba(186, 135, 211, 0.3)',
         bgGradient: 'linear-gradient(160deg, rgba(232, 160, 191, 0.06) 0%, rgba(186, 135, 211, 0.12) 100%)',
     },
+    {
+        type: 'office' as const,
+        category: '사회생활',
+        categoryIcon: <WorkIcon sx={{ fontSize: '0.75rem' }} />,
+        title: '사회에서 나의 정체는?',
+        subtitle: '5가지 사회생활 유형 중 나는?',
+        meta: '5문항 · 약 1분',
+        birdVariant: 'sitting' as const,
+        birdColor: 'pepe-yellow' as const,
+        accentColor: '#E67E22',
+        accentColorLight: 'rgba(230, 126, 34, 0.12)',
+        accentColorBorder: 'rgba(230, 126, 34, 0.3)',
+        bgGradient: 'linear-gradient(160deg, rgba(230, 126, 34, 0.06) 0%, rgba(241, 196, 15, 0.12) 100%)',
+    },
+    {
+        type: 'job' as const,
+        category: '직업 추천',
+        categoryIcon: <BusinessCenterIcon sx={{ fontSize: '0.75rem' }} />,
+        title: '나와 어울리는 직업은?',
+        subtitle: '5가지 유형으로 알아보는 추천 직업',
+        meta: '5문항 · 약 1분',
+        birdVariant: 'flying' as const,
+        birdColor: 'white' as const,
+        accentColor: '#3498DB',
+        accentColorLight: 'rgba(52, 152, 219, 0.12)',
+        accentColorBorder: 'rgba(52, 152, 219, 0.3)',
+        bgGradient: 'linear-gradient(160deg, rgba(52, 152, 219, 0.06) 0%, rgba(93, 173, 226, 0.12) 100%)',
+    },
+    {
+        type: 'mbti' as const,
+        category: 'MBTI 궁합',
+        categoryIcon: <PsychologyIcon sx={{ fontSize: '0.75rem' }} />,
+        title: '나와 잘 어울리는 MBTI',
+        subtitle: '5가지 MBTI 유형 중 나의 찰떡궁합은?',
+        meta: '5문항 · 약 1분',
+        birdVariant: 'sitting' as const,
+        birdColor: 'pepe-lime' as const,
+        accentColor: '#E91E63',
+        accentColorLight: 'rgba(233, 30, 99, 0.12)',
+        accentColorBorder: 'rgba(233, 30, 99, 0.3)',
+        bgGradient: 'linear-gradient(160deg, rgba(233, 30, 99, 0.06) 0%, rgba(244, 143, 177, 0.12) 100%)',
+    },
 ];
 
 interface TestSelectPageProps {
-    onSelectTest: (type: 'lovebird' | 'parrot') => void;
+    onSelectTest: (type: 'lovebird' | 'parrot' | 'office' | 'job' | 'mbti') => void;
 }
 
 const TestSelectPage: React.FC<TestSelectPageProps> = ({ onSelectTest }) => {

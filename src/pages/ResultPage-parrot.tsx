@@ -8,9 +8,25 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 interface ResultPageParrotProps {
     result: BirdResult;
     onRestart: () => void;
+    titleText?: string;
+    themeColor?: string;
+    themeColorLight?: string;
 }
 
-const ResultPageParrot: React.FC<ResultPageParrotProps> = ({ result, onRestart }) => {
+const hexToRgba = (hex: string, alpha: number) => {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
+const ResultPageParrot: React.FC<ResultPageParrotProps> = ({
+    result,
+    onRestart,
+    titleText = '당신의 궁합 앵무새는!',
+    themeColor = '#9B59B6',
+    themeColorLight = '#BA87D3',
+}) => {
     const showContent = true;
     const [showConfetti, setShowConfetti] = useState(false);
 
@@ -70,7 +86,7 @@ const ResultPageParrot: React.FC<ResultPageParrotProps> = ({ result, onRestart }
                             <FavoriteIcon
                                 sx={{
                                     fontSize: 18,
-                                    color: item.id % 2 === 0 ? '#BA87D3' : '#E8A0BF',
+                                    color: item.id % 2 === 0 ? themeColorLight : hexToRgba(themeColor, 0.6),
                                     opacity: 0.7,
                                     transform: `rotate(${item.rotation}deg)`,
                                 }}
@@ -79,7 +95,7 @@ const ResultPageParrot: React.FC<ResultPageParrotProps> = ({ result, onRestart }
                             <AutoAwesomeIcon
                                 sx={{
                                     fontSize: 16,
-                                    color: item.id % 2 === 0 ? '#DDA0DD' : '#C3AED6',
+                                    color: item.id % 2 === 0 ? hexToRgba(themeColor, 0.5) : themeColorLight,
                                     opacity: 0.6,
                                     transform: `rotate(${item.rotation}deg)`,
                                 }}
@@ -103,21 +119,21 @@ const ResultPageParrot: React.FC<ResultPageParrotProps> = ({ result, onRestart }
                             px: { xs: 2.5, sm: 4 },
                             py: { xs: 0.7, sm: 1.5 },
                             borderRadius: '50px',
-                            background: 'linear-gradient(135deg, rgba(186, 135, 211, 0.15) 0%, rgba(232, 160, 191, 0.15) 100%)',
+                            background: `linear-gradient(135deg, ${hexToRgba(themeColorLight, 0.15)} 0%, ${hexToRgba(themeColor, 0.1)} 100%)`,
                             backdropFilter: 'blur(10px)',
-                            border: '2px solid rgba(186, 135, 211, 0.3)',
+                            border: `2px solid ${hexToRgba(themeColorLight, 0.3)}`,
                         }}
                     >
                         <Typography
                             variant="subtitle1"
                             sx={{
                                 fontWeight: 700,
-                                color: '#9B59B6',
+                                color: themeColor,
                                 fontSize: { xs: '0.8rem', sm: '1.1rem' },
                                 letterSpacing: '0.05em',
                             }}
                         >
-                            당신의 궁합 앵무새는!
+                            {titleText}
                         </Typography>
                     </Paper>
                 </Box>
@@ -140,7 +156,7 @@ const ResultPageParrot: React.FC<ResultPageParrotProps> = ({ result, onRestart }
                                 sm: '2.8rem',
                                 md: '3.5rem',
                             },
-                            background: 'linear-gradient(135deg, #9B59B6 0%, #E8A0BF 50%, #BA87D3 100%)',
+                            background: `linear-gradient(135deg, ${themeColor} 0%, ${themeColorLight} 50%, ${hexToRgba(themeColor, 0.8)} 100%)`,
                             backgroundClip: 'text',
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
@@ -154,7 +170,7 @@ const ResultPageParrot: React.FC<ResultPageParrotProps> = ({ result, onRestart }
                         <Typography
                             variant="body1"
                             sx={{
-                                color: '#9B59B6',
+                                color: themeColor,
                                 fontSize: { xs: '0.85rem', sm: '1.1rem' },
                                 fontWeight: 600,
                                 fontStyle: 'italic',
@@ -176,10 +192,10 @@ const ResultPageParrot: React.FC<ResultPageParrotProps> = ({ result, onRestart }
                             maxWidth: { xs: '150px', sm: '200px', md: '250px' },
                             borderRadius: { xs: '20px', sm: '28px' },
                             overflow: 'visible',
-                            boxShadow: '0 8px 28px rgba(186, 135, 211, 0.3)',
+                            boxShadow: `0 8px 28px ${hexToRgba(themeColor, 0.3)}`,
                             border: {
-                                xs: '3px solid rgba(186, 135, 211, 0.4)',
-                                sm: '3px solid rgba(186, 135, 211, 0.4)',
+                                xs: `3px solid ${hexToRgba(themeColorLight, 0.4)}`,
+                                sm: `3px solid ${hexToRgba(themeColorLight, 0.4)}`,
                             },
                             position: 'relative',
                             mb: { xs: 1, sm: 2 },
@@ -193,7 +209,7 @@ const ResultPageParrot: React.FC<ResultPageParrotProps> = ({ result, onRestart }
                                 left: 0,
                                 right: 0,
                                 bottom: 0,
-                                background: 'linear-gradient(135deg, rgba(186, 135, 211, 0.08) 0%, rgba(232, 160, 191, 0.08) 100%)',
+                                background: `linear-gradient(135deg, ${hexToRgba(themeColorLight, 0.08)} 0%, ${hexToRgba(themeColor, 0.08)} 100%)`,
                                 pointerEvents: 'none',
                                 borderRadius: { xs: '20px', sm: '28px' },
                             },
@@ -234,11 +250,11 @@ const ResultPageParrot: React.FC<ResultPageParrotProps> = ({ result, onRestart }
                                 label={`#${trait}`}
                                 size="small"
                                 sx={{
-                                    backgroundColor: 'rgba(186, 135, 211, 0.12)',
-                                    color: '#9B59B6',
+                                    backgroundColor: hexToRgba(themeColorLight, 0.12),
+                                    color: themeColor,
                                     fontWeight: 600,
                                     fontSize: { xs: '0.75rem', sm: '0.85rem' },
-                                    border: '1px solid rgba(186, 135, 211, 0.25)',
+                                    border: `1px solid ${hexToRgba(themeColorLight, 0.25)}`,
                                     borderRadius: '20px',
                                 }}
                             />
@@ -258,14 +274,14 @@ const ResultPageParrot: React.FC<ResultPageParrotProps> = ({ result, onRestart }
                         backdropFilter: 'blur(12px)',
                         borderRadius: { xs: '14px', sm: '32px' },
                         border: {
-                            xs: '2px solid rgba(186, 135, 211, 0.3)',
-                            sm: '3px solid rgba(186, 135, 211, 0.3)',
+                            xs: `2px solid ${hexToRgba(themeColorLight, 0.3)}`,
+                            sm: `3px solid ${hexToRgba(themeColorLight, 0.3)}`,
                         },
                         mb: { xs: 0.5, sm: 2 },
                         width: '100%',
                         position: 'relative',
                         zIndex: 1,
-                        boxShadow: '0 8px 24px rgba(186, 135, 211, 0.2)',
+                        boxShadow: `0 8px 24px ${hexToRgba(themeColor, 0.2)}`,
                         '&::before': {
                             content: '""',
                             position: 'absolute',
@@ -275,7 +291,7 @@ const ResultPageParrot: React.FC<ResultPageParrotProps> = ({ result, onRestart }
                             width: { xs: '40px', sm: '60px' },
                             height: { xs: '4px', sm: '6px' },
                             borderRadius: '3px',
-                            background: 'linear-gradient(90deg, #BA87D3, #E8A0BF)',
+                            background: `linear-gradient(90deg, ${themeColorLight}, ${themeColor})`,
                         },
                     }}
                 >
@@ -296,6 +312,58 @@ const ResultPageParrot: React.FC<ResultPageParrotProps> = ({ result, onRestart }
                     </Typography>
                 </Paper>
 
+                {/* Recommended jobs */}
+                {result.recommendedJobs && result.recommendedJobs.length > 0 && (
+                    <Box
+                        className={showContent ? 'fade-in' : ''}
+                        sx={{
+                            opacity: showContent ? 1 : 0,
+                            animationDelay: '0.55s',
+                            zIndex: 1,
+                            width: '100%',
+                        }}
+                    >
+                        <Paper
+                            elevation={1}
+                            sx={{
+                                p: { xs: 1.2, sm: 2.5 },
+                                borderRadius: { xs: '12px', sm: '20px' },
+                                background: hexToRgba(themeColor, 0.04),
+                                border: `1px solid ${hexToRgba(themeColor, 0.15)}`,
+                            }}
+                        >
+                            <Typography
+                                variant="body2"
+                                sx={{
+                                    color: themeColor,
+                                    fontWeight: 600,
+                                    fontSize: { xs: '0.75rem', sm: '0.9rem' },
+                                    mb: 0.8,
+                                }}
+                            >
+                                추천 직업
+                            </Typography>
+                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.8, justifyContent: 'center' }}>
+                                {result.recommendedJobs.map((job) => (
+                                    <Chip
+                                        key={job}
+                                        label={job}
+                                        size="small"
+                                        sx={{
+                                            backgroundColor: hexToRgba(themeColor, 0.1),
+                                            color: themeColor,
+                                            fontWeight: 600,
+                                            fontSize: { xs: '0.72rem', sm: '0.82rem' },
+                                            border: `1px solid ${hexToRgba(themeColor, 0.2)}`,
+                                            borderRadius: '16px',
+                                        }}
+                                    />
+                                ))}
+                            </Box>
+                        </Paper>
+                    </Box>
+                )}
+
                 {/* Compatibility info */}
                 {result.compatibility && result.compatibility.length > 0 && (
                     <Box
@@ -312,14 +380,14 @@ const ResultPageParrot: React.FC<ResultPageParrotProps> = ({ result, onRestart }
                             sx={{
                                 p: { xs: 1.2, sm: 2.5 },
                                 borderRadius: { xs: '12px', sm: '20px' },
-                                background: 'rgba(186, 135, 211, 0.06)',
-                                border: '1px solid rgba(186, 135, 211, 0.15)',
+                                background: hexToRgba(themeColor, 0.06),
+                                border: `1px solid ${hexToRgba(themeColor, 0.15)}`,
                             }}
                         >
                             <Typography
                                 variant="body2"
                                 sx={{
-                                    color: '#9B59B6',
+                                    color: themeColor,
                                     fontWeight: 600,
                                     fontSize: { xs: '0.75rem', sm: '0.9rem' },
                                     mb: 0.5,
@@ -368,7 +436,7 @@ const ResultPageParrot: React.FC<ResultPageParrotProps> = ({ result, onRestart }
                     zIndex: 10,
                     backgroundColor: { xs: 'rgba(255, 255, 255, 0.95)', sm: 'transparent' },
                     backdropFilter: { xs: 'blur(10px)', sm: 'none' },
-                    borderTop: { xs: '1px solid rgba(186, 135, 211, 0.2)', sm: 'none' },
+                    borderTop: { xs: `1px solid ${hexToRgba(themeColorLight, 0.2)}`, sm: 'none' },
                     boxShadow: { xs: '0 -4px 12px rgba(0, 0, 0, 0.08)', sm: 'none' },
                     py: { xs: 1.4, sm: 0 },
                     px: { xs: 2, sm: 0 },
@@ -394,12 +462,12 @@ const ResultPageParrot: React.FC<ResultPageParrotProps> = ({ result, onRestart }
                             xs: '11px 24px',
                             sm: '16px 40px',
                         },
-                        background: 'linear-gradient(135deg, #DDA0DD 0%, #BA87D3 100%)',
+                        background: `linear-gradient(135deg, ${themeColorLight} 0%, ${themeColor} 100%)`,
                         color: '#fff',
-                        boxShadow: '0 8px 24px rgba(186, 135, 211, 0.4)',
+                        boxShadow: `0 8px 24px ${hexToRgba(themeColor, 0.4)}`,
                         '&:hover': {
-                            background: 'linear-gradient(135deg, #BA87D3 0%, #DDA0DD 100%)',
-                            boxShadow: '0 12px 36px rgba(186, 135, 211, 0.6)',
+                            background: `linear-gradient(135deg, ${themeColor} 0%, ${themeColorLight} 100%)`,
+                            boxShadow: `0 12px 36px ${hexToRgba(themeColor, 0.6)}`,
                         },
                         '&:active': {
                             transform: 'scale(0.98)',

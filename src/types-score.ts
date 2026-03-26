@@ -10,7 +10,7 @@ export interface Question {
     text: string;
     imageUrl?: string;
     options: [ScoreOption, ScoreOption]; // 항상 2개의 선택지 (A, B)
-    category: '사교성' | '활동성' | '지능/신중함' | '애착도';
+    category: string;
 }
 
 export interface BirdResult {
@@ -20,6 +20,7 @@ export interface BirdResult {
     description: string;
     imageUrl?: string;
     traits: string[];
+    recommendedJobs?: string[];
     compatibility: string[];
 }
 

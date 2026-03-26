@@ -10,13 +10,18 @@ import ResultPage from './pages/ResultPage';
 import ResultPageParrot from './pages/ResultPage-parrot';
 import scoreData from './scenario/score-data.json';
 import parrotData from './scenario/parrot-data.json';
+import officeData from './scenario/office-data.json';
+import jobData from './scenario/job-data.json';
+import mbtiData from './scenario/mbti-data.json';
 import type { ScoreScenario, BirdResult } from './types-score';
 
-// Cast the JSON data to specific types
 const lovebirdScenario = scoreData as ScoreScenario;
 const parrotScenario = parrotData as ScoreScenario;
+const officeScenario = officeData as ScoreScenario;
+const jobScenario = jobData as ScoreScenario;
+const mbtiScenario = mbtiData as ScoreScenario;
 
-type TestType = 'lovebird' | 'parrot' | null;
+type TestType = 'lovebird' | 'parrot' | 'office' | 'job' | 'mbti' | null;
 
 // Page transition variants
 const pageVariants = {
@@ -49,7 +54,11 @@ function App() {
   const [answers, setAnswers] = useState<number[]>([]);
 
   // Current scenario based on test type
-  const currentScenario = testType === 'parrot' ? parrotScenario : lovebirdScenario;
+  const currentScenario = testType === 'parrot' ? parrotScenario
+    : testType === 'office' ? officeScenario
+    : testType === 'job' ? jobScenario
+    : testType === 'mbti' ? mbtiScenario
+    : lovebirdScenario;
 
   // Handle test selection
   const handleSelectTest = (type: TestType) => {
@@ -57,11 +66,9 @@ function App() {
     setCurrentQuestionIndex(-1);
     setTotalScore(0);
     setAnswers([]);
-    if (type === 'parrot') {
-      // Parrot test goes directly to first question
+    if (type === 'parrot' || type === 'office' || type === 'job' || type === 'mbti') {
       setCurrentQuestionIndex(0);
     }
-    // Lovebird keeps -1 to show StartPage first
   };
 
   // Initialize test (for lovebird StartPage)
@@ -144,8 +151,31 @@ function App() {
       return <div>Error: Result not found for score {totalScore}</div>;
     }
 
-    // Parrot test uses new result page style
-    if (testType === 'parrot') {
+    if (testType === 'mbti') {
+      return (
+        <ResultPageParrot
+          result={result}
+          onRestart={handleRestart}
+          titleText="나와 잘 어울리는 MBTI는!"
+          themeColor="#E91E63"
+          themeColorLight="#F48FB1"
+        />
+      );
+    }
+
+    if (testType === 'job') {
+      return (
+        <ResultPageParrot
+          result={result}
+          onRestart={handleRestart}
+          titleText="나와 어울리는 직업은!"
+          themeColor="#2980B9"
+          themeColorLight="#5DADE2"
+        />
+      );
+    }
+
+    if (testType === 'parrot' || testType === 'office') {
       return (
         <ResultPageParrot
           result={result}
