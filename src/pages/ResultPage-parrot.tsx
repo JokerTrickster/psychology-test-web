@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, Button, Paper, Chip } from '@mui/material';
+import { Box, Typography, Button, Paper, Chip, Snackbar, Alert } from '@mui/material';
 import type { BirdResult } from '../types-score';
 import ReplayIcon from '@mui/icons-material/Replay';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import CheckIcon from '@mui/icons-material/Check';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 
@@ -29,6 +31,28 @@ const ResultPageParrot: React.FC<ResultPageParrotProps> = ({
 }) => {
     const showContent = true;
     const [showConfetti, setShowConfetti] = useState(false);
+    const [copied, setCopied] = useState(false);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+    const handleCopyLink = async () => {
+        const shareText = `${titleText} ${result.name}\n${result.summary}\n\n${window.location.origin}`;
+        try {
+            await navigator.clipboard.writeText(shareText);
+            setCopied(true);
+            setSnackbarOpen(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch {
+            const textarea = document.createElement('textarea');
+            textarea.value = shareText;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            setCopied(true);
+            setSnackbarOpen(true);
+            setTimeout(() => setCopied(false), 2000);
+        }
+    };
 
     const [confettiItems] = useState(() => {
         return Array.from({ length: 18 }, (_, i) => ({
@@ -441,27 +465,48 @@ const ResultPageParrot: React.FC<ResultPageParrotProps> = ({
                     py: { xs: 1.4, sm: 0 },
                     px: { xs: 2, sm: 0 },
                     display: 'flex',
+                    gap: { xs: 1, sm: 1.5 },
                     justifyContent: 'center',
                 }}
             >
+                <Button
+                    variant="outlined"
+                    size="large"
+                    startIcon={copied ? <CheckIcon /> : <ContentCopyIcon />}
+                    onClick={handleCopyLink}
+                    sx={{
+                        minWidth: { xs: 0, sm: '140px' },
+                        flex: { xs: '0 0 auto', sm: 'none' },
+                        fontSize: { xs: '0.85rem', sm: '1.1rem' },
+                        fontWeight: 700,
+                        padding: { xs: '11px 16px', sm: '16px 28px' },
+                        borderWidth: '2px',
+                        borderColor: copied ? themeColor : hexToRgba(themeColor, 0.4),
+                        color: copied ? '#fff' : themeColor,
+                        backgroundColor: copied ? themeColor : 'transparent',
+                        transition: 'all 0.3s ease',
+                        '&:hover': {
+                            borderWidth: '2px',
+                            borderColor: themeColor,
+                            backgroundColor: hexToRgba(themeColor, 0.08),
+                        },
+                        '&:active': { transform: 'scale(0.96)' },
+                    }}
+                >
+                    {copied ? '복사됨' : '공유'}
+                </Button>
                 <Button
                     variant="contained"
                     size="large"
                     startIcon={<ReplayIcon />}
                     onClick={onRestart}
                     sx={{
-                        minWidth: { xs: '200px', sm: '240px' },
-                        width: { xs: '100%', sm: 'auto' },
+                        flex: { xs: 1, sm: 'none' },
+                        minWidth: { xs: 0, sm: '200px' },
                         maxWidth: '300px',
-                        fontSize: {
-                            xs: '0.95rem',
-                            sm: '1.25rem',
-                        },
+                        fontSize: { xs: '0.95rem', sm: '1.25rem' },
                         fontWeight: 700,
-                        padding: {
-                            xs: '11px 24px',
-                            sm: '16px 40px',
-                        },
+                        padding: { xs: '11px 24px', sm: '16px 40px' },
                         background: `linear-gradient(135deg, ${themeColorLight} 0%, ${themeColor} 100%)`,
                         color: '#fff',
                         boxShadow: `0 8px 24px ${hexToRgba(themeColor, 0.4)}`,
@@ -469,14 +514,31 @@ const ResultPageParrot: React.FC<ResultPageParrotProps> = ({
                             background: `linear-gradient(135deg, ${themeColor} 0%, ${themeColorLight} 100%)`,
                             boxShadow: `0 12px 36px ${hexToRgba(themeColor, 0.6)}`,
                         },
-                        '&:active': {
-                            transform: 'scale(0.98)',
-                        },
+                        '&:active': { transform: 'scale(0.98)' },
                     }}
                 >
                     다시 테스트하기
                 </Button>
             </Box>
+
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={2000}
+                onClose={() => setSnackbarOpen(false)}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+                <Alert
+                    onClose={() => setSnackbarOpen(false)}
+                    severity="success"
+                    variant="filled"
+                    sx={{
+                        background: `linear-gradient(135deg, ${themeColor}, ${themeColorLight})`,
+                        fontWeight: 600,
+                    }}
+                >
+                    링크가 복사되었습니다!
+                </Alert>
+            </Snackbar>
 
             {/* Confetti animation */}
             <style>

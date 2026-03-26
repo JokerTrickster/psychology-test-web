@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, Button, Paper } from '@mui/material';
+import { Box, Typography, Button, Paper, Snackbar, Alert } from '@mui/material';
 import type { Node } from '../types';
 import LovebirdIllustration from '../components/LovebirdIllustration';
 import ReplayIcon from '@mui/icons-material/Replay';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import CheckIcon from '@mui/icons-material/Check';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import StarIcon from '@mui/icons-material/Star';
 
@@ -14,9 +16,30 @@ interface ResultPageProps {
 }
 
 const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart, summary }) => {
-    // Remove local animation state - handled by App.tsx AnimatePresence
     const showContent = true;
     const [showConfetti, setShowConfetti] = useState(false);
+    const [copied, setCopied] = useState(false);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+    const handleCopyLink = async () => {
+        const shareText = `나는 어떤 앵무새일까? 결과: ${node.title}\n${summary || ''}\n\n${window.location.origin}`;
+        try {
+            await navigator.clipboard.writeText(shareText);
+            setCopied(true);
+            setSnackbarOpen(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch {
+            const textarea = document.createElement('textarea');
+            textarea.value = shareText;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            setCopied(true);
+            setSnackbarOpen(true);
+            setTimeout(() => setCopied(false), 2000);
+        }
+    };
 
     // Generate random confetti items - use useState with lazy initializer to avoid calling Math.random during render
     const [confettiItems] = useState(() => {
@@ -376,58 +399,80 @@ const ResultPage: React.FC<ResultPageProps> = ({ node, onRestart, summary }) => 
                     py: { xs: 1.4, sm: 0 },
                     px: { xs: 2, sm: 0 },
                     display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: { xs: 0, sm: 1 },
+                    gap: { xs: 1, sm: 1.5 },
+                    justifyContent: 'center',
                 }}
             >
-
-                {/* Restart button */}
-                <Box
-                    className={showContent ? 'fade-in' : ''}
+                <Button
+                    variant="outlined"
+                    size="large"
+                    startIcon={copied ? <CheckIcon /> : <ContentCopyIcon />}
+                    onClick={handleCopyLink}
                     sx={{
-                        opacity: showContent ? 1 : 0,
-                        animationDelay: '0.9s',
-                        zIndex: 1,
-                        width: '100%',
-                        display: 'flex',
-                        justifyContent: 'center',
+                        minWidth: { xs: 0, sm: '140px' },
+                        flex: { xs: '0 0 auto', sm: 'none' },
+                        fontSize: { xs: '0.85rem', sm: '1.1rem' },
+                        fontWeight: 700,
+                        padding: { xs: '11px 16px', sm: '16px 28px' },
+                        borderWidth: '2px',
+                        borderColor: copied ? '#5CA632' : 'rgba(126, 200, 80, 0.5)',
+                        color: copied ? '#fff' : '#5CA632',
+                        backgroundColor: copied ? '#5CA632' : 'transparent',
+                        transition: 'all 0.3s ease',
+                        '&:hover': {
+                            borderWidth: '2px',
+                            borderColor: '#5CA632',
+                            backgroundColor: 'rgba(126, 200, 80, 0.08)',
+                        },
+                        '&:active': { transform: 'scale(0.96)' },
                     }}
                 >
-                    <Button
-                        variant="contained"
-                        size="large"
-                        startIcon={<ReplayIcon />}
-                        onClick={onRestart}
-                        sx={{
-                            minWidth: { xs: '200px', sm: '240px' },
-                            width: { xs: '100%', sm: 'auto' },
-                            maxWidth: '300px',
-                            fontSize: {
-                                xs: '0.95rem',      // 320px - bigger
-                                sm: '1.25rem',   // 600px+
-                            },
-                            fontWeight: 700,
-                            padding: {
-                                xs: '11px 24px',   // 320px - bigger
-                                sm: '16px 40px',   // 600px+
-                            },
-                            background: 'linear-gradient(135deg, #FFE84D 0%, #FFD700 100%)',
-                            color: '#2C2C2C',
-                            boxShadow: '0 8px 24px rgba(255, 232, 77, 0.4)',
-                            '&:hover': {
-                                background: 'linear-gradient(135deg, #FFD700 0%, #FFE84D 100%)',
-                                boxShadow: '0 12px 36px rgba(255, 232, 77, 0.6)',
-                            },
-                            '&:active': {
-                                transform: 'scale(0.98)',
-                            },
-                        }}
-                    >
-                        다시 테스트하기
-                    </Button>
-                </Box>
+                    {copied ? '복사됨' : '공유'}
+                </Button>
+                <Button
+                    variant="contained"
+                    size="large"
+                    startIcon={<ReplayIcon />}
+                    onClick={onRestart}
+                    sx={{
+                        flex: { xs: 1, sm: 'none' },
+                        minWidth: { xs: 0, sm: '200px' },
+                        maxWidth: '300px',
+                        fontSize: { xs: '0.95rem', sm: '1.25rem' },
+                        fontWeight: 700,
+                        padding: { xs: '11px 24px', sm: '16px 40px' },
+                        background: 'linear-gradient(135deg, #FFE84D 0%, #FFD700 100%)',
+                        color: '#2C2C2C',
+                        boxShadow: '0 8px 24px rgba(255, 232, 77, 0.4)',
+                        '&:hover': {
+                            background: 'linear-gradient(135deg, #FFD700 0%, #FFE84D 100%)',
+                            boxShadow: '0 12px 36px rgba(255, 232, 77, 0.6)',
+                        },
+                        '&:active': { transform: 'scale(0.98)' },
+                    }}
+                >
+                    다시 테스트하기
+                </Button>
             </Box>
+
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={2000}
+                onClose={() => setSnackbarOpen(false)}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+                <Alert
+                    onClose={() => setSnackbarOpen(false)}
+                    severity="success"
+                    variant="filled"
+                    sx={{
+                        background: 'linear-gradient(135deg, #5CA632, #7EC850)',
+                        fontWeight: 600,
+                    }}
+                >
+                    링크가 복사되었습니다!
+                </Alert>
+            </Snackbar>
 
             {/* Confetti animation */}
             <style>
