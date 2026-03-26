@@ -3,14 +3,20 @@ import { ThemeProvider, CssBaseline } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import theme from './theme';
 import Layout from './components/Layout';
+import TestSelectPage from './pages/TestSelectPage';
 import StartPage from './pages/StartPage';
 import QuestionPage from './pages/QuestionPage-score';
 import ResultPage from './pages/ResultPage';
+import ResultPageParrot from './pages/ResultPage-parrot';
 import scoreData from './scenario/score-data.json';
+import parrotData from './scenario/parrot-data.json';
 import type { ScoreScenario, BirdResult } from './types-score';
 
-// Cast the JSON data to specific type
-const scenario = scoreData as ScoreScenario;
+// Cast the JSON data to specific types
+const lovebirdScenario = scoreData as ScoreScenario;
+const parrotScenario = parrotData as ScoreScenario;
+
+type TestType = 'lovebird' | 'parrot' | null;
 
 // Page transition variants
 const pageVariants = {
@@ -37,11 +43,28 @@ const pageVariants = {
 };
 
 function App() {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(-1); // -1 = start, 0-9 = questions, 10+ = result
+  const [testType, setTestType] = useState<TestType>(null);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(-1); // -1 = start, 0+ = questions
   const [totalScore, setTotalScore] = useState<number>(0);
-  const [answers, setAnswers] = useState<number[]>([]); // 선택한 점수 기록용
+  const [answers, setAnswers] = useState<number[]>([]);
 
-  // Initialize test
+  // Current scenario based on test type
+  const currentScenario = testType === 'parrot' ? parrotScenario : lovebirdScenario;
+
+  // Handle test selection
+  const handleSelectTest = (type: TestType) => {
+    setTestType(type);
+    setCurrentQuestionIndex(-1);
+    setTotalScore(0);
+    setAnswers([]);
+    if (type === 'parrot') {
+      // Parrot test goes directly to first question
+      setCurrentQuestionIndex(0);
+    }
+    // Lovebird keeps -1 to show StartPage first
+  };
+
+  // Initialize test (for lovebird StartPage)
   const handleStart = () => {
     setCurrentQuestionIndex(0);
     setTotalScore(0);
@@ -56,17 +79,16 @@ function App() {
     setAnswers(newAnswers);
     setTotalScore(newScore);
 
-    // 다음 질문으로 이동 또는 결과 표시
-    if (currentQuestionIndex < scenario.questions.length - 1) {
+    if (currentQuestionIndex < currentScenario.questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      // 모든 질문 완료, 결과 표시
-      setCurrentQuestionIndex(scenario.questions.length);
+      setCurrentQuestionIndex(currentScenario.questions.length);
     }
   };
 
-  // Handle restart
+  // Handle restart — go back to test selection
   const handleRestart = () => {
+    setTestType(null);
     setCurrentQuestionIndex(-1);
     setTotalScore(0);
     setAnswers([]);
@@ -74,38 +96,43 @@ function App() {
 
   // Get current bird result based on total score
   const getCurrentResult = (): BirdResult | null => {
-    if (currentQuestionIndex < scenario.questions.length) return null;
+    if (currentQuestionIndex < currentScenario.questions.length) return null;
 
-    // 점수에 맞는 결과 찾기
-    const result = scenario.results.find(r =>
+    const result = currentScenario.results.find(r =>
       totalScore >= r.scoreRange[0] && totalScore <= r.scoreRange[1]
     );
 
-    return result || scenario.results.find(r => r.scoreRange[0] === 0 && r.scoreRange[1] === 0) || null;
+    return result || currentScenario.results.find(r => r.scoreRange[0] === 0 && r.scoreRange[1] === 0) || null;
   };
 
   // Get current page key for AnimatePresence
   const getPageKey = () => {
-    if (currentQuestionIndex === -1) return 'start';
-    if (currentQuestionIndex < scenario.questions.length) return `question-${currentQuestionIndex}`;
-    return 'result';
+    if (testType === null) return 'select';
+    if (testType === 'lovebird' && currentQuestionIndex === -1) return 'start-lovebird';
+    if (currentQuestionIndex < currentScenario.questions.length) return `question-${testType}-${currentQuestionIndex}`;
+    return `result-${testType}`;
   };
 
   // Determine which page to show
   const renderContent = () => {
-    // Start page
-    if (currentQuestionIndex === -1) {
+    // Test selection page
+    if (testType === null) {
+      return <TestSelectPage onSelectTest={handleSelectTest} />;
+    }
+
+    // Lovebird: show StartPage first
+    if (testType === 'lovebird' && currentQuestionIndex === -1) {
       return <StartPage onStart={handleStart} />;
     }
 
-    // Questions
-    if (currentQuestionIndex < scenario.questions.length) {
-      const currentQuestion = scenario.questions[currentQuestionIndex];
+    // Questions (shared for both test types)
+    if (currentQuestionIndex < currentScenario.questions.length) {
+      const currentQuestion = currentScenario.questions[currentQuestionIndex];
       return (
         <QuestionPage
           question={currentQuestion}
           questionNumber={currentQuestionIndex + 1}
-          totalQuestions={scenario.questions.length}
+          totalQuestions={currentScenario.questions.length}
           onSelectOption={handleSelectOption}
         />
       );
@@ -117,6 +144,17 @@ function App() {
       return <div>Error: Result not found for score {totalScore}</div>;
     }
 
+    // Parrot test uses new result page style
+    if (testType === 'parrot') {
+      return (
+        <ResultPageParrot
+          result={result}
+          onRestart={handleRestart}
+        />
+      );
+    }
+
+    // Lovebird test uses original result page
     return (
       <ResultPage
         node={{
