@@ -1,10 +1,12 @@
 import React from 'react';
-import { Box, Typography, Paper, IconButton } from '@mui/material';
+import { Box, Typography, Paper, IconButton, Chip } from '@mui/material';
 import LovebirdIllustration from '../components/LovebirdIllustration';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import StorefrontIcon from '@mui/icons-material/Storefront';
+import QuizIcon from '@mui/icons-material/Quiz';
+import PetsIcon from '@mui/icons-material/Pets';
 
 const socialLinks = [
     { icon: <YouTubeIcon />, label: 'YouTube', url: 'https://www.youtube.com/@%EB%AA%A8%EB%9E%80%EB%8F%84%EB%9E%80%EC%95%B5%ED%8A%9C%EB%B8%8C', color: '#FF0000' },
@@ -22,13 +24,42 @@ const socialLinks = [
     { icon: <StorefrontIcon />, label: '쇼핑몰', url: 'https://link.inpock.co.kr/molandolan', color: '#FF9800' },
 ];
 
+const testCards = [
+    {
+        type: 'lovebird' as const,
+        category: '성격 유형',
+        categoryIcon: <QuizIcon sx={{ fontSize: '0.75rem' }} />,
+        title: '나는 어떤 앵무새일까?',
+        subtitle: '31가지 앵무새 중 나의 성격 유형 찾기',
+        meta: '10문항 · 약 2분',
+        birdVariant: 'couple' as const,
+        birdColor: 'pepe-green' as const,
+        accentColor: '#5CA632',
+        accentColorLight: 'rgba(126, 200, 80, 0.12)',
+        accentColorBorder: 'rgba(126, 200, 80, 0.3)',
+        bgGradient: 'linear-gradient(160deg, rgba(126, 200, 80, 0.06) 0%, rgba(184, 233, 134, 0.12) 100%)',
+    },
+    {
+        type: 'parrot' as const,
+        category: '궁합 테스트',
+        categoryIcon: <PetsIcon sx={{ fontSize: '0.75rem' }} />,
+        title: '나랑 궁합 좋은 모란도란은?',
+        subtitle: '5마리 앵무새 중 나의 성격 궁합 찾기',
+        meta: '5문항 · 약 1분',
+        birdVariant: 'flying' as const,
+        birdColor: 'violet-butter' as const,
+        accentColor: '#9B59B6',
+        accentColorLight: 'rgba(186, 135, 211, 0.12)',
+        accentColorBorder: 'rgba(186, 135, 211, 0.3)',
+        bgGradient: 'linear-gradient(160deg, rgba(232, 160, 191, 0.06) 0%, rgba(186, 135, 211, 0.12) 100%)',
+    },
+];
+
 interface TestSelectPageProps {
     onSelectTest: (type: 'lovebird' | 'parrot') => void;
 }
 
 const TestSelectPage: React.FC<TestSelectPageProps> = ({ onSelectTest }) => {
-    const showContent = true;
-
     return (
         <Box
             sx={{
@@ -38,71 +69,33 @@ const TestSelectPage: React.FC<TestSelectPageProps> = ({ onSelectTest }) => {
                 justifyContent: 'flex-start',
                 height: '100%',
                 textAlign: 'center',
-                gap: { xs: 1.5, sm: 3 },
+                gap: { xs: 2, sm: 3 },
                 position: 'relative',
                 overflow: 'hidden',
-                py: { xs: 2, sm: 3 },
+                py: { xs: 2.5, sm: 3 },
                 px: { xs: 2, sm: 0 },
             }}
         >
             {/* Decorative floating hearts */}
-            <Box
-                sx={{
-                    position: 'absolute',
-                    top: '5%',
-                    left: '10%',
-                    opacity: 0.4,
-                    animation: 'float 4s ease-in-out infinite',
-                }}
-            >
+            <Box sx={{ position: 'absolute', top: '5%', left: '10%', opacity: 0.4, animation: 'float 4s ease-in-out infinite' }}>
                 <FavoriteIcon sx={{ fontSize: 35, color: '#7EC850' }} />
             </Box>
-            <Box
-                sx={{
-                    position: 'absolute',
-                    top: '12%',
-                    right: '12%',
-                    opacity: 0.3,
-                    animation: 'float 5s ease-in-out infinite',
-                    animationDelay: '1.5s',
-                }}
-            >
+            <Box sx={{ position: 'absolute', top: '12%', right: '12%', opacity: 0.3, animation: 'float 5s ease-in-out infinite', animationDelay: '1.5s' }}>
                 <FavoriteIcon sx={{ fontSize: 28, color: '#E8A0BF' }} />
             </Box>
 
-            {/* Couple illustration */}
-            <Box
-                className={showContent ? 'fade-in' : ''}
-                sx={{
-                    opacity: showContent ? 1 : 0,
-                    mb: { xs: 0, sm: 1 },
-                }}
-            >
-                <LovebirdIllustration
-                    variant="couple"
-                    size={{ xs: 50, sm: 90, md: 100 }}
-                    animated
-                />
+            {/* Header: illustration + title */}
+            <Box sx={{ mb: { xs: 0, sm: 0.5 } }}>
+                <LovebirdIllustration variant="couple" size={{ xs: 50, sm: 90, md: 100 }} animated />
             </Box>
 
-            {/* Title */}
-            <Box
-                className={showContent ? 'fade-in' : ''}
-                sx={{
-                    opacity: showContent ? 1 : 0,
-                    animationDelay: '0.15s',
-                }}
-            >
+            <Box>
                 <Typography
                     variant="h1"
                     component="h1"
                     sx={{
                         fontWeight: 800,
-                        fontSize: {
-                            xs: '1.4rem',
-                            sm: '2.5rem',
-                            md: '3rem',
-                        },
+                        fontSize: { xs: '1.4rem', sm: '2.5rem', md: '3rem' },
                         color: '#5CA632',
                         textShadow: '0 2px 8px rgba(92, 166, 50, 0.3)',
                         mb: { xs: 0.5, sm: 1 },
@@ -111,13 +104,7 @@ const TestSelectPage: React.FC<TestSelectPageProps> = ({ onSelectTest }) => {
                 >
                     어떤 테스트를 해볼까?
                 </Typography>
-                <Typography
-                    variant="body2"
-                    sx={{
-                        color: '#888',
-                        fontSize: { xs: '0.8rem', sm: '1rem' },
-                    }}
-                >
+                <Typography variant="body2" sx={{ color: '#888', fontSize: { xs: '0.8rem', sm: '1rem' } }}>
                     하고 싶은 테스트를 골라보세요!
                 </Typography>
             </Box>
@@ -126,129 +113,137 @@ const TestSelectPage: React.FC<TestSelectPageProps> = ({ onSelectTest }) => {
             <Box
                 sx={{
                     display: 'flex',
-                    flexDirection: { xs: 'column', sm: 'row' },
-                    gap: { xs: 1.5, sm: 2.5 },
+                    flexDirection: 'column',
+                    gap: { xs: 1.5, sm: 2 },
                     width: '100%',
-                    mt: { xs: 1, sm: 2 },
+                    mt: { xs: 0.5, sm: 1 },
                 }}
             >
-                {/* Card 1: Lovebird test */}
-                <Paper
-                    className={showContent ? 'fade-in' : ''}
-                    elevation={3}
-                    onClick={() => onSelectTest('lovebird')}
-                    sx={{
-                        opacity: showContent ? 1 : 0,
-                        animationDelay: '0.3s',
-                        flex: 1,
-                        p: { xs: 2, sm: 3 },
-                        borderRadius: { xs: '16px', sm: '24px' },
-                        cursor: 'pointer',
-                        background: 'linear-gradient(135deg, rgba(126, 200, 80, 0.1) 0%, rgba(184, 233, 134, 0.15) 100%)',
-                        border: '2px solid rgba(126, 200, 80, 0.3)',
-                        transition: 'all 0.3s ease',
-                        '&:hover': {
-                            transform: 'scale(1.02)',
-                            boxShadow: '0 12px 36px rgba(126, 200, 80, 0.35)',
-                            borderColor: '#7EC850',
-                        },
-                        '&:active': {
-                            transform: 'scale(0.98)',
-                        },
-                    }}
-                >
-                    <Box sx={{ mb: 1 }}>
-                        <LovebirdIllustration
-                            variant="flying"
-                            color="pepe-green"
-                            size={{ xs: 35, sm: 50 }}
-                            animated
-                        />
-                    </Box>
-                    <Typography
-                        variant="h6"
+                {testCards.map((card) => (
+                    <Paper
+                        key={card.type}
+                        elevation={0}
+                        onClick={() => onSelectTest(card.type)}
                         sx={{
-                            fontWeight: 700,
-                            color: '#5CA632',
-                            fontSize: { xs: '1rem', sm: '1.25rem' },
-                            mb: 0.5,
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            gap: { xs: 1.5, sm: 2.5 },
+                            p: { xs: 2, sm: 2.5 },
+                            borderRadius: { xs: '16px', sm: '20px' },
+                            cursor: 'pointer',
+                            background: card.bgGradient,
+                            border: `1.5px solid ${card.accentColorBorder}`,
+                            transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+                            position: 'relative',
+                            overflow: 'hidden',
+                            '&:hover': {
+                                transform: 'translateY(-3px)',
+                                boxShadow: `0 12px 32px ${card.accentColorBorder}`,
+                                borderColor: card.accentColor,
+                            },
+                            '&:active': {
+                                transform: 'translateY(0) scale(0.99)',
+                            },
                         }}
                     >
-                        나는 어떤 앵무새일까?
-                    </Typography>
-                    <Typography
-                        variant="body2"
-                        sx={{
-                            color: '#777',
-                            fontSize: { xs: '0.75rem', sm: '0.85rem' },
-                        }}
-                    >
-                        31가지 앵무새 중 나의 성격 유형 찾기
-                    </Typography>
-                </Paper>
+                        {/* Left: illustration area */}
+                        <Box
+                            sx={{
+                                flexShrink: 0,
+                                width: { xs: 72, sm: 90 },
+                                height: { xs: 72, sm: 90 },
+                                borderRadius: { xs: '14px', sm: '16px' },
+                                backgroundColor: card.accentColorLight,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }}
+                        >
+                            <LovebirdIllustration
+                                variant={card.birdVariant}
+                                color={card.birdColor}
+                                size={{ xs: 48, sm: 60 }}
+                                animated
+                            />
+                        </Box>
 
-                {/* Card 2: Parrot compatibility test */}
-                <Paper
-                    className={showContent ? 'fade-in' : ''}
-                    elevation={3}
-                    onClick={() => onSelectTest('parrot')}
-                    sx={{
-                        opacity: showContent ? 1 : 0,
-                        animationDelay: '0.45s',
-                        flex: 1,
-                        p: { xs: 2, sm: 3 },
-                        borderRadius: { xs: '16px', sm: '24px' },
-                        cursor: 'pointer',
-                        background: 'linear-gradient(135deg, rgba(232, 160, 191, 0.1) 0%, rgba(186, 135, 211, 0.15) 100%)',
-                        border: '2px solid rgba(186, 135, 211, 0.3)',
-                        transition: 'all 0.3s ease',
-                        '&:hover': {
-                            transform: 'scale(1.02)',
-                            boxShadow: '0 12px 36px rgba(186, 135, 211, 0.35)',
-                            borderColor: '#BA87D3',
-                        },
-                        '&:active': {
-                            transform: 'scale(0.98)',
-                        },
-                    }}
-                >
-                    <Box sx={{ mb: 1 }}>
-                        <LovebirdIllustration
-                            variant="flying"
-                            color="violet-butter"
-                            size={{ xs: 35, sm: 50 }}
-                            animated
-                        />
-                    </Box>
-                    <Typography
-                        variant="h6"
-                        sx={{
-                            fontWeight: 700,
-                            color: '#9B59B6',
-                            fontSize: { xs: '1rem', sm: '1.25rem' },
-                            mb: 0.5,
-                        }}
-                    >
-                        나랑 궁합 좋은 모란도란은?
-                    </Typography>
-                    <Typography
-                        variant="body2"
-                        sx={{
-                            color: '#777',
-                            fontSize: { xs: '0.75rem', sm: '0.85rem' },
-                        }}
-                    >
-                        5마리 앵무새 중 나의 성격 궁합 찾기
-                    </Typography>
-                </Paper>
+                        {/* Right: text content */}
+                        <Box sx={{ flex: 1, textAlign: 'left', minWidth: 0 }}>
+                            <Chip
+                                icon={card.categoryIcon}
+                                label={card.category}
+                                size="small"
+                                sx={{
+                                    height: 22,
+                                    fontSize: '0.65rem',
+                                    fontWeight: 700,
+                                    backgroundColor: card.accentColorLight,
+                                    color: card.accentColor,
+                                    border: `1px solid ${card.accentColorBorder}`,
+                                    borderRadius: '6px',
+                                    mb: 0.8,
+                                    '& .MuiChip-icon': {
+                                        color: card.accentColor,
+                                        ml: '4px',
+                                    },
+                                }}
+                            />
+                            <Typography
+                                variant="h6"
+                                sx={{
+                                    fontWeight: 700,
+                                    color: '#2C2C2C',
+                                    fontSize: { xs: '0.95rem', sm: '1.15rem' },
+                                    mb: 0.3,
+                                    lineHeight: 1.3,
+                                }}
+                            >
+                                {card.title}
+                            </Typography>
+                            <Typography
+                                variant="body2"
+                                sx={{
+                                    color: '#888',
+                                    fontSize: { xs: '0.72rem', sm: '0.82rem' },
+                                    mb: 0.5,
+                                    lineHeight: 1.4,
+                                }}
+                            >
+                                {card.subtitle}
+                            </Typography>
+                            <Typography
+                                variant="caption"
+                                sx={{
+                                    color: card.accentColor,
+                                    fontSize: { xs: '0.65rem', sm: '0.72rem' },
+                                    fontWeight: 600,
+                                    opacity: 0.8,
+                                }}
+                            >
+                                {card.meta}
+                            </Typography>
+                        </Box>
+
+                        {/* Arrow indicator */}
+                        <Box
+                            sx={{
+                                flexShrink: 0,
+                                color: card.accentColor,
+                                opacity: 0.4,
+                                fontSize: { xs: '1.2rem', sm: '1.4rem' },
+                                fontWeight: 300,
+                            }}
+                        >
+                            ›
+                        </Box>
+                    </Paper>
+                ))}
             </Box>
 
             {/* Social links */}
             <Box
-                className={showContent ? 'fade-in' : ''}
                 sx={{
-                    opacity: showContent ? 1 : 0,
-                    animationDelay: '0.6s',
                     display: 'flex',
                     gap: { xs: 1.5, sm: 2 },
                     justifyContent: 'center',
@@ -288,11 +283,9 @@ const TestSelectPage: React.FC<TestSelectPageProps> = ({ onSelectTest }) => {
 
             {/* Bottom text */}
             <Typography
-                className={showContent ? 'fade-in' : ''}
                 variant="body2"
                 sx={{
-                    opacity: showContent ? 0.6 : 0,
-                    animationDelay: '0.7s',
+                    opacity: 0.6,
                     color: '#999',
                     fontSize: { xs: '0.7rem', sm: '0.85rem' },
                     mt: { xs: 0.5, sm: 1 },

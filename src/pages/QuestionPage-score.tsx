@@ -17,7 +17,6 @@ const QuestionPageScore: React.FC<QuestionPageScoreProps> = ({
     totalQuestions,
     onSelectOption
 }) => {
-    const showContent = true;
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
     const birdColors: Array<'pepe-green' | 'violet-butter' | 'pepe-yellow' | 'yellowface-green' | 'pepe-lime'> = [
@@ -100,11 +99,8 @@ const QuestionPageScore: React.FC<QuestionPageScoreProps> = ({
 
             {/* Question text box */}
             <Paper
-                className={showContent ? 'bounce-in' : ''}
                 elevation={3}
                 sx={{
-                    opacity: showContent ? 1 : 0,
-                    animationDelay: '0.2s',
                     p: { xs: 1.8, sm: 4 },
                     background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 249, 250, 0.95) 100%)',
                     backdropFilter: 'blur(12px)',
@@ -190,10 +186,7 @@ const QuestionPageScore: React.FC<QuestionPageScoreProps> = ({
                     return (
                         <Box
                             key={index}
-                            className={showContent ? 'fade-in' : ''}
                             sx={{
-                                opacity: showContent ? 1 : 0,
-                                animationDelay: `${0.4 + index * 0.1}s`,
                                 position: 'relative',
                             }}
                         >
