@@ -8,6 +8,7 @@ import StartPage from './pages/StartPage';
 import QuestionPage from './pages/QuestionPage-score';
 import ResultPage from './pages/ResultPage';
 import ResultPageParrot from './pages/ResultPage-parrot';
+import SunflowerGame from './pages/SunflowerGame';
 import scoreData from './scenario/score-data.json';
 import parrotData from './scenario/parrot-data.json';
 import officeData from './scenario/office-data.json';
@@ -21,7 +22,7 @@ const officeScenario = officeData as ScoreScenario;
 const jobScenario = jobData as ScoreScenario;
 const mbtiScenario = mbtiData as ScoreScenario;
 
-type TestType = 'lovebird' | 'parrot' | 'office' | 'job' | 'mbti' | null;
+type TestType = 'lovebird' | 'parrot' | 'office' | 'job' | 'mbti' | 'sunflower' | null;
 
 // Page transition variants
 const pageVariants = {
@@ -104,6 +105,7 @@ function App() {
   // Get current page key for AnimatePresence
   const getPageKey = () => {
     if (testType === null) return 'select';
+    if (testType === 'sunflower') return 'sunflower-game';
     if (testType === 'lovebird' && currentQuestionIndex === -1) return 'start-lovebird';
     if (currentQuestionIndex < currentScenario.questions.length) return `question-${testType}-${currentQuestionIndex}`;
     return `result-${testType}`;
@@ -114,6 +116,11 @@ function App() {
     // Test selection page
     if (testType === null) {
       return <TestSelectPage onSelectTest={handleSelectTest} />;
+    }
+
+    // Sunflower game
+    if (testType === 'sunflower') {
+      return <SunflowerGame onRestart={handleRestart} />;
     }
 
     // Lovebird: show StartPage first
