@@ -22,3 +22,35 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Backup / sync
+.bkit/
+
+# Claude AI (keep only project-specific skills)
+.claude/agents/
+.claude/commands/
+.claude/settings.json
+.claude/skills/README.md
+.claude/skills/skill-rules.json
+.claude/skills/brand-guidelines/
+.claude/skills/docx/
+.claude/skills/error-tracking/
+.claude/skills/flutter-mobile-guidelines/
+.claude/skills/flutter-testing-guidelines/
+.claude/skills/go-backend-guidelines/
+.claude/skills/go-testing-guidelines/
+.claude/skills/mermaid/
+.claude/skills/pdf/
+.claude/skills/ppt-brand-guidelines/
+.claude/skills/pptx/
+.claude/skills/skill-developer/
+.claude/skills/unity-game-guidelines/
+.claude/skills/unity-testing-guidelines/
+.claude/skills/vercel-react-best-practices/
+.claude/skills/web-design-guidelines/
+
+# Test coverage
+coverage/
+
+# Generated docs
+docs/
