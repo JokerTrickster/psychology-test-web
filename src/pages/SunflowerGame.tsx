@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Box, Typography, Button, Paper } from '@mui/material';
-import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import LovebirdIllustration from '../components/LovebirdIllustration';
 import ReplayIcon from '@mui/icons-material/Replay';
 import HomeIcon from '@mui/icons-material/Home';
 
 type GamePhase = 'idle' | 'showing' | 'shuffling' | 'selecting' | 'correct' | 'gameover' | 'cleared';
 
-type BirdColor = 'pepe-green' | 'violet-butter' | 'pepe-yellow' | 'yellowface-green' | 'pepe-lime';
+type BirdColor = 'pepe-green' | 'violet-butter' | 'pepe-yellow' | 'yellowface-green' | 'pepe-lime' | 'white';
 
-const ALL_COLORS: BirdColor[] = ['pepe-green', 'violet-butter', 'pepe-yellow', 'yellowface-green', 'pepe-lime'];
+const ROUND_COLORS: BirdColor[] = ['white', 'pepe-green', 'pepe-yellow', 'pepe-green', 'pepe-yellow'];
 
 interface SunflowerGameProps {
     onRestart: () => void;
@@ -27,7 +27,8 @@ const SunflowerGame: React.FC<SunflowerGameProps> = ({ onRestart }) => {
     const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const birdCount = round <= 2 ? 3 : 5;
-    const colors = ALL_COLORS.slice(0, birdCount);
+    const roundColor = ROUND_COLORS[round - 1];
+    const colors = Array(birdCount).fill(roundColor) as BirdColor[];
 
     const clearAllTimers = useCallback(() => {
         if (shuffleTimerRef.current) {
@@ -147,49 +148,38 @@ const SunflowerGame: React.FC<SunflowerGameProps> = ({ onRestart }) => {
 
     const renderBirds = () => {
         return (
-            <LayoutGroup>
-                <Box sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    gap: { xs: positions.length <= 3 ? 3 : 1.5, sm: positions.length <= 3 ? 5 : 3 },
-                    width: '100%',
-                    zIndex: 1,
-                }}>
-                    {positions.map((birdId) => {
-                        const isTarget = birdId === targetBird;
-                        const isHighlighted = phase === 'showing' && isTarget;
-                        const isSelected = phase !== 'shuffling' && phase !== 'showing' && selectedBird === birdId;
-                        const isSwapping = swappingPair?.includes(birdId) ?? false;
-                        const isRevealed = (phase === 'gameover' || phase === 'correct' || phase === 'cleared') && isTarget;
-                        const isSelectable = phase === 'selecting';
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: { xs: positions.length <= 3 ? 3 : 1.5, sm: positions.length <= 3 ? 5 : 3 },
+                width: '100%',
+                zIndex: 1,
+            }}>
+                {positions.map((birdId) => {
+                    const isTarget = birdId === targetBird;
+                    const isHighlighted = phase === 'showing' && isTarget;
+                    const isSelected = phase !== 'shuffling' && phase !== 'showing' && selectedBird === birdId;
+                    const isSwapping = swappingPair?.includes(birdId) ?? false;
+                    const isRevealed = (phase === 'gameover' || phase === 'correct' || phase === 'cleared') && isTarget;
+                    const isSelectable = phase === 'selecting';
 
-                        return (
-                            <motion.div
-                                key={birdId}
-                                layout
-                                layoutTransition={{ type: 'spring', stiffness: 300, damping: 25 }}
-                                transition={{
-                                    layout: {
-                                        type: 'spring',
-                                        stiffness: 250,
-                                        damping: 22,
-                                        duration: 0.65,
-                                    },
-                                }}
-                                animate={{
-                                    y: isSwapping ? [0, -45, 0] : 0,
-                                    rotate: isSwapping ? [0, 360] : 0,
-                                    scale: isSwapping ? [1, 1.1, 1] : 1,
-                                }}
-                                whileHover={isSelectable ? { scale: 1.15, y: -5 } : {}}
-                                whileTap={isSelectable ? { scale: 0.95 } : {}}
-                                style={{
-                                    cursor: isSelectable ? 'pointer' : 'default',
-                                    zIndex: isSwapping ? 10 : 1,
-                                    position: 'relative',
-                                }}
-                                onClick={() => handleSelect(birdId)}
+                    return (
+                        <motion.div
+                            key={birdId}
+                            animate={{
+                                y: isSwapping ? [0, -45, 0] : 0,
+                                rotate: isSwapping ? [0, 360] : 0,
+                                scale: isSwapping ? [1, 1.1, 1] : 1,
+                            }}
+                            whileHover={isSelectable ? { scale: 1.15, y: -5 } : {}}
+                            whileTap={isSelectable ? { scale: 0.95 } : {}}
+                            style={{
+                                cursor: isSelectable ? 'pointer' : 'default',
+                                zIndex: isSwapping ? 10 : 1,
+                                position: 'relative',
+                            }}
+                            onClick={() => handleSelect(birdId)}
                             >
                                 <Box sx={{
                                     display: 'flex',
@@ -265,7 +255,6 @@ const SunflowerGame: React.FC<SunflowerGameProps> = ({ onRestart }) => {
                         );
                     })}
                 </Box>
-            </LayoutGroup>
         );
     };
 
@@ -566,7 +555,7 @@ const SunflowerGame: React.FC<SunflowerGameProps> = ({ onRestart }) => {
             {/* Bird arena */}
             <Box sx={{
                 width: '100%', maxWidth: 420,
-                height: { xs: 150, sm: 180 },
+                height: { xs: 110, sm: 130 },
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 my: { xs: 1, sm: 2 },
                 position: 'relative',
