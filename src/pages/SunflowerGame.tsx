@@ -154,8 +154,6 @@ const SunflowerGame: React.FC<SunflowerGameProps> = ({ onRestart }) => {
                     alignItems: 'center',
                     gap: { xs: positions.length <= 3 ? 3 : 1.5, sm: positions.length <= 3 ? 5 : 3 },
                     width: '100%',
-                    height: '100%',
-                    position: 'relative',
                     zIndex: 1,
                 }}>
                     {positions.map((birdId) => {
@@ -360,7 +358,9 @@ const SunflowerGame: React.FC<SunflowerGameProps> = ({ onRestart }) => {
 
                 <Box sx={{
                     width: '100%', maxWidth: 400,
-                    py: { xs: 2, sm: 3 }, my: 1,
+                    height: { xs: 150, sm: 180 },
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    my: 1,
                 }}>
                     {renderBirds()}
                 </Box>
@@ -566,8 +566,7 @@ const SunflowerGame: React.FC<SunflowerGameProps> = ({ onRestart }) => {
             {/* Bird arena */}
             <Box sx={{
                 width: '100%', maxWidth: 420,
-                minHeight: { xs: 130, sm: 160 },
-                py: { xs: 4, sm: 5 },
+                height: { xs: 150, sm: 180 },
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 my: { xs: 1, sm: 2 },
                 position: 'relative',
