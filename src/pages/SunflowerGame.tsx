@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Box, Typography, Button, Paper } from '@mui/material';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import LovebirdIllustration from '../components/LovebirdIllustration';
 import ReplayIcon from '@mui/icons-material/Replay';
 import HomeIcon from '@mui/icons-material/Home';
@@ -105,7 +105,10 @@ const SunflowerGame: React.FC<SunflowerGameProps> = ({ onRestart }) => {
             });
 
             swapCount++;
-            shuffleTimerRef.current = setTimeout(doSwap, SWAP_INTERVAL);
+            shuffleTimerRef.current = setTimeout(() => {
+                setSwappingPair(null);
+                shuffleTimerRef.current = setTimeout(doSwap, 200);
+            }, SWAP_INTERVAL - 200);
         };
 
         shuffleTimerRef.current = setTimeout(doSwap, 600);
@@ -142,117 +145,132 @@ const SunflowerGame: React.FC<SunflowerGameProps> = ({ onRestart }) => {
         setSelectedBird(null);
     };
 
-    const getSlotX = (slotIndex: number, total: number): number => {
-        const spacing = total === 3 ? 33.33 : 20;
-        const offset = total === 3 ? 16.67 : 10;
-        return offset + slotIndex * spacing;
-    };
-
     const renderBirds = () => {
-        return positions.map((birdId, slotIndex) => {
-            const isTarget = birdId === targetBird;
-            const isHighlighted = phase === 'showing' && isTarget;
-            const isSelected = phase !== 'shuffling' && phase !== 'showing' && selectedBird === birdId;
-            const isSwapping = swappingPair?.includes(birdId) ?? false;
-            const xPos = getSlotX(slotIndex, positions.length);
+        return (
+            <LayoutGroup>
+                <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: { xs: positions.length <= 3 ? 3 : 1.5, sm: positions.length <= 3 ? 5 : 3 },
+                    width: '100%',
+                    height: '100%',
+                    position: 'relative',
+                    zIndex: 1,
+                }}>
+                    {positions.map((birdId) => {
+                        const isTarget = birdId === targetBird;
+                        const isHighlighted = phase === 'showing' && isTarget;
+                        const isSelected = phase !== 'shuffling' && phase !== 'showing' && selectedBird === birdId;
+                        const isSwapping = swappingPair?.includes(birdId) ?? false;
+                        const isRevealed = (phase === 'gameover' || phase === 'correct' || phase === 'cleared') && isTarget;
+                        const isSelectable = phase === 'selecting';
 
-            const isRevealed = (phase === 'gameover' || phase === 'correct' || phase === 'cleared') && isTarget;
-
-            return (
-                <motion.div
-                    key={birdId}
-                    animate={{
-                        x: `${xPos}%`,
-                        rotate: isSwapping ? [0, 360] : 0,
-                        y: isSwapping ? [0, -30, 0] : 0,
-                    }}
-                    transition={{
-                        x: { duration: 0.5, ease: 'easeInOut' },
-                        rotate: { duration: 0.5, ease: 'easeInOut' },
-                        y: { duration: 0.5, ease: 'easeInOut' },
-                    }}
-                    style={{
-                        position: 'absolute',
-                        left: 0,
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        cursor: phase === 'selecting' ? 'pointer' : 'default',
-                        zIndex: isSwapping ? 10 : 1,
-                    }}
-                    onClick={() => handleSelect(birdId)}
-                >
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            transform: 'translate(-50%, -50%)',
-                            position: 'relative',
-                        }}
-                    >
-                        {/* Sunflower seed indicator */}
-                        {(isHighlighted || isRevealed) && (
-                            <Box
-                                sx={{
-                                    position: 'absolute',
-                                    top: { xs: -22, sm: -28 },
-                                    fontSize: { xs: '1.2rem', sm: '1.5rem' },
-                                    animation: 'bounce 0.6s ease-in-out infinite alternate',
-                                    zIndex: 20,
+                        return (
+                            <motion.div
+                                key={birdId}
+                                layout
+                                layoutTransition={{ type: 'spring', stiffness: 300, damping: 25 }}
+                                transition={{
+                                    layout: {
+                                        type: 'spring',
+                                        stiffness: 250,
+                                        damping: 22,
+                                        duration: 0.65,
+                                    },
                                 }}
+                                animate={{
+                                    y: isSwapping ? [0, -45, 0] : 0,
+                                    rotate: isSwapping ? [0, 360] : 0,
+                                    scale: isSwapping ? [1, 1.1, 1] : 1,
+                                }}
+                                whileHover={isSelectable ? { scale: 1.15, y: -5 } : {}}
+                                whileTap={isSelectable ? { scale: 0.95 } : {}}
+                                style={{
+                                    cursor: isSelectable ? 'pointer' : 'default',
+                                    zIndex: isSwapping ? 10 : 1,
+                                    position: 'relative',
+                                }}
+                                onClick={() => handleSelect(birdId)}
                             >
-                                🌻
-                            </Box>
-                        )}
+                                <Box sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    position: 'relative',
+                                }}>
+                                    {(isHighlighted || isRevealed) && (
+                                        <Box sx={{
+                                            position: 'absolute',
+                                            top: { xs: -24, sm: -30 },
+                                            left: '50%',
+                                            transform: 'translateX(-50%)',
+                                            fontSize: { xs: '1.2rem', sm: '1.5rem' },
+                                            animation: 'sfBounce 0.6s ease-in-out infinite alternate',
+                                            zIndex: 20,
+                                        }}>
+                                            🌻
+                                        </Box>
+                                    )}
 
-                        {/* Highlight ring */}
-                        {(isHighlighted || isRevealed) && (
-                            <Box
-                                sx={{
-                                    position: 'absolute',
-                                    top: '50%',
-                                    left: '50%',
-                                    transform: 'translate(-50%, -50%)',
-                                    width: { xs: 68, sm: 90 },
-                                    height: { xs: 68, sm: 90 },
-                                    borderRadius: '50%',
-                                    border: '3px solid #FFD700',
-                                    boxShadow: '0 0 16px rgba(255, 215, 0, 0.5)',
-                                    animation: 'pulse-glow 1.5s ease-in-out infinite',
-                                }}
-                            />
-                        )}
+                                    {(isHighlighted || isRevealed) && (
+                                        <Box sx={{
+                                            position: 'absolute',
+                                            top: '50%',
+                                            left: '50%',
+                                            transform: 'translate(-50%, -50%)',
+                                            width: { xs: 70, sm: 90 },
+                                            height: { xs: 70, sm: 90 },
+                                            borderRadius: '50%',
+                                            border: '3px solid #FFD700',
+                                            boxShadow: '0 0 20px rgba(255, 215, 0, 0.6)',
+                                            animation: 'pulse-glow 1.5s ease-in-out infinite',
+                                        }} />
+                                    )}
 
-                        {/* Selection ring */}
-                        {isSelected && !isTarget && (
-                            <Box
-                                sx={{
-                                    position: 'absolute',
-                                    top: '50%',
-                                    left: '50%',
-                                    transform: 'translate(-50%, -50%)',
-                                    width: { xs: 68, sm: 90 },
-                                    height: { xs: 68, sm: 90 },
-                                    borderRadius: '50%',
-                                    border: '3px solid #FF4444',
-                                    boxShadow: '0 0 16px rgba(255, 68, 68, 0.5)',
-                                }}
-                            />
-                        )}
+                                    {isSelected && !isTarget && (
+                                        <Box sx={{
+                                            position: 'absolute',
+                                            top: '50%',
+                                            left: '50%',
+                                            transform: 'translate(-50%, -50%)',
+                                            width: { xs: 70, sm: 90 },
+                                            height: { xs: 70, sm: 90 },
+                                            borderRadius: '50%',
+                                            border: '3px solid #FF4444',
+                                            boxShadow: '0 0 16px rgba(255, 68, 68, 0.5)',
+                                        }} />
+                                    )}
 
-                        <LovebirdIllustration
-                            variant="sitting"
-                            color={colors[birdId]}
-                            size={{ xs: 55, sm: 72 }}
-                            animated={isHighlighted || phase === 'selecting'}
-                        />
-                    </Box>
-                </motion.div>
-            );
-        });
+                                    {isSelectable && (
+                                        <Box sx={{
+                                            position: 'absolute',
+                                            top: '50%',
+                                            left: '50%',
+                                            transform: 'translate(-50%, -50%)',
+                                            width: { xs: 66, sm: 86 },
+                                            height: { xs: 66, sm: 86 },
+                                            borderRadius: '50%',
+                                            border: '2px dashed rgba(255, 140, 0, 0.3)',
+                                            transition: 'border-color 0.2s ease',
+                                        }} />
+                                    )}
+
+                                    <LovebirdIllustration
+                                        variant="sitting"
+                                        color={colors[birdId]}
+                                        size={{ xs: 55, sm: 72 }}
+                                        animated={isHighlighted || isSelectable}
+                                    />
+                                </Box>
+                            </motion.div>
+                        );
+                    })}
+                </Box>
+            </LayoutGroup>
+        );
     };
 
-    // Idle screen
     if (phase === 'idle') {
         return (
             <Box sx={{
@@ -314,7 +332,6 @@ const SunflowerGame: React.FC<SunflowerGameProps> = ({ onRestart }) => {
         );
     }
 
-    // Game over screen
     if (phase === 'gameover') {
         return (
             <Box sx={{
@@ -341,10 +358,9 @@ const SunflowerGame: React.FC<SunflowerGameProps> = ({ onRestart }) => {
                     </Typography>
                 </Box>
 
-                {/* Show the birds with answer revealed */}
                 <Box sx={{
-                    position: 'relative', width: '100%', maxWidth: 400,
-                    height: { xs: 100, sm: 130 }, my: 1,
+                    width: '100%', maxWidth: 400,
+                    py: { xs: 2, sm: 3 }, my: 1,
                 }}>
                     {renderBirds()}
                 </Box>
@@ -380,7 +396,6 @@ const SunflowerGame: React.FC<SunflowerGameProps> = ({ onRestart }) => {
         );
     }
 
-    // Cleared screen
     if (phase === 'cleared') {
         return (
             <Box sx={{
@@ -439,14 +454,13 @@ const SunflowerGame: React.FC<SunflowerGameProps> = ({ onRestart }) => {
         );
     }
 
-    // Main game UI (showing / shuffling / selecting / correct)
     return (
         <Box sx={{
             display: 'flex', flexDirection: 'column', alignItems: 'center',
             height: '100%', gap: { xs: 1.5, sm: 2.5 },
             px: 2, py: { xs: 2, sm: 3 }, position: 'relative',
         }}>
-            {/* Header: Round + Timer */}
+            {/* Header */}
             <Box sx={{
                 display: 'flex', justifyContent: 'space-between',
                 alignItems: 'center', width: '100%', maxWidth: 400,
@@ -463,8 +477,6 @@ const SunflowerGame: React.FC<SunflowerGameProps> = ({ onRestart }) => {
                         ({birdCount}마리)
                     </Typography>
                 </Box>
-
-                {/* Timer */}
                 <AnimatePresence mode="wait">
                     {(phase === 'shuffling' || phase === 'showing') && (
                         <motion.div
@@ -497,7 +509,7 @@ const SunflowerGame: React.FC<SunflowerGameProps> = ({ onRestart }) => {
                 </AnimatePresence>
             </Box>
 
-            {/* Round progress dots */}
+            {/* Progress dots */}
             <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center' }}>
                 {[1, 2, 3, 4, 5].map(r => (
                     <Box
@@ -553,10 +565,12 @@ const SunflowerGame: React.FC<SunflowerGameProps> = ({ onRestart }) => {
 
             {/* Bird arena */}
             <Box sx={{
-                position: 'relative', width: '100%', maxWidth: 400,
-                height: { xs: 140, sm: 180 },
+                width: '100%', maxWidth: 420,
+                minHeight: { xs: 130, sm: 160 },
+                py: { xs: 4, sm: 5 },
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                my: { xs: 2, sm: 3 },
+                my: { xs: 1, sm: 2 },
+                position: 'relative',
             }}>
                 <Box sx={{
                     position: 'absolute', inset: 0,
@@ -567,7 +581,6 @@ const SunflowerGame: React.FC<SunflowerGameProps> = ({ onRestart }) => {
                 {renderBirds()}
             </Box>
 
-            {/* Correct phase - next round button */}
             {phase === 'correct' && (
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -590,7 +603,6 @@ const SunflowerGame: React.FC<SunflowerGameProps> = ({ onRestart }) => {
                 </motion.div>
             )}
 
-            {/* Selecting phase hint */}
             {phase === 'selecting' && (
                 <Typography variant="body2" sx={{
                     color: '#999', fontSize: { xs: '0.72rem', sm: '0.82rem' },
@@ -601,9 +613,9 @@ const SunflowerGame: React.FC<SunflowerGameProps> = ({ onRestart }) => {
             )}
 
             <style>{`
-                @keyframes bounce {
-                    0% { transform: translateY(0); }
-                    100% { transform: translateY(-6px); }
+                @keyframes sfBounce {
+                    0% { transform: translateX(-50%) translateY(0); }
+                    100% { transform: translateX(-50%) translateY(-6px); }
                 }
             `}</style>
         </Box>
