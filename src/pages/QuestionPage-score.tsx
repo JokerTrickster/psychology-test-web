@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Typography, Button, Paper, LinearProgress } from '@mui/material';
+import { Box, Typography, Button, Paper } from '@mui/material';
 import type { Question } from '../types-score';
 import LovebirdIllustration from '../components/LovebirdIllustration';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -70,19 +70,88 @@ const QuestionPageScore: React.FC<QuestionPageScoreProps> = ({
                         {question.category}
                     </Typography>
                 </Box>
-                <LinearProgress
-                    variant="determinate"
-                    value={progress}
-                    sx={{
-                        height: { xs: 6, sm: 8 },
-                        borderRadius: 4,
-                        backgroundColor: 'rgba(126, 200, 80, 0.15)',
-                        '& .MuiLinearProgress-bar': {
-                            borderRadius: 4,
-                            background: 'linear-gradient(90deg, #7EC850 0%, #B8E986 100%)',
-                        },
-                    }}
-                />
+                <Box sx={{ position: 'relative', width: '100%' }}>
+                    {/* Track */}
+                    <Box
+                        sx={{
+                            width: '100%',
+                            height: { xs: 10, sm: 12 },
+                            borderRadius: '6px',
+                            backgroundColor: 'rgba(126, 200, 80, 0.12)',
+                            border: '1px solid rgba(126, 200, 80, 0.2)',
+                            overflow: 'hidden',
+                            position: 'relative',
+                        }}
+                    >
+                        {/* Filled area */}
+                        <Box
+                            sx={{
+                                width: `${progress}%`,
+                                height: '100%',
+                                borderRadius: '6px',
+                                background: 'linear-gradient(90deg, #7EC850 0%, #B8E986 60%, #C4E86B 100%)',
+                                transition: 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                                position: 'relative',
+                                '&::after': {
+                                    content: '""',
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    right: 0,
+                                    bottom: 0,
+                                    background: 'linear-gradient(180deg, rgba(255,255,255,0.3) 0%, transparent 60%)',
+                                    borderRadius: '6px',
+                                },
+                            }}
+                        />
+                    </Box>
+                    {/* Parrot indicator */}
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            left: `${progress}%`,
+                            top: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            transition: 'left 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                            zIndex: 2,
+                            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.15))',
+                            animation: 'parrotFloat 2s ease-in-out infinite',
+                        }}
+                    >
+                        <LovebirdIllustration
+                            variant="flying"
+                            color="pepe-green"
+                            size={{ xs: 24, sm: 32 }}
+                            animated
+                        />
+                    </Box>
+                    {/* Step dots */}
+                    {Array.from({ length: totalQuestions + 1 }, (_, i) => (
+                        <Box
+                            key={i}
+                            sx={{
+                                position: 'absolute',
+                                left: `${(i / totalQuestions) * 100}%`,
+                                top: '50%',
+                                transform: 'translate(-50%, -50%)',
+                                width: { xs: 4, sm: 5 },
+                                height: { xs: 4, sm: 5 },
+                                borderRadius: '50%',
+                                backgroundColor: i <= questionNumber - 1
+                                    ? 'rgba(255,255,255,0.8)'
+                                    : 'rgba(126, 200, 80, 0.25)',
+                                transition: 'background-color 0.4s ease',
+                                zIndex: 1,
+                            }}
+                        />
+                    ))}
+                </Box>
+                <style>{`
+                    @keyframes parrotFloat {
+                        0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+                        50% { transform: translate(-50%, -50%) translateY(-3px); }
+                    }
+                `}</style>
             </Box>
 
             {/* Decorative bird on top corner */}
