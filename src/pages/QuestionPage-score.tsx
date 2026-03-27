@@ -22,6 +22,8 @@ const QuestionPageScore: React.FC<QuestionPageScoreProps> = ({
     const birdColors: Array<'pepe-green' | 'violet-butter' | 'pepe-yellow' | 'yellowface-green' | 'pepe-lime'> = [
         'pepe-green',
         'pepe-yellow',
+        'violet-butter',
+        'yellowface-green',
     ];
 
     const progress = ((questionNumber - 1) / totalQuestions) * 100;
@@ -34,7 +36,7 @@ const QuestionPageScore: React.FC<QuestionPageScoreProps> = ({
                 justifyContent: 'flex-start',
                 height: '100%',
                 gap: { xs: 0.9, sm: 3 },
-                pb: { xs: 'calc(200px + env(safe-area-inset-bottom))', sm: 4 }, // Space for fixed buttons on mobile
+                pb: { xs: 'calc(300px + env(safe-area-inset-bottom))', sm: 4 }, // Space for fixed buttons on mobile
                 py: { xs: 1.2, sm: 0 },
                 px: { xs: 2, sm: 0 },
                 position: 'relative',
@@ -166,7 +168,7 @@ const QuestionPageScore: React.FC<QuestionPageScoreProps> = ({
                     width: { xs: '100%', sm: '100%' },
                     display: 'flex', 
                     flexDirection: 'column', 
-                    gap: { xs: 1.2, sm: 2.5 },
+                    gap: { xs: 0.8, sm: 2 },
                     p: { xs: '16px', sm: 0 },
                     pb: { xs: 'max(16px, env(safe-area-inset-bottom))', sm: 0 },
                     backgroundColor: { xs: 'rgba(255, 255, 255, 0.95)', sm: 'transparent' },
@@ -181,7 +183,8 @@ const QuestionPageScore: React.FC<QuestionPageScoreProps> = ({
                 {question.options.map((option, index) => {
                     const isHovered = hoveredIndex === index;
                     const birdColor = birdColors[index % birdColors.length];
-                    const label = index === 0 ? 'A' : 'B';
+                    const labels = ['A', 'B', 'C', 'D'];
+                    const label = labels[index] || String.fromCharCode(65 + index);
 
                     return (
                         <Box
@@ -222,12 +225,12 @@ const QuestionPageScore: React.FC<QuestionPageScoreProps> = ({
                                 onTouchEnd={() => setHoveredIndex(null)}
                                 sx={{
                                     padding: {
-                                        xs: '16px 20px',
-                                        sm: '24px 32px',
+                                        xs: '10px 14px',
+                                        sm: '18px 24px',
                                     },
-                                    minHeight: { xs: '56px', sm: '64px' },
+                                    minHeight: { xs: '48px', sm: '56px' },
                                     borderWidth: {
-                                        xs: '2.5px',
+                                        xs: '2px',
                                         sm: '3px',
                                     },
                                     borderColor: isHovered ? '#5CA632' : 'rgba(126, 200, 80, 0.5)',
@@ -235,8 +238,8 @@ const QuestionPageScore: React.FC<QuestionPageScoreProps> = ({
                                     backgroundColor: isHovered ? 'rgba(126, 200, 80, 0.15)' : 'rgba(255, 255, 255, 0.9)',
                                     backdropFilter: 'blur(10px)',
                                     fontSize: {
-                                        xs: '1rem',
-                                        sm: '1.25rem',
+                                        xs: '0.85rem',
+                                        sm: '1.1rem',
                                     },
                                     fontWeight: 600,
                                     borderRadius: { xs: '16px', sm: '32px' },
@@ -248,7 +251,7 @@ const QuestionPageScore: React.FC<QuestionPageScoreProps> = ({
                                         : '0 6px 20px rgba(126, 200, 80, 0.25)',
                                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                                     '&:hover': {
-                                        borderWidth: { xs: '2.5px', sm: '3px' },
+                                        borderWidth: { xs: '2px', sm: '3px' },
                                         borderColor: '#5CA632',
                                         backgroundColor: 'rgba(126, 200, 80, 0.2)',
                                         transform: {
@@ -265,8 +268,8 @@ const QuestionPageScore: React.FC<QuestionPageScoreProps> = ({
                                         left: { xs: 16, sm: 20 },
                                         top: '50%',
                                         transform: 'translateY(-50%)',
-                                        width: { xs: '32px', sm: '36px' },
-                                        height: { xs: '32px', sm: '36px' },
+                                        width: { xs: '26px', sm: '32px' },
+                                        height: { xs: '26px', sm: '32px' },
                                         borderRadius: '50%',
                                         backgroundColor: isHovered ? '#7EC850' : 'rgba(126, 200, 80, 0.5)',
                                         color: isHovered ? '#fff' : '#7EC850',

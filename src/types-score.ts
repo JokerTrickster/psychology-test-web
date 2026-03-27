@@ -9,7 +9,7 @@ export interface Question {
     id: string;
     text: string;
     imageUrl?: string;
-    options: [ScoreOption, ScoreOption]; // 항상 2개의 선택지 (A, B)
+    options: ScoreOption[];
     category: string;
 }
 

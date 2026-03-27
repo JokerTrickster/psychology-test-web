@@ -10,8 +10,10 @@ describe('QuestionPage-score', () => {
     id: 'q1',
     text: '새로운 사람을 만나면?',
     options: [
+      { text: '바로 말 걸고 친해진다', score: 2 },
       { text: '먼저 다가간다', score: 1 },
-      { text: '기다린다', score: -1 },
+      { text: '상대가 오면 반응한다', score: -1 },
+      { text: '기다린다', score: -2 },
     ],
     category: '사교성',
   };
@@ -38,24 +40,40 @@ describe('QuestionPage-score', () => {
     expect(screen.getByText('사교성')).toBeInTheDocument();
   });
 
-  it('renders both options', () => {
+  it('renders all four options', () => {
     render(<QuestionPageScore {...defaultProps} />);
+    expect(screen.getByText('바로 말 걸고 친해진다')).toBeInTheDocument();
     expect(screen.getByText('먼저 다가간다')).toBeInTheDocument();
+    expect(screen.getByText('상대가 오면 반응한다')).toBeInTheDocument();
     expect(screen.getByText('기다린다')).toBeInTheDocument();
   });
 
-  it('calls onSelectOption with score when A is clicked', async () => {
+  it('calls onSelectOption with score +2 when A is clicked', async () => {
+    const onSelectOption = vi.fn();
+    render(<QuestionPageScore {...defaultProps} onSelectOption={onSelectOption} />);
+    await userEvent.click(screen.getByText('바로 말 걸고 친해진다'));
+    expect(onSelectOption).toHaveBeenCalledWith(2);
+  });
+
+  it('calls onSelectOption with score +1 when B is clicked', async () => {
     const onSelectOption = vi.fn();
     render(<QuestionPageScore {...defaultProps} onSelectOption={onSelectOption} />);
     await userEvent.click(screen.getByText('먼저 다가간다'));
     expect(onSelectOption).toHaveBeenCalledWith(1);
   });
 
-  it('calls onSelectOption with score when B is clicked', async () => {
+  it('calls onSelectOption with score -1 when C is clicked', async () => {
+    const onSelectOption = vi.fn();
+    render(<QuestionPageScore {...defaultProps} onSelectOption={onSelectOption} />);
+    await userEvent.click(screen.getByText('상대가 오면 반응한다'));
+    expect(onSelectOption).toHaveBeenCalledWith(-1);
+  });
+
+  it('calls onSelectOption with score -2 when D is clicked', async () => {
     const onSelectOption = vi.fn();
     render(<QuestionPageScore {...defaultProps} onSelectOption={onSelectOption} />);
     await userEvent.click(screen.getByText('기다린다'));
-    expect(onSelectOption).toHaveBeenCalledWith(-1);
+    expect(onSelectOption).toHaveBeenCalledWith(-2);
   });
 
   it('renders progress bar', () => {
@@ -75,7 +93,7 @@ describe('QuestionPage-score', () => {
 
   it('handles hover on option buttons', async () => {
     render(<QuestionPageScore {...defaultProps} />);
-    const firstOption = screen.getByText('먼저 다가간다');
+    const firstOption = screen.getByText('바로 말 걸고 친해진다');
     await userEvent.hover(firstOption);
     expect(firstOption).toBeInTheDocument();
     await userEvent.unhover(firstOption);
@@ -84,7 +102,7 @@ describe('QuestionPage-score', () => {
 
   it('handles touch events on option buttons', () => {
     render(<QuestionPageScore {...defaultProps} />);
-    const button = screen.getByText('먼저 다가간다').closest('button')!;
+    const button = screen.getByText('바로 말 걸고 친해진다').closest('button')!;
     fireEvent.touchStart(button);
     fireEvent.touchEnd(button);
     expect(button).toBeInTheDocument();
